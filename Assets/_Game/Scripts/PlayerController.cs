@@ -7,16 +7,10 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private Rigidbody rb;
     [SerializeField] private FixedJoystick joystick;
     [SerializeField] private Animator amimator;
-
+    [SerializeField] private float moveSpeed;
     // Start is called before the first frame update
-    void Start()
+    private void FixedUpdate()
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        rb.velocity = new Vector3 (joystick.Horizontal * moveSpeed, rb.velocity.y, joystick.Vertical * moveSpeed);
     }
 }
