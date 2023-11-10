@@ -1,14 +1,18 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class Indicator : MonoBehaviour
 {
+    [SerializeField] private float screenBoundOffset = 0.9f;
+
     public GameObject target;
     public GameObject player;
-
     public Camera cam;
     public GameObject indicator;
+
     private bool IsVisible(Camera c, GameObject target)
     {
         var planes = GeometryUtility.CalculateFrustumPlanes(c);
@@ -24,20 +28,19 @@ public class Indicator : MonoBehaviour
     }
     private void Update()
     {
+
         if (!IsVisible(cam, target))
         {
             indicator.SetActive(true);
-            Vector3 targetDir = target.transform.position - player.transform.position;
-            Debug.DrawRay(player.transform.position, targetDir, Color.green);
-            float angle = Mathf.Atan2(targetDir.y, targetDir.x) * Mathf.Rad2Deg - 90;
-            indicator.transform.localEulerAngles = Vector3.forward * angle;
-            Debug.Log(Vector3.forward * angle);
-
+            Vector3 playerPos = player.transform.position;
+            Vector3 botPos = target.transform.position;
+            Vector2 screenDirection = cam.WorldToScreenPoint(botPos) - cam.WorldToScreenPoint(playerPos);
+            float angle = Mathf.Atan2(screenDirection.y, screenDirection.x) * Mathf.Rad2Deg;
+            indicator.transform.localRotation = Quaternion.Euler(0, 0, angle - 90);
         }
         else
         {
             indicator.SetActive(false);
-            Debug.Log("Target is visible.");
         }
     }
 }
