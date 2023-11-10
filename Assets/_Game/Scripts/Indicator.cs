@@ -32,6 +32,13 @@ public class Indicator : MonoBehaviour
         if (!IsVisible(cam, target))
         {
             indicator.SetActive(true);
+            Vector3 offScreenPos = cam.WorldToScreenPoint(target.transform.position);
+            offScreenPos.x = Mathf.Clamp(offScreenPos.x, 0.05f, Screen.width / 2); // 0.05 and 0.95 to keep the indicator away from the very edge
+            offScreenPos.y = Mathf.Clamp(offScreenPos.y, 0.05f, Screen.height / 2);
+            Debug.Log(offScreenPos);
+            //offScreenPos = cam.ViewportToWorldPoint(offScreenPos);
+            indicator.transform.localPosition = new Vector3(offScreenPos.x, offScreenPos.y, 0);
+
             Vector3 playerPos = player.transform.position;
             Vector3 botPos = target.transform.position;
             Vector2 screenDirection = cam.WorldToScreenPoint(botPos) - cam.WorldToScreenPoint(playerPos);
