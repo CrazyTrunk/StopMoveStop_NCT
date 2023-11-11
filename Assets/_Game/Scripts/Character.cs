@@ -5,8 +5,8 @@ using UnityEngine;
 
 public class Character : MonoBehaviour
 {
-    private string CurrentAnim;
-    private float radius;
+    protected string CurrentAnim;
+    protected float radius;
     [SerializeField] private Animator animator;
     public void ChangeAnim(string animName)
     {

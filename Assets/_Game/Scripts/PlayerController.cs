@@ -1,5 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
+
 using UnityEngine;
 [RequireComponent(typeof(Rigidbody), typeof(CapsuleCollider))]
 public class PlayerController : MonoBehaviour
@@ -8,6 +7,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private Rigidbody rb;
     [SerializeField] private Joystick joystick;
     [SerializeField] private float moveSpeed;
+
     // Start is called before the first frame update
     private void FixedUpdate()
     {
@@ -22,6 +22,7 @@ public class PlayerController : MonoBehaviour
         else 
         {
            player.ChangeAnim("idle");
+          
         }
     }
 }
