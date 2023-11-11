@@ -11,7 +11,7 @@ public class Indicator : MonoBehaviour
     public Camera cam;
     public GameObject indicator;
     [SerializeField] private Canvas indicatorCanvas;
-    public float offScreenThreshold = 10f;
+    public float offScreenThreshold = 50f;
     private bool IsVisible(Camera c, GameObject target)
     {
         var planes = GeometryUtility.CalculateFrustumPlanes(c);
@@ -27,6 +27,20 @@ public class Indicator : MonoBehaviour
     }
     private void Update()
     {
+        if (!IsVisible(cam, target))
+        {
+            indicator.SetActive(true);
+            SetPosAndRotateToTarget();
+
+        }
+        else
+        {
+            indicator.SetActive(false);
+        }
+
+    }
+    private void SetPosAndRotateToTarget()
+    {
         //vi la Screen Space  va la canvas nen can lay ReactTransform
         RectTransform indicatorRectTransform = indicator.GetComponent<RectTransform>();
         Vector3 targetScreenPos = cam.WorldToScreenPoint(target.transform.position);
@@ -40,12 +54,10 @@ public class Indicator : MonoBehaviour
             Mathf.Clamp(targetCanvasPosition.y, -canvasSize.y / 2 + offScreenThreshold, canvasSize.y / 2 - offScreenThreshold)
         );
 
-        Vector2 directionInCanvas = targetCanvasPosition - (Vector2)indicatorRectTransform.anchoredPosition;
+        Vector2 directionInCanvas = targetCanvasPosition;
 
         float angle = Mathf.Atan2(directionInCanvas.y, directionInCanvas.x) * Mathf.Rad2Deg - 90;
 
-
         indicatorRectTransform.localRotation = Quaternion.Euler(0, 0, angle);
-
     }
 }

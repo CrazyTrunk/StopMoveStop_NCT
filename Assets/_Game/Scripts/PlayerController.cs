@@ -11,9 +11,11 @@ public class PlayerController : MonoBehaviour
     // Start is called before the first frame update
     private void FixedUpdate()
     {
-        rb.velocity = new Vector3 (joystick.Horizontal * moveSpeed, 0, joystick.Vertical * moveSpeed);
+        float yVelocity = rb.velocity.y;
 
-        if ((joystick.Horizontal != 0 || joystick.Vertical != 0) && rb.velocity != Vector3.zero)
+        rb.velocity = new Vector3 (joystick.Horizontal * moveSpeed, yVelocity, joystick.Vertical * moveSpeed);
+
+        if ((joystick.Horizontal != 0 || joystick.Vertical != 0) )
         {
             transform.rotation = Quaternion.LookRotation(rb.velocity);
             player.ChangeAnim("run");
