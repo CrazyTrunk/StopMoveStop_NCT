@@ -14,15 +14,14 @@ public class PlayerController : MonoBehaviour
         float yVelocity = rb.velocity.y;
 
         rb.velocity = new Vector3 (joystick.Horizontal * moveSpeed, yVelocity, joystick.Vertical * moveSpeed);
-
         if ((joystick.Horizontal != 0 || joystick.Vertical != 0) )
         {
-            transform.rotation = Quaternion.LookRotation(rb.velocity);
+            transform.rotation = Quaternion.LookRotation(new Vector3(rb.velocity.x, 0, rb.velocity.z));
             player.ChangeAnim("run");
         }
-        else if(joystick.Horizontal == 0 || joystick.Vertical == 0)
+        else 
         {
-            player.ChangeAnim("idle");
+           player.ChangeAnim("idle");
         }
     }
 }
