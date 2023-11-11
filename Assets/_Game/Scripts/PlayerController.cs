@@ -12,8 +12,6 @@ public class PlayerController : MonoBehaviour
     private void FixedUpdate()
     {
         rb.velocity = new Vector3 (joystick.Horizontal * moveSpeed, 0, joystick.Vertical * moveSpeed);
-        Debug.Log($"joystick.Horizontal {joystick.Horizontal}");
-        Debug.Log($"joystick.Verticall {joystick.Vertical}");
 
         if ((joystick.Horizontal != 0 || joystick.Vertical != 0) && rb.velocity != Vector3.zero)
         {
