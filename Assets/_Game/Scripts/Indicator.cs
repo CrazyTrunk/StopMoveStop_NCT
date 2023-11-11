@@ -6,13 +6,12 @@ using UnityEngine.UIElements;
 
 public class Indicator : MonoBehaviour
 {
-    [SerializeField] private float screenBoundOffset = 0.9f;
-
     public GameObject target;
     public GameObject player;
     public Camera cam;
     public GameObject indicator;
-
+    [SerializeField]private Canvas indicatorCanvas;
+    public float offScreenThreshold = 10f;
     private bool IsVisible(Camera c, GameObject target)
     {
         var planes = GeometryUtility.CalculateFrustumPlanes(c);
@@ -28,26 +27,14 @@ public class Indicator : MonoBehaviour
     }
     private void Update()
     {
-
-        if (!IsVisible(cam, target))
-        {
-            indicator.SetActive(true);
-            Vector3 offScreenPos = cam.WorldToScreenPoint(target.transform.position);
-            offScreenPos.x = Mathf.Clamp(offScreenPos.x, 0.05f, Screen.width / 2); // 0.05 and 0.95 to keep the indicator away from the very edge
-            offScreenPos.y = Mathf.Clamp(offScreenPos.y, 0.05f, Screen.height / 2);
-            Debug.Log(offScreenPos);
-            //offScreenPos = cam.ViewportToWorldPoint(offScreenPos);
-            indicator.transform.localPosition = new Vector3(offScreenPos.x, offScreenPos.y, 0);
-
-            Vector3 playerPos = player.transform.position;
-            Vector3 botPos = target.transform.position;
-            Vector2 screenDirection = cam.WorldToScreenPoint(botPos) - cam.WorldToScreenPoint(playerPos);
-            float angle = Mathf.Atan2(screenDirection.y, screenDirection.x) * Mathf.Rad2Deg;
-            indicator.transform.localRotation = Quaternion.Euler(0, 0, angle - 90);
-        }
-        else
-        {
-            indicator.SetActive(false);
-        }
+        RectTransform indicatorRectTransform = indicator.GetComponent<RectTransform>();
+        Vector3 targetScreenPos = cam.WorldToScreenPoint(target.transform.position);
+        targetScreenPos.z = 0;
+        Vector2 targetCanvasPosition;
+        RectTransformUtility.ScreenPointToLocalPointInRectangle(
+            indicatorCanvas.transform as RectTransform, targetScreenPos, cam, out targetCanvasPosition);
+        Vector2 directionInCanvas = targetCanvasPosition - (Vector2)indicatorRectTransform.anchoredPosition;
+        float angle = Mathf.Atan2(directionInCanvas.y, directionInCanvas.x) * Mathf.Rad2Deg - 90;
+        indicatorRectTransform.localRotation = Quaternion.Euler(0, 0, angle); 
     }
 }
