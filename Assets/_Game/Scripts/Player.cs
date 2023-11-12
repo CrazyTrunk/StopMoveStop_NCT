@@ -5,11 +5,15 @@ using UnityEngine;
 public class Player : Character
 {
     [SerializeField] private ThrowWeapon throwWeapon;
-    private void Update()
+    public void Throw(Enemy enemy)
     {
-        if(CurrentAnim == "idle")
-        {
-            throwWeapon.Throw();
-        }
+        LookAtTarget(enemy);
+        ChangeAnim("attack");
+        throwWeapon.Throw();
     }
+    public void LookAtTarget(Enemy enemy)
+    {
+        transform.LookAt(enemy.transform.position);
+    }
+
 }

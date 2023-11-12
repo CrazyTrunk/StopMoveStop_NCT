@@ -18,4 +18,5 @@ public class Cache
         }
         return weapons[collider];
     }
+
 }

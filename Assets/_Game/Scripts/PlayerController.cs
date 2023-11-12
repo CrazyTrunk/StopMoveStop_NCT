@@ -16,13 +16,15 @@ public class PlayerController : MonoBehaviour
         rb.velocity = new Vector3 (joystick.Horizontal * moveSpeed, yVelocity, joystick.Vertical * moveSpeed);
         if ((joystick.Horizontal != 0 || joystick.Vertical != 0) )
         {
+            player.CanAttack = false;
             transform.rotation = Quaternion.LookRotation(new Vector3(rb.velocity.x, 0, rb.velocity.z));
             player.ChangeAnim("run");
         }
         else 
         {
            player.ChangeAnim("idle");
-          
+           player.CanAttack = true;
+
         }
     }
 }

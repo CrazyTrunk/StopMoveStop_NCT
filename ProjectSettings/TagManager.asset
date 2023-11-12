@@ -6,11 +6,12 @@ TagManager:
   tags:
   - MeleeWeapon
   - RangeWeapon
+  - Enemy
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Ground
   - Water
   - UI
   - 
