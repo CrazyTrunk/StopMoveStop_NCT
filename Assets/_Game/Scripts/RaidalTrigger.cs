@@ -9,10 +9,16 @@ public class RaidalTrigger : MonoBehaviour
     private Queue<Enemy> enemyQueue = new Queue<Enemy>();
     private Enemy currentTargetEnemy = null;
     private Character character;
-    private bool isAttacking = false;
+    private Player player;
+    public Enemy CurrentTargetEnemy { get => currentTargetEnemy; set => currentTargetEnemy = value; }
+
     private void Awake()
     {
         character = GetComponentInParent<Character>();
+        if(character is Player currentPlayer)
+        {
+            player = currentPlayer;
+        }
     }
     private void OnTriggerEnter(Collider other)
     {
@@ -20,39 +26,27 @@ public class RaidalTrigger : MonoBehaviour
         if (other.CompareTag("Enemy"))
         {
             enemyQueue.Enqueue(enemy);
-        }
-    }
-    private void OnTriggerStay(Collider other)
-    {
-        if (other.CompareTag("Enemy") && !isAttacking)
-        {
-            AttackNextEnemy(other);
-        }
-    }
-    private void AttackNextEnemy(Collider collider)
-    {
-        if (enemyQueue.Count > 0)
-        {
-            currentTargetEnemy = enemyQueue.Peek();
-
-            DetectedCircle detectedCircle = collider.GetComponentInChildren<DetectedCircle>();
+            player.HasEnemyInSight = true;
+            DetectedCircle detectedCircle = other.GetComponentInChildren<DetectedCircle>();
             if (detectedCircle != null)
             {
                 detectedCircle.Show();
             }
-            StartCoroutine(AttackEnemy(currentTargetEnemy));
         }
     }
-    private IEnumerator AttackEnemy(Enemy enemy)
+    private void OnTriggerStay(Collider other)
     {
-        isAttacking = true;
-        yield return new WaitForSeconds(1f);
-        Player player = character as Player;
-        Enemy currentEnemy = enemy.GetComponent<Enemy>();
-        if (player.CanAttack)
+        if (other.CompareTag("Enemy"))
         {
-            player.Throw(currentEnemy);
+            AttackCurrentEnemy(other);
         }
-        isAttacking = false;
     }
+    private void AttackCurrentEnemy(Collider collider)
+    {
+        if (enemyQueue.Count > 0)
+        {
+            CurrentTargetEnemy = enemyQueue.Peek();
+        }
+    }
+
 }

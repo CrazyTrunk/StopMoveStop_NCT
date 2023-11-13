@@ -5502,9 +5502,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   animator: {fileID: 1514492100}
   throwWeapon: {fileID: 159340421}
-  groundLayer:
-    serializedVersion: 2
-    m_Bits: 8
+  radicalTrigger: {fileID: 81862260}
 --- !u!1 &431843917
 GameObject:
   m_ObjectHideFlags: 0

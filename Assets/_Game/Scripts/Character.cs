@@ -9,10 +9,11 @@ public class Character : MonoBehaviour
     protected string CurrentAnim;
     protected float radius;
     protected bool IsDead = false;
-    protected bool HasEnemyInSight = false;
+    private bool hasEnemyInSight = false;
     [SerializeField] private Animator animator;
 
     public bool CanAttack { get => canAttack; set => canAttack = value; }
+    public bool HasEnemyInSight { get => hasEnemyInSight; set => hasEnemyInSight = value; }
 
     public void ChangeAnim(string animName)
     {
