@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using static System.TimeZoneInfo;
 
 public class RaidalTrigger : MonoBehaviour
 {
@@ -11,6 +12,8 @@ public class RaidalTrigger : MonoBehaviour
     private Character character;
     private Player player;
     public Enemy CurrentTargetEnemy { get => currentTargetEnemy; set => currentTargetEnemy = value; }
+    public bool IsAttacking;
+    private float attackTime;
 
     private void Awake()
     {
@@ -18,6 +21,22 @@ public class RaidalTrigger : MonoBehaviour
         if(character is Player currentPlayer)
         {
             player = currentPlayer;
+        }
+        UpdateAnimClipTimes();
+
+    }
+    public void UpdateAnimClipTimes()
+    {
+        AnimationClip[] clips = character.Animator.runtimeAnimatorController.animationClips;
+        foreach (AnimationClip clip in clips)
+        {
+            switch (clip.name)
+            {
+                case "Attack":
+                    attackTime = clip.length;
+                    Debug.Log($"attackTime {attackTime}");
+                    break;
+            }
         }
     }
     private void OnTriggerEnter(Collider other)
@@ -27,6 +46,7 @@ public class RaidalTrigger : MonoBehaviour
         {
             enemyQueue.Enqueue(enemy);
             player.HasEnemyInSight = true;
+            CurrentTargetEnemy = enemyQueue.Peek();
             DetectedCircle detectedCircle = other.GetComponentInChildren<DetectedCircle>();
             if (detectedCircle != null)
             {
@@ -36,17 +56,32 @@ public class RaidalTrigger : MonoBehaviour
     }
     private void OnTriggerStay(Collider other)
     {
-        if (other.CompareTag("Enemy"))
+        if (other.CompareTag("Enemy") && !IsAttacking)
         {
-            AttackCurrentEnemy(other);
+            AttackCurrentEnemy();
         }
     }
-    private void AttackCurrentEnemy(Collider collider)
+    private void AttackCurrentEnemy()
     {
         if (enemyQueue.Count > 0)
         {
-            CurrentTargetEnemy = enemyQueue.Peek();
+            if (!player.IsMoving)
+            {
+                StartCoroutine(WaitForAnimation());
+
+            }
         }
     }
-
+    IEnumerator WaitForAnimation()
+    {
+        IsAttacking = true;
+        //player.TryToAttackEnemy(currentTargetEnemy);
+        character.ChangeAnim("attack");
+        yield return new WaitForSeconds(attackTime);
+        if (!player.IsMoving)
+        {
+            character.ChangeAnim("idle");
+        }
+        IsAttacking = false;
+    }
 }

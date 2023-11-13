@@ -10,6 +10,7 @@ public class Player : Character
     public void TryToAttackEnemy(Enemy enemy)
     {
         LookAtTarget(enemy);
+        throwWeapon.Throw();
     }
     public void LookAtTarget(Enemy enemy)
     {

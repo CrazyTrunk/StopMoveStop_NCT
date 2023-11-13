@@ -9,7 +9,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float moveSpeed;
 
     // Start is called before the first frame update
-    private void FixedUpdate()
+    private void Update()
     {
         float yVelocity = rb.velocity.y;
 
@@ -21,20 +21,14 @@ public class PlayerController : MonoBehaviour
             transform.rotation = Quaternion.LookRotation(new Vector3(rb.velocity.x, 0, rb.velocity.z));
             player.ChangeAnim("run");
         }
-        else if (player.HasEnemyInSight && !player.IsMoving)
+        else if ((joystick.Horizontal == 0 || joystick.Vertical == 0) && !player.HasEnemyInSight)
         {
-            player.ChangeAnim("attack");
-            player.TryToAttackEnemy(player.radicalTrigger.CurrentTargetEnemy);
-        }
-        else if(joystick.Horizontal == 0 || joystick.Vertical == 0)
-        {
-            // If we're not moving, go to idle
-            player.ChangeAnim("idle");
             player.IsMoving = false;
-        }
-        else
-        {
             player.ChangeAnim("idle");
+        }
+        else if ((joystick.Horizontal == 0 || joystick.Vertical == 0) && player.HasEnemyInSight)
+        {
+            player.IsMoving = false;
 
         }
     }

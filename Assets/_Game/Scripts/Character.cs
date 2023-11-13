@@ -16,14 +16,15 @@ public class Character : MonoBehaviour
 
     public bool CanAttack { get => canAttack; set => canAttack = value; }
     public bool HasEnemyInSight { get => hasEnemyInSight; set => hasEnemyInSight = value; }
+    public Animator Animator { get => animator; set => animator = value; }
 
     public void ChangeAnim(string animName)
     {
         if (CurrentAnim != animName)
         {
-            animator.ResetTrigger(animName);
+            Animator.ResetTrigger(animName);
             CurrentAnim = animName;
-            animator.SetTrigger(CurrentAnim);
+            Animator.SetTrigger(CurrentAnim);
         }
     }
 }
