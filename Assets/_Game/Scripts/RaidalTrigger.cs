@@ -68,20 +68,25 @@ public class RaidalTrigger : MonoBehaviour
             if (!player.IsMoving)
             {
                 StartCoroutine(WaitForAnimation());
-
             }
         }
     }
     IEnumerator WaitForAnimation()
     {
         IsAttacking = true;
-        //player.TryToAttackEnemy(currentTargetEnemy);
+        player.LookAtTarget(currentTargetEnemy);
         character.ChangeAnim("attack");
         yield return new WaitForSeconds(attackTime);
+        if (character.Animator.GetCurrentAnimatorStateInfo(0).IsName("Attack"))
+        {
+            player.ThrowWeapon();
+        }
         if (!player.IsMoving)
         {
             character.ChangeAnim("idle");
         }
+        yield return new WaitForSeconds(0.5f);
+
         IsAttacking = false;
     }
 }

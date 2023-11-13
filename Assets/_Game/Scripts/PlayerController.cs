@@ -17,18 +17,13 @@ public class PlayerController : MonoBehaviour
         if (joystick.Horizontal != 0 || joystick.Vertical != 0)
         {
             player.IsMoving = true;
-            // If we're moving, rotate and play the running animation, don't attack
             transform.rotation = Quaternion.LookRotation(new Vector3(rb.velocity.x, 0, rb.velocity.z));
             player.ChangeAnim("run");
         }
-        else if ((joystick.Horizontal == 0 || joystick.Vertical == 0) && !player.HasEnemyInSight)
+        else if ((joystick.Horizontal == 0 || joystick.Vertical == 0))
         {
             player.IsMoving = false;
             player.ChangeAnim("idle");
-        }
-        else if ((joystick.Horizontal == 0 || joystick.Vertical == 0) && player.HasEnemyInSight)
-        {
-            player.IsMoving = false;
 
         }
     }
