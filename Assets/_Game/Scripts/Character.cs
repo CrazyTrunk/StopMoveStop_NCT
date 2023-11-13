@@ -10,6 +10,8 @@ public class Character : MonoBehaviour
     protected float radius;
     protected bool IsDead = false;
     private bool hasEnemyInSight = false;
+
+    public bool IsMoving;
     [SerializeField] private Animator animator;
 
     public bool CanAttack { get => canAttack; set => canAttack = value; }

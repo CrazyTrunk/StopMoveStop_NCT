@@ -7,7 +7,7 @@ public class Player : Character
     [SerializeField] private ThrowWeapon throwWeapon;
     [SerializeField] public RaidalTrigger radicalTrigger;
 
-    public void Throw(Enemy enemy)
+    public void TryToAttackEnemy(Enemy enemy)
     {
         LookAtTarget(enemy);
     }
@@ -15,5 +15,5 @@ public class Player : Character
     {
         transform.LookAt(enemy.transform.position);
     }
-
+    
 }

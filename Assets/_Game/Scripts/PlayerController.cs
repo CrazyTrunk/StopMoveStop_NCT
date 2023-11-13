@@ -14,21 +14,28 @@ public class PlayerController : MonoBehaviour
         float yVelocity = rb.velocity.y;
 
         rb.velocity = new Vector3(joystick.Horizontal * moveSpeed, yVelocity, joystick.Vertical * moveSpeed);
-        if (player.HasEnemyInSight && player.CanAttack)
+        if (joystick.Horizontal != 0 || joystick.Vertical != 0)
         {
-            player.ChangeAnim("attack");
-            player.Throw(player.radicalTrigger.CurrentTargetEnemy);
-        }
-        else if (joystick.Horizontal != 0 || joystick.Vertical != 0)
-        {
+            player.IsMoving = true;
             // If we're moving, rotate and play the running animation, don't attack
             transform.rotation = Quaternion.LookRotation(new Vector3(rb.velocity.x, 0, rb.velocity.z));
             player.ChangeAnim("run");
         }
-        else
+        else if (player.HasEnemyInSight && !player.IsMoving)
+        {
+            player.ChangeAnim("attack");
+            player.TryToAttackEnemy(player.radicalTrigger.CurrentTargetEnemy);
+        }
+        else if(joystick.Horizontal == 0 || joystick.Vertical == 0)
         {
             // If we're not moving, go to idle
             player.ChangeAnim("idle");
+            player.IsMoving = false;
+        }
+        else
+        {
+            player.ChangeAnim("idle");
+
         }
     }
 }
