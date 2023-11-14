@@ -5,7 +5,6 @@ using UnityEngine;
 
 public class ThrowWeapon : MonoBehaviour
 {
-    [SerializeField] private float throwCooldown;
     [Header("Throwing")]
     [SerializeField] private float throwForce;
 
@@ -14,13 +13,17 @@ public class ThrowWeapon : MonoBehaviour
 
     public void Throw()
     {
-
-            GameObject projectile = Instantiate(weaponToThrow, attackPoint.position, Quaternion.identity);
-            projectile.transform.rotation = Quaternion.Euler(90f, 90f, 0);
-            Rigidbody projectRb = projectile.GetComponent<Rigidbody>();
-            projectRb.AddForce(attackPoint.transform.forward * throwForce);
-            float torqueForce = 500f; 
-            projectRb.AddTorque(transform.up * torqueForce, ForceMode.Impulse);
+        GameObject projectile = Instantiate(weaponToThrow, attackPoint.position, Quaternion.identity);
+        projectile.transform.rotation = Quaternion.Euler(90f, 90f, 0);
+        Rigidbody projectRb = projectile.GetComponent<Rigidbody>();
+        projectRb.AddForce(attackPoint.transform.forward * throwForce);
+        float torqueForce = 500f;
+        projectRb.AddTorque(transform.up * torqueForce, ForceMode.Impulse);
+        Weapon weapon = projectile.GetComponent<Weapon>();
+        if (weapon != null)
+        {
+            weapon.isThrown = true; 
+        }
 
     }
 }

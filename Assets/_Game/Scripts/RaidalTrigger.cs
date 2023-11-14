@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.TextCore.Text;
 using static System.TimeZoneInfo;
 
 public class RaidalTrigger : MonoBehaviour
@@ -76,16 +77,20 @@ public class RaidalTrigger : MonoBehaviour
         IsAttacking = true;
         player.LookAtTarget(currentTargetEnemy);
         character.ChangeAnim("attack");
-        yield return new WaitForSeconds(attackTime);
+        yield return new WaitForSeconds(attackTime / 2);
+        player.HideWeapon();
         if (character.Animator.GetCurrentAnimatorStateInfo(0).IsName("Attack"))
         {
             player.ThrowWeapon();
         }
+        yield return new WaitForSeconds(attackTime / 2);
+        player.ShowWeapon();
+
         if (!player.IsMoving)
         {
             character.ChangeAnim("idle");
         }
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(0.2f);
 
         IsAttacking = false;
     }

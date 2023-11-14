@@ -5,4 +5,5 @@ using UnityEngine;
 public class Weapon : MonoBehaviour
 {
     [SerializeField]public bool isMelee;
+    [SerializeField] public bool isThrown = false;
 }
