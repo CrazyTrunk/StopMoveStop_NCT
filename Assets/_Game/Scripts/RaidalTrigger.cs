@@ -64,24 +64,57 @@ public class RaidalTrigger : MonoBehaviour
             }
         }
     }
+    //private void OnTriggerExit(Collider other)
+    //{
+    //    if (other.CompareTag("Enemy"))
+    //    {
+    //        Enemy enemy = other.GetComponent<Enemy>();
+    //        enemyQueue = new Queue<Enemy>(enemyQueue.Where(e => e != enemy));
+    //        if (currentTargetEnemy.enemyNumber== enemy.enemyNumber)
+    //        {
+    //            DetectedCircle detectedCircle = other.GetComponentInChildren<DetectedCircle>();
+    //            if (detectedCircle != null)
+    //            {
+    //                detectedCircle.Hide();
+    //            }
+    //        }
+    //    }
+    //}
     private void OnTriggerExit(Collider other)
     {
         if (other.CompareTag("Enemy"))
         {
             Enemy enemy = other.GetComponent<Enemy>();
-            if (enemyQueue.Contains(enemy))
+            // Loại bỏ enemy ra khỏi hàng đợi
+            enemyQueue = new Queue<Enemy>(enemyQueue.Where(e => e != enemy));
+            enemy.OnEnemyKilled -= Enemy_OnEnemyKilled; // Loại bỏ listener
+
+            // Ẩn detected circle nếu có
+            DetectedCircle detectedCircle = other.GetComponentInChildren<DetectedCircle>();
+            if (detectedCircle != null)
             {
-                enemyQueue = new Queue<Enemy>(enemyQueue.Where(e => e != enemy));
-                if(enemyQueue.Count == 0)
+                detectedCircle.Hide();
+            }
+
+            // Nếu enemy hiện tại rời khỏi, cần chọn target mới hoặc ngừng tấn công
+            if (currentTargetEnemy == enemy)
+            {
+                if (enemyQueue.Count > 0)
                 {
-                    DetectedCircle detectedCircle = other.GetComponentInChildren<DetectedCircle>();
-                    if (detectedCircle != null)
+                    // Có enemy khác trong hàng đợi, chọn làm mục tiêu mới
+                    CurrentTargetEnemy = enemyQueue.Peek();
+                    DetectedCircle nextDetectedCircle = CurrentTargetEnemy.GetComponentInChildren<DetectedCircle>();
+                    if (nextDetectedCircle != null)
                     {
-                        detectedCircle.Hide();
+                        nextDetectedCircle.Show();
                     }
-                    CurrentTargetEnemy = null;
                 }
-               
+                else
+                {
+                    // Không còn enemy nào, cần ngừng tấn công
+                    CurrentTargetEnemy = null;
+                    IsAttacking = false;
+                }
             }
         }
     }
@@ -95,7 +128,7 @@ public class RaidalTrigger : MonoBehaviour
     private void Enemy_OnEnemyKilled(Enemy enemy)
     {
         OnDestroyEnemy(enemy);
-        enemyQueue = new Queue<Enemy>(enemyQueue.Where(e => e != enemy));
+        enemyQueue = new Queue<Enemy>(enemyQueue.Where(e => !e.IsDead));
         currentTargetEnemy = null;
         if (enemyQueue.Count > 0)
         {
