@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SocialPlatforms;
 
 public class ThrowWeapon : MonoBehaviour
 {
@@ -16,14 +17,21 @@ public class ThrowWeapon : MonoBehaviour
         GameObject projectile = Instantiate(weaponToThrow, attackPoint.position, Quaternion.identity);
         projectile.transform.rotation = Quaternion.Euler(90f, 90f, 0);
         Rigidbody projectRb = projectile.GetComponent<Rigidbody>();
-        projectRb.AddForce(attackPoint.transform.forward * throwForce);
-        float torqueForce = 500f;
-        projectRb.AddTorque(transform.up * torqueForce, ForceMode.Impulse);
+        //5f is range
+        Vector3 targetPoint = attackPoint.position + attackPoint.forward * 5f;
+
+        projectRb.AddForce((targetPoint - attackPoint.position).normalized * throwForce);
+        projectRb.AddTorque(transform.up * throwForce, ForceMode.Impulse);
         Weapon weapon = projectile.GetComponent<Weapon>();
+        ProjectileTracker tracker = projectile.GetComponent<ProjectileTracker>();
+
         if (weapon != null)
         {
             weapon.isThrown = true; 
         }
-
+        if(tracker != null)
+        {
+            tracker.SetTargetPoint(targetPoint);
+        }
     }
 }

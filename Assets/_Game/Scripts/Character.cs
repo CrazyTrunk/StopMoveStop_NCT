@@ -7,7 +7,7 @@ public class Character : MonoBehaviour
 {
     private bool canAttack;
     protected string CurrentAnim;
-    protected float radius;
+    protected float range;
     protected bool IsDead = false;
     private bool hasEnemyInSight = false;
 

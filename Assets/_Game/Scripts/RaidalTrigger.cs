@@ -83,6 +83,10 @@ public class RaidalTrigger : MonoBehaviour
         {
             player.ThrowWeapon();
         }
+        else
+        {
+            player.ShowWeapon();
+        }
         yield return new WaitForSeconds(attackTime / 2);
         player.ShowWeapon();
 
