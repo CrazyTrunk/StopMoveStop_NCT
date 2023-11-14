@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.TextCore.Text;
@@ -19,13 +20,14 @@ public class RaidalTrigger : MonoBehaviour
     private void Awake()
     {
         character = GetComponentInParent<Character>();
-        if(character is Player currentPlayer)
+        if (character is Player currentPlayer)
         {
             player = currentPlayer;
         }
         UpdateAnimClipTimes();
 
     }
+
     public void UpdateAnimClipTimes()
     {
         AnimationClip[] clips = character.Animator.runtimeAnimatorController.animationClips;
@@ -42,17 +44,42 @@ public class RaidalTrigger : MonoBehaviour
     }
     private void OnTriggerEnter(Collider other)
     {
-        Enemy enemy = other.GetComponent<Enemy>();
         if (other.CompareTag("Enemy"))
         {
+
+            Enemy enemy = other.GetComponent<Enemy>();
+            enemy.OnEnemyKilled += Enemy_OnEnemyKilled;
             enemyQueue.Enqueue(enemy);
             player.HasEnemyInSight = true;
-            CurrentTargetEnemy = enemyQueue.Peek();
-            DetectedCircle detectedCircle = other.GetComponentInChildren<DetectedCircle>();
-            if (detectedCircle != null)
+            if (CurrentTargetEnemy == null)
             {
-                detectedCircle.Show();
+                CurrentTargetEnemy = enemyQueue.Peek();
+                DetectedCircle detectedCircle = other.GetComponentInChildren<DetectedCircle>();
+                if (detectedCircle != null)
+                {
+                    detectedCircle.Show();
+                }
             }
+
+        }
+    }
+
+    private void Enemy_OnEnemyKilled(Enemy enemy)
+    {
+        OnDestroyEnemy(enemy);
+        enemyQueue = new Queue<Enemy>(enemyQueue.Where(e => !e.IsDead));
+        if (CurrentTargetEnemy == enemy)
+        {
+            CurrentTargetEnemy = null;
+            StartAttackSequence();
+        }
+    }
+    private void StartAttackSequence()
+    {
+        if (enemyQueue.Count > 0)
+        {
+            CurrentTargetEnemy = enemyQueue.Peek();
+            AttackCurrentEnemy();
         }
     }
     private void OnTriggerStay(Collider other)
@@ -60,6 +87,29 @@ public class RaidalTrigger : MonoBehaviour
         if (other.CompareTag("Enemy") && !IsAttacking)
         {
             AttackCurrentEnemy();
+        }
+    }
+    private void OnDestroyEnemy(Enemy enemy)
+    {
+        enemy.OnEnemyKilled -= Enemy_OnEnemyKilled;
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag("Enemy"))
+        {
+            Enemy enemy = other.GetComponent<Enemy>();
+            OnDestroyEnemy(enemy);
+            if (enemy.enemyNumber == CurrentTargetEnemy.enemyNumber)
+            {
+                DetectedCircle detectedCircle = other.GetComponentInChildren<DetectedCircle>();
+                if (detectedCircle != null)
+                {
+                    detectedCircle.Hide();
+                }
+                CurrentTargetEnemy = null;
+                StartAttackSequence();
+            }
         }
     }
     private void AttackCurrentEnemy()

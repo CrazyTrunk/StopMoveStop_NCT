@@ -14,6 +14,8 @@ public class MeleeWeapon : Weapon
     {
         if (other.CompareTag("Enemy") && isThrown)
         {
+            Enemy enemy = other.GetComponent<Enemy>();
+            enemy.EnemyKilled();
             DestroyWeapon();
         }
     }

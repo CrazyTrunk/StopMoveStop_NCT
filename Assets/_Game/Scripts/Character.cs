@@ -8,15 +8,15 @@ public class Character : MonoBehaviour
     private bool canAttack;
     protected string CurrentAnim;
     protected float range;
-    protected bool IsDead = false;
+    private bool isDead = false;
     private bool hasEnemyInSight = false;
-
     public bool IsMoving;
     [SerializeField] private Animator animator;
 
     public bool CanAttack { get => canAttack; set => canAttack = value; }
     public bool HasEnemyInSight { get => hasEnemyInSight; set => hasEnemyInSight = value; }
     public Animator Animator { get => animator; set => animator = value; }
+    public bool IsDead { get => isDead; set => isDead = value; }
 
     public void ChangeAnim(string animName)
     {

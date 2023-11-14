@@ -5182,7 +5182,7 @@ PrefabInstance:
     - target: {fileID: -6057140222963153312, guid: 38f9296dc39c27647a0119314baf12a2, type: 3}
       propertyPath: m_Controller
       value: 
-      objectReference: {fileID: 9100000, guid: ca15e250bd288784495f2cbd7dc91d50, type: 2}
+      objectReference: {fileID: 9100000, guid: 22645f5308ed96e469214a8f53aae3e3, type: 2}
     - target: {fileID: -4216859302048453862, guid: 38f9296dc39c27647a0119314baf12a2, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -5605,6 +5605,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   IsMoving: 0
   animator: {fileID: 1109582170}
+  enemyNumber: 1
 --- !u!1001 &445529402
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -11062,7 +11063,7 @@ PrefabInstance:
     - target: {fileID: -6057140222963153312, guid: 38f9296dc39c27647a0119314baf12a2, type: 3}
       propertyPath: m_Controller
       value: 
-      objectReference: {fileID: 9100000, guid: ca15e250bd288784495f2cbd7dc91d50, type: 2}
+      objectReference: {fileID: 9100000, guid: 22645f5308ed96e469214a8f53aae3e3, type: 2}
     - target: {fileID: -4216859302048453862, guid: 38f9296dc39c27647a0119314baf12a2, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -11225,8 +11226,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 1882555825}
-  player: {fileID: 424253563}
-  cam: {fileID: 963194227}
+  mainCamera: {fileID: 963194227}
   indicator: {fileID: 1313326775}
   indicatorCanvas: {fileID: 726397871}
   offScreenThreshold: 70
@@ -12336,6 +12336,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   IsMoving: 0
   animator: {fileID: 298940319}
+  enemyNumber: 0
 --- !u!1 &2063900400
 GameObject:
   m_ObjectHideFlags: 0
