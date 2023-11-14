@@ -6,58 +6,47 @@ using UnityEngine.UIElements;
 
 public class Indicator : MonoBehaviour
 {
-    public GameObject target;
-    public GameObject player;
-    public Camera cam;
-    public GameObject indicator;
+    [SerializeField] private GameObject target;
+    [SerializeField] private Camera mainCamera;
+    [SerializeField] private GameObject indicator;
     [SerializeField] private Canvas indicatorCanvas;
-    public float offScreenThreshold = 50f;
-    private bool IsVisible(Camera c, GameObject target)
-    {
-        var planes = GeometryUtility.CalculateFrustumPlanes(c);
-        var point = target.transform.position;
-        foreach (var plane in planes)
-        {
-            if (plane.GetDistanceToPoint(point) < 0)
-            {
-                return false;
-            }
-        }
-        return true;
-    }
+    [SerializeField] private float offScreenThreshold = 50f;
     private void Update()
     {
-        if (!IsVisible(cam, target))
+        if (TargetIsOffScreen())
         {
+            UpdateIndicatorPosition();
             indicator.SetActive(true);
-            SetPosAndRotateToTarget();
-
         }
         else
         {
             indicator.SetActive(false);
         }
-
     }
-    private void SetPosAndRotateToTarget()
+    private bool TargetIsOffScreen()
     {
-        //vi la Screen Space  va la canvas nen can lay ReactTransform
-        RectTransform indicatorRectTransform = indicator.GetComponent<RectTransform>();
-        Vector3 targetScreenPos = cam.WorldToScreenPoint(target.transform.position);
-        Vector2 targetCanvasPosition;
-        RectTransformUtility.ScreenPointToLocalPointInRectangle(
-            indicatorCanvas.transform as RectTransform, targetScreenPos, cam, out targetCanvasPosition);
-        //vi day la Screen Space -camera nen can lay sizedelta
-        Vector2 canvasSize = indicatorCanvas.GetComponent<RectTransform>().sizeDelta;
-        indicatorRectTransform.localPosition = new Vector3(
-            Mathf.Clamp(targetCanvasPosition.x, -canvasSize.x / 2 + offScreenThreshold, canvasSize.x / 2 - offScreenThreshold),
-            Mathf.Clamp(targetCanvasPosition.y, -canvasSize.y / 2 + offScreenThreshold, canvasSize.y / 2 - offScreenThreshold)
-        );
+        Vector3 targetViewportPos = mainCamera.WorldToViewportPoint(target.transform.position);
+        return targetViewportPos.x < 0 || targetViewportPos.x > 1 || targetViewportPos.y < 0 || targetViewportPos.y > 1;
+    }
+    private void UpdateIndicatorPosition()
+    {
+        RectTransform indicatorRect = indicator.GetComponent<RectTransform>();
+        Vector3 targetScreenPos = mainCamera.WorldToScreenPoint(target.transform.position);
 
-        Vector2 directionInCanvas = targetCanvasPosition;
+        Vector2 localPoint;
+        RectTransformUtility.ScreenPointToLocalPointInRectangle((RectTransform)indicatorCanvas.transform, targetScreenPos, mainCamera, out localPoint);
 
-        float angle = Mathf.Atan2(directionInCanvas.y, directionInCanvas.x) * Mathf.Rad2Deg - 90;
+        Vector2 canvasSize = ((RectTransform)indicatorCanvas.transform).sizeDelta;
+        localPoint.x = Mathf.Clamp(localPoint.x, -canvasSize.x / 2 + offScreenThreshold, canvasSize.x / 2 - offScreenThreshold);
+        localPoint.y = Mathf.Clamp(localPoint.y, -canvasSize.y / 2 + offScreenThreshold, canvasSize.y / 2 - offScreenThreshold);
 
-        indicatorRectTransform.localRotation = Quaternion.Euler(0, 0, angle);
+        indicatorRect.localPosition = localPoint;
+        RotateIndicatorTowardsTarget(localPoint);
+    }
+    private void RotateIndicatorTowardsTarget(Vector2 targetPosition)
+    {
+        RectTransform indicatorRect = indicator.GetComponent<RectTransform>();
+        float angle = Mathf.Atan2(targetPosition.y, targetPosition.x) * Mathf.Rad2Deg - 90;
+        indicatorRect.localRotation = Quaternion.Euler(0, 0, angle);
     }
 }
