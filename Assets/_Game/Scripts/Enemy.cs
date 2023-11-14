@@ -11,10 +11,11 @@ public class Enemy : Character
     public event EnemyKilledHandler OnEnemyKilled;
     public void EnemyKilled()
     {
+        IsDead = true;
+        OnEnemyKilled?.Invoke(this);
         if (!isAnimPlay)
         {
             StartCoroutine(WaitForAnimation());
-
         }
     }
     IEnumerator WaitForAnimation()
@@ -24,8 +25,6 @@ public class Enemy : Character
         float animationLength = Animator.GetCurrentAnimatorStateInfo(0).length;
         yield return new WaitForSecondsRealtime(animationLength / 2);
         gameObject.SetActive(false);
-        IsDead = true;
         isAnimPlay = false;
-        OnEnemyKilled?.Invoke(this);
     }
 }

@@ -9,12 +9,10 @@ public class Character : MonoBehaviour
     protected string CurrentAnim;
     protected float range;
     private bool isDead = false;
-    private bool hasEnemyInSight = false;
     public bool IsMoving;
     [SerializeField] private Animator animator;
 
     public bool CanAttack { get => canAttack; set => canAttack = value; }
-    public bool HasEnemyInSight { get => hasEnemyInSight; set => hasEnemyInSight = value; }
     public Animator Animator { get => animator; set => animator = value; }
     public bool IsDead { get => isDead; set => isDead = value; }
 

@@ -46,47 +46,65 @@ public class RaidalTrigger : MonoBehaviour
     {
         if (other.CompareTag("Enemy"))
         {
-
             Enemy enemy = other.GetComponent<Enemy>();
-            enemy.OnEnemyKilled += Enemy_OnEnemyKilled;
-            enemyQueue.Enqueue(enemy);
-            player.HasEnemyInSight = true;
-            if (CurrentTargetEnemy == null)
+            if (!enemyQueue.Contains(enemy))
             {
-                CurrentTargetEnemy = enemyQueue.Peek();
-                DetectedCircle detectedCircle = other.GetComponentInChildren<DetectedCircle>();
-                if (detectedCircle != null)
+                enemy.OnEnemyKilled += Enemy_OnEnemyKilled;
+                enemyQueue.Enqueue(enemy);
+                if (CurrentTargetEnemy == null)
                 {
-                    detectedCircle.Show();
+                    //hien tai neu khong co targetnao => lay thang dau tien luon
+                    CurrentTargetEnemy = enemyQueue.Peek();
+                    DetectedCircle detectedCircle = other.GetComponentInChildren<DetectedCircle>();
+                    if (detectedCircle != null)
+                    {
+                        detectedCircle.Show();
+                    }
                 }
             }
-
         }
     }
-
-    private void Enemy_OnEnemyKilled(Enemy enemy)
+    private void OnTriggerExit(Collider other)
     {
-        OnDestroyEnemy(enemy);
-        enemyQueue = new Queue<Enemy>(enemyQueue.Where(e => !e.IsDead));
-        if (CurrentTargetEnemy == enemy)
+        if (other.CompareTag("Enemy"))
         {
-            CurrentTargetEnemy = null;
-            StartAttackSequence();
-        }
-    }
-    private void StartAttackSequence()
-    {
-        if (enemyQueue.Count > 0)
-        {
-            CurrentTargetEnemy = enemyQueue.Peek();
-            AttackCurrentEnemy();
+            Enemy enemy = other.GetComponent<Enemy>();
+            if (enemyQueue.Contains(enemy))
+            {
+                enemyQueue = new Queue<Enemy>(enemyQueue.Where(e => e != enemy));
+                if(enemyQueue.Count == 0)
+                {
+                    DetectedCircle detectedCircle = other.GetComponentInChildren<DetectedCircle>();
+                    if (detectedCircle != null)
+                    {
+                        detectedCircle.Hide();
+                    }
+                    CurrentTargetEnemy = null;
+                }
+               
+            }
         }
     }
     private void OnTriggerStay(Collider other)
     {
-        if (other.CompareTag("Enemy") && !IsAttacking)
+        if (CurrentTargetEnemy != null && !IsAttacking)
         {
             AttackCurrentEnemy();
+        }
+    }
+    private void Enemy_OnEnemyKilled(Enemy enemy)
+    {
+        OnDestroyEnemy(enemy);
+        enemyQueue = new Queue<Enemy>(enemyQueue.Where(e => e != enemy));
+        currentTargetEnemy = null;
+        if (enemyQueue.Count > 0)
+        {
+            currentTargetEnemy = enemyQueue.Peek();
+            DetectedCircle detectedCircle = currentTargetEnemy.GetComponentInChildren<DetectedCircle>();
+            if (detectedCircle != null)
+            {
+                detectedCircle.Show();
+            }
         }
     }
     private void OnDestroyEnemy(Enemy enemy)
@@ -94,32 +112,11 @@ public class RaidalTrigger : MonoBehaviour
         enemy.OnEnemyKilled -= Enemy_OnEnemyKilled;
     }
 
-    private void OnTriggerExit(Collider other)
-    {
-        if (other.CompareTag("Enemy"))
-        {
-            Enemy enemy = other.GetComponent<Enemy>();
-            OnDestroyEnemy(enemy);
-            if (enemy.enemyNumber == CurrentTargetEnemy.enemyNumber)
-            {
-                DetectedCircle detectedCircle = other.GetComponentInChildren<DetectedCircle>();
-                if (detectedCircle != null)
-                {
-                    detectedCircle.Hide();
-                }
-                CurrentTargetEnemy = null;
-                StartAttackSequence();
-            }
-        }
-    }
     private void AttackCurrentEnemy()
     {
-        if (enemyQueue.Count > 0)
+        if (!player.IsMoving)
         {
-            if (!player.IsMoving)
-            {
-                StartCoroutine(WaitForAnimation());
-            }
+            StartCoroutine(WaitForAnimation());
         }
     }
     IEnumerator WaitForAnimation()
