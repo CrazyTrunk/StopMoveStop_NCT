@@ -27,4 +27,8 @@ public class Enemy : Character
         gameObject.SetActive(false);
         isAnimPlay = false;
     }
+    public void Move(Vector3 direction)
+    {
+        transform.position += speed * Time.deltaTime * direction;
+    }
 }

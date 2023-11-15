@@ -5535,7 +5535,6 @@ MonoBehaviour:
   player: {fileID: 424253570}
   rb: {fileID: 424253569}
   joystick: {fileID: 445529404}
-  moveSpeed: 5
 --- !u!54 &424253569
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -5576,9 +5575,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   IsMoving: 0
+  speed: 5
   animator: {fileID: 1514492100}
   throwWeapon: {fileID: 159340421}
-  radicalTrigger: {fileID: 0}
   Weapon: {fileID: 1167782141}
 --- !u!1001 &445529402
 PrefabInstance:
@@ -5700,11 +5699,6 @@ MonoBehaviour:
 --- !u!4 &470747315 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -4216859302048453862, guid: 38f9296dc39c27647a0119314baf12a2, type: 3}
-  m_PrefabInstance: {fileID: 1734820469}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &561620083 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: -927199367670048503, guid: 38f9296dc39c27647a0119314baf12a2, type: 3}
   m_PrefabInstance: {fileID: 1734820469}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &566672922
@@ -11309,18 +11303,6 @@ Animator:
   m_CorrespondingSourceObject: {fileID: -6057140222963153312, guid: 38f9296dc39c27647a0119314baf12a2, type: 3}
   m_PrefabInstance: {fileID: 1734820469}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1514492101
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 561620083}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c10705db2fa25ab4eba51ec37673d0aa, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1613504370
 GameObject:
   m_ObjectHideFlags: 0
@@ -12134,10 +12116,7 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 3373197664844238778, guid: 38f9296dc39c27647a0119314baf12a2, type: 3}
       insertIndex: -1
       addedObject: {fileID: 2063900401}
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: -927199367670048503, guid: 38f9296dc39c27647a0119314baf12a2, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1514492101}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 38f9296dc39c27647a0119314baf12a2, type: 3}
 --- !u!1 &1852785662
 GameObject:
@@ -12285,6 +12264,7 @@ GameObject:
   - component: {fileID: 1882555829}
   - component: {fileID: 1882555828}
   - component: {fileID: 1882555831}
+  - component: {fileID: 1882555832}
   m_Layer: 0
   m_Name: Bot
   m_TagString: Enemy
@@ -12372,8 +12352,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   IsMoving: 0
+  speed: 5
   animator: {fileID: 298940319}
   enemyNumber: 0
+--- !u!114 &1882555832
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1882555825}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: afcb46e8f86883f439cd78684ba139dc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enemy: {fileID: 1882555831}
 --- !u!1 &2063900400
 GameObject:
   m_ObjectHideFlags: 0

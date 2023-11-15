@@ -34,7 +34,6 @@ public class RadicalTrigger : MonoBehaviour
             {
                 case "Attack":
                     attackTime = clip.length / animSpeed;
-                    Debug.Log($"attackTime {attackTime}");
                     break;
             }
         }

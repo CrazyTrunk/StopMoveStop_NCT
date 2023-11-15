@@ -5,7 +5,6 @@ using UnityEngine;
 public class Player : Character
 {
     [SerializeField] private ThrowWeapon throwWeapon;
-    [SerializeField] public RadicalTrigger radicalTrigger;
     [SerializeField] public GameObject Weapon;
     public void LookAtTarget(Enemy enemy)
     {

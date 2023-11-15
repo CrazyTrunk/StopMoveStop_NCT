@@ -6,13 +6,12 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private Player player;
     [SerializeField] private Rigidbody rb;
     [SerializeField] private Joystick joystick;
-    [SerializeField] private float moveSpeed;
 
     // Start is called before the first frame update
     private void Update()
     {
 
-        rb.velocity = new Vector3(joystick.Horizontal * moveSpeed, rb.velocity.y, joystick.Vertical * moveSpeed);
+        rb.velocity = new Vector3(joystick.Horizontal * player.speed, rb.velocity.y, joystick.Vertical * player.speed);
         if (joystick.Horizontal != 0 || joystick.Vertical != 0)
         {
             player.IsMoving = true;

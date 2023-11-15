@@ -4,9 +4,17 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Assets._Game.Scripts.State
+public class FindTargetState : IState
 {
-    internal class FindTargetState
+    public void OnEnter()
+    {
+    }
+
+    public void OnExecute()
+    {
+    }
+
+    public void OnExit()
     {
     }
 }

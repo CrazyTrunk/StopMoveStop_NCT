@@ -10,6 +10,7 @@ public class Character : MonoBehaviour
     protected float range;
     private bool isDead = false;
     public bool IsMoving;
+    public float speed;
     [SerializeField] private Animator animator;
 
     public bool CanAttack { get => canAttack; set => canAttack = value; }

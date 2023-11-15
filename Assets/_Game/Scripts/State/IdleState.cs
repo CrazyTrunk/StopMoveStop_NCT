@@ -1,12 +1,24 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using UnityEditor.Tilemaps;
 
-namespace Assets._Game.Scripts.State
+public class IdleState : IState
 {
-    internal class IdleState
+    private Enemy _enemy;
+    public IdleState(Enemy enemy)
+    {
+        _enemy = enemy;
+    }
+
+    public void OnEnter()
+    {
+        _enemy.ChangeAnim("idle");
+    }
+
+    public void OnExecute()
+    {
+    }
+
+    public void OnExit()
     {
     }
 }
