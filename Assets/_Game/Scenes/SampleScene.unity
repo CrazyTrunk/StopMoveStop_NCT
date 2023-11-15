@@ -5578,7 +5578,7 @@ MonoBehaviour:
   IsMoving: 0
   animator: {fileID: 1514492100}
   throwWeapon: {fileID: 159340421}
-  radicalTrigger: {fileID: 81862260}
+  radicalTrigger: {fileID: 0}
   Weapon: {fileID: 1167782141}
 --- !u!1001 &445529402
 PrefabInstance:

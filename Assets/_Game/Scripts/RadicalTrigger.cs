@@ -1,13 +1,10 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.TextCore.Text;
-using static System.TimeZoneInfo;
 
-public class RaidalTrigger : MonoBehaviour
+
+public class RadicalTrigger : MonoBehaviour
 {
     private Queue<Enemy> enemyQueue = new Queue<Enemy>();
     private Enemy currentTargetEnemy = null;
