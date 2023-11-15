@@ -16,7 +16,7 @@ public class RaidalTrigger : MonoBehaviour
     public Enemy CurrentTargetEnemy { get => currentTargetEnemy; set => currentTargetEnemy = value; }
     public bool IsAttacking;
     private float attackTime;
-
+    private float animSpeed = 1.5f;
     private void Awake()
     {
         character = GetComponentInParent<Character>();
@@ -24,8 +24,8 @@ public class RaidalTrigger : MonoBehaviour
         {
             player = currentPlayer;
         }
+        character.Animator.SetFloat("attackSpeed", animSpeed);
         UpdateAnimClipTimes();
-
     }
 
     public void UpdateAnimClipTimes()
@@ -36,7 +36,7 @@ public class RaidalTrigger : MonoBehaviour
             switch (clip.name)
             {
                 case "Attack":
-                    attackTime = clip.length;
+                    attackTime = clip.length / animSpeed;
                     Debug.Log($"attackTime {attackTime}");
                     break;
             }
@@ -64,22 +64,7 @@ public class RaidalTrigger : MonoBehaviour
             }
         }
     }
-    //private void OnTriggerExit(Collider other)
-    //{
-    //    if (other.CompareTag("Enemy"))
-    //    {
-    //        Enemy enemy = other.GetComponent<Enemy>();
-    //        enemyQueue = new Queue<Enemy>(enemyQueue.Where(e => e != enemy));
-    //        if (currentTargetEnemy.enemyNumber== enemy.enemyNumber)
-    //        {
-    //            DetectedCircle detectedCircle = other.GetComponentInChildren<DetectedCircle>();
-    //            if (detectedCircle != null)
-    //            {
-    //                detectedCircle.Hide();
-    //            }
-    //        }
-    //    }
-    //}
+
     private void OnTriggerExit(Collider other)
     {
         if (other.CompareTag("Enemy"))
@@ -120,7 +105,7 @@ public class RaidalTrigger : MonoBehaviour
     }
     private void OnTriggerStay(Collider other)
     {
-        if (CurrentTargetEnemy != null && !IsAttacking)
+        if (CurrentTargetEnemy != null && !IsAttacking && !CurrentTargetEnemy.IsDead)
         {
             AttackCurrentEnemy();
         }
@@ -129,7 +114,10 @@ public class RaidalTrigger : MonoBehaviour
     {
         OnDestroyEnemy(enemy);
         enemyQueue = new Queue<Enemy>(enemyQueue.Where(e => !e.IsDead));
-        currentTargetEnemy = null;
+        UpdateTarget();
+    }
+    private void UpdateTarget()
+    {
         if (enemyQueue.Count > 0)
         {
             currentTargetEnemy = enemyQueue.Peek();
@@ -138,6 +126,11 @@ public class RaidalTrigger : MonoBehaviour
             {
                 detectedCircle.Show();
             }
+        }
+        else
+        {
+            currentTargetEnemy = null;
+            IsAttacking = false;
         }
     }
     private void OnDestroyEnemy(Enemy enemy)
@@ -174,7 +167,7 @@ public class RaidalTrigger : MonoBehaviour
         {
             character.ChangeAnim("idle");
         }
-        yield return new WaitForSeconds(0.2f);
+        yield return new WaitForSeconds(0.5f);
 
         IsAttacking = false;
     }
