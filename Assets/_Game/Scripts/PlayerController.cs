@@ -9,15 +9,14 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float moveSpeed;
 
     // Start is called before the first frame update
-    private void Update()
+    private void FixedUpdate()
     {
-        float yVelocity = rb.velocity.y;
 
-        rb.velocity = new Vector3(joystick.Horizontal * moveSpeed, yVelocity, joystick.Vertical * moveSpeed);
+        rb.velocity = new Vector3(joystick.Horizontal * moveSpeed, rb.velocity.y, joystick.Vertical * moveSpeed);
         if (joystick.Horizontal != 0 || joystick.Vertical != 0)
         {
             player.IsMoving = true;
-            transform.rotation = Quaternion.LookRotation(new Vector3(rb.velocity.x, 0, rb.velocity.z));
+            transform.rotation = Quaternion.LookRotation(rb.velocity);
             player.ChangeAnim("run");
         }
         else if ((joystick.Horizontal == 0 || joystick.Vertical == 0))
