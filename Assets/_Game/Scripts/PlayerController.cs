@@ -9,7 +9,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float moveSpeed;
 
     // Start is called before the first frame update
-    private void FixedUpdate()
+    private void Update()
     {
 
         rb.velocity = new Vector3(joystick.Horizontal * moveSpeed, rb.velocity.y, joystick.Vertical * moveSpeed);
