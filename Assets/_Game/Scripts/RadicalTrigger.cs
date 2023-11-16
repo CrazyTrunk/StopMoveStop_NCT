@@ -9,7 +9,7 @@ public class RadicalTrigger : MonoBehaviour
     private Queue<ICombatant> combatantQueue = new Queue<ICombatant>();
     private ICombatant currentTarget = null;
     private Character character;
-    public bool IsAttacking;
+    private bool IsAttacking;
     private float attackTime;
     private float animSpeed = 1.5f;
 

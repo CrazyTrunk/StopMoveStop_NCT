@@ -9,8 +9,6 @@ public class Enemy : Character, ICombatant
     [SerializeField] private DetectedCircle detectedCircle;
     private CapsuleCollider capsuleCollider;
     private Rigidbody rb;
-
-    public int enemyNumber;
     private bool isAnimPlay = false;
     public event Action<ICombatant> OnCombatantKilled;
     private void Awake()
@@ -43,7 +41,7 @@ public class Enemy : Character, ICombatant
     }
     public void Move(Vector3 direction)
     {
-        transform.position += speed * Time.deltaTime * direction;
+        transform.position += Speed * Time.deltaTime * direction;
     }
 
     public void Detect()

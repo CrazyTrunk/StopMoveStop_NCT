@@ -5,19 +5,20 @@ using UnityEngine;
 
 public class Character : MonoBehaviour
 {
-    private bool canAttack;
-    protected string CurrentAnim;
-    protected float range;
-    private bool isDead = false;
-    public bool IsMoving;
-    public float speed;
     [SerializeField] private Animator animator;
     [SerializeField] private ThrowWeapon throwWeapon;
     [SerializeField] public GameObject Weapon;
+    [SerializeField] private float speed;
 
-    public bool CanAttack { get => canAttack; set => canAttack = value; }
+    protected string CurrentAnim;
+    protected float range;
+    protected bool isDead = false;
+    private bool isMoving;
+
     public Animator Animator { get => animator; set => animator = value; }
     public bool IsDead { get => isDead; set => isDead = value; }
+    public bool IsMoving { get => isMoving; set => isMoving = value; }
+    public float Speed { get => speed; set => speed = value; }
 
     public void ChangeAnim(string animName)
     {

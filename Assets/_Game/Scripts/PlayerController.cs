@@ -10,8 +10,7 @@ public class PlayerController : MonoBehaviour
     // Start is called before the first frame update
     private void Update()
     {
-
-        rb.velocity = new Vector3(joystick.Horizontal * player.speed, rb.velocity.y, joystick.Vertical * player.speed);
+        rb.velocity = new Vector3(joystick.Horizontal * player.Speed, rb.velocity.y, joystick.Vertical * player.Speed);
         if (joystick.Horizontal != 0 || joystick.Vertical != 0)
         {
             player.IsMoving = true;
