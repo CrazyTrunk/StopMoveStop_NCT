@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class EnemyController : MonoBehaviour
 {
-    [SerializeField] private Enemy enemy;
+    [SerializeField] private Enemy currentBot;
     private IState currentState;
 
-    public Enemy Enemy { get => enemy; set => enemy = value; }
+    public Enemy Enemy { get => currentBot; set => currentBot = value; }
 
     public void Start()
     {

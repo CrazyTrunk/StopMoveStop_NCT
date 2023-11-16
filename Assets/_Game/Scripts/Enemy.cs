@@ -1,18 +1,19 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.TextCore.Text;
 
-public class Enemy : Character
+public class Enemy : Character, ICombatant
 {
+    [SerializeField] private DetectedCircle detectedCircle;
     public int enemyNumber;
     private bool isAnimPlay = false;
-    public delegate void EnemyKilledHandler(Enemy enemy);
-    public event EnemyKilledHandler OnEnemyKilled;
+    public event Action<ICombatant> OnCombatantKilled;
     public void EnemyKilled()
     {
         IsDead = true;
-        OnEnemyKilled?.Invoke(this);
+        OnCombatantKilled?.Invoke(this);
         if (!isAnimPlay)
         {
             StartCoroutine(WaitForAnimation());
@@ -30,5 +31,20 @@ public class Enemy : Character
     public void Move(Vector3 direction)
     {
         transform.position += speed * Time.deltaTime * direction;
+    }
+
+    public void Detect()
+    {
+        detectedCircle.Show();
+    }
+
+    public void Undetect()
+    {
+        detectedCircle.Hide();
+    }
+
+    public Transform GetTransform()
+    {
+        return transform;
     }
 }

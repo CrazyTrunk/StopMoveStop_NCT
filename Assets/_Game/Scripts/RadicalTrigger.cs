@@ -6,13 +6,15 @@ using UnityEngine;
 
 public class RadicalTrigger : MonoBehaviour
 {
-    private Queue<Enemy> enemyQueue = new Queue<Enemy>();
-    private Enemy currentTargetEnemy = null;
+    private Queue<ICombatant> combatantQueue = new Queue<ICombatant>();
+    private ICombatant currentTarget = null;
     private Character character;
-    public Enemy CurrentTargetEnemy { get => currentTargetEnemy; set => currentTargetEnemy = value; }
     public bool IsAttacking;
     private float attackTime;
     private float animSpeed = 1.5f;
+
+    public ICombatant CurrentTarget { get => currentTarget; set => currentTarget = value; }
+
     private void Awake()
     {
         character = GetComponentInParent<Character>();
@@ -35,60 +37,47 @@ public class RadicalTrigger : MonoBehaviour
     }
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Enemy"))
+        ICombatant combatant = other.GetComponent<ICombatant>();
+
+        if (combatant != null && !combatantQueue.Contains(combatant))
         {
-            Enemy enemy = other.GetComponent<Enemy>();
-            if (!enemyQueue.Contains(enemy))
+
+            combatant.OnCombatantKilled += Combatant_OnCombatantKilled;
+            combatantQueue.Enqueue(combatant);
+            if (CurrentTarget == null)
             {
-                enemy.OnEnemyKilled += Enemy_OnEnemyKilled;
-                enemyQueue.Enqueue(enemy);
-                if (CurrentTargetEnemy == null)
-                {
-                    //hien tai neu khong co targetnao => lay thang dau tien luon
-                    CurrentTargetEnemy = enemyQueue.Peek();
-                    DetectedCircle detectedCircle = other.GetComponentInChildren<DetectedCircle>();
-                    if (detectedCircle != null)
-                    {
-                        detectedCircle.Show();
-                    }
-                }
+                //hien tai neu khong co targetnao => lay thang dau tien luon
+                CurrentTarget = combatantQueue.Peek();
+                combatant.Detect();
             }
         }
     }
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.CompareTag("Enemy"))
+        ICombatant combatant = other.GetComponent<ICombatant>();
+
+        if (combatant != null)
         {
-            Enemy enemy = other.GetComponent<Enemy>();
-            // Loại bỏ enemy ra khỏi hàng đợi
-            enemyQueue = new Queue<Enemy>(enemyQueue.Where(e => e != enemy));
-            enemy.OnEnemyKilled -= Enemy_OnEnemyKilled; // Loại bỏ listener
+            combatantQueue = new Queue<ICombatant>(combatantQueue.Where(e => e != combatant));
+            //enemy.OnEnemyKilled -= Enemy_OnEnemyKilled; // Loại bỏ listener
 
             // Ẩn detected circle nếu có
-            DetectedCircle detectedCircle = other.GetComponentInChildren<DetectedCircle>();
-            if (detectedCircle != null)
-            {
-                detectedCircle.Hide();
-            }
+            combatant.Undetect();
 
             // Nếu enemy hiện tại rời khỏi, cần chọn target mới hoặc ngừng tấn công
-            if (currentTargetEnemy == enemy)
+            if (CurrentTarget == combatant)
             {
-                if (enemyQueue.Count > 0)
+                if (combatantQueue.Count > 0)
                 {
                     // Có enemy khác trong hàng đợi, chọn làm mục tiêu mới
-                    CurrentTargetEnemy = enemyQueue.Peek();
-                    DetectedCircle nextDetectedCircle = CurrentTargetEnemy.GetComponentInChildren<DetectedCircle>();
-                    if (nextDetectedCircle != null)
-                    {
-                        nextDetectedCircle.Show();
-                    }
+                    CurrentTarget = combatantQueue.Peek();
+                    CurrentTarget.Detect();
                 }
                 else
                 {
                     // Không còn enemy nào, cần ngừng tấn công
-                    CurrentTargetEnemy = null;
+                    CurrentTarget = null;
                     IsAttacking = false;
                 }
             }
@@ -96,37 +85,33 @@ public class RadicalTrigger : MonoBehaviour
     }
     private void OnTriggerStay(Collider other)
     {
-        if (CurrentTargetEnemy != null && !IsAttacking && !CurrentTargetEnemy.IsDead)
+        if (CurrentTarget != null && !IsAttacking && !CurrentTarget.IsDead)
         {
             AttackCurrentEnemy();
         }
     }
-    private void Enemy_OnEnemyKilled(Enemy enemy)
+    private void Combatant_OnCombatantKilled(ICombatant combatant)
     {
-        OnDestroyEnemy(enemy);
-        enemyQueue = new Queue<Enemy>(enemyQueue.Where(e => !e.IsDead));
+        OnDestroyEnemy(combatant);
+        combatantQueue = new Queue<ICombatant>(combatantQueue.Where(e => !e.IsDead));
         UpdateTarget();
     }
     private void UpdateTarget()
     {
-        if (enemyQueue.Count > 0)
+        if (combatantQueue.Count > 0)
         {
-            currentTargetEnemy = enemyQueue.Peek();
-            DetectedCircle detectedCircle = currentTargetEnemy.GetComponentInChildren<DetectedCircle>();
-            if (detectedCircle != null)
-            {
-                detectedCircle.Show();
-            }
+            CurrentTarget = combatantQueue.Peek();
+            CurrentTarget.Detect();
         }
         else
         {
-            currentTargetEnemy = null;
+            CurrentTarget = null;
             IsAttacking = false;
         }
     }
-    private void OnDestroyEnemy(Enemy enemy)
+    private void OnDestroyEnemy(ICombatant combatant)
     {
-        enemy.OnEnemyKilled -= Enemy_OnEnemyKilled;
+        combatant.OnCombatantKilled -= Combatant_OnCombatantKilled;
     }
 
     private void AttackCurrentEnemy()
@@ -139,7 +124,7 @@ public class RadicalTrigger : MonoBehaviour
     IEnumerator WaitForAnimation()
     {
         IsAttacking = true;
-        character.LookAtTarget(currentTargetEnemy.transform);
+        character.LookAtTarget(currentTarget.GetTransform());
         character.ChangeAnim("attack");
         yield return new WaitForSeconds(attackTime / 2);
         character.HideWeapon();
