@@ -39,7 +39,7 @@ public class RadicalTrigger : MonoBehaviour
     {
         ICombatant combatant = other.GetComponent<ICombatant>();
 
-        if (combatant != null && !combatantQueue.Contains(combatant))
+        if (combatant != null && !combatantQueue.Contains(combatant) && !combatant.IsDead)
         {
 
             combatant.OnCombatantKilled += Combatant_OnCombatantKilled;
@@ -143,7 +143,7 @@ public class RadicalTrigger : MonoBehaviour
         {
             character.ChangeAnim("idle");
         }
-        yield return new WaitForSeconds(0.1f);
+        yield return new WaitForSeconds(0.4f);
 
         IsAttacking = false;
     }

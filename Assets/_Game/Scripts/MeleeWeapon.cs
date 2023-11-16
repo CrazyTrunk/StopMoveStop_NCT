@@ -16,6 +16,7 @@ public class MeleeWeapon : Weapon
         {
             Enemy enemy = other.GetComponent<Enemy>();
             enemy.EnemyKilled();
+            enemy.DeactiveEnemy();
             DestroyWeapon();
         }
     }

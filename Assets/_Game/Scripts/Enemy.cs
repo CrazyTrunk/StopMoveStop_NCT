@@ -7,9 +7,17 @@ using UnityEngine.TextCore.Text;
 public class Enemy : Character, ICombatant
 {
     [SerializeField] private DetectedCircle detectedCircle;
+    private CapsuleCollider capsuleCollider;
+    private Rigidbody rb;
+
     public int enemyNumber;
     private bool isAnimPlay = false;
     public event Action<ICombatant> OnCombatantKilled;
+    private void Awake()
+    {
+        capsuleCollider = GetComponent<CapsuleCollider>();
+        rb = GetComponent<Rigidbody>();
+    }
     public void EnemyKilled()
     {
         IsDead = true;
@@ -18,6 +26,11 @@ public class Enemy : Character, ICombatant
         {
             StartCoroutine(WaitForAnimation());
         }
+    }
+    public void DeactiveEnemy()
+    {
+        capsuleCollider.isTrigger = true;
+        rb.isKinematic = true;
     }
     IEnumerator WaitForAnimation()
     {
