@@ -4,40 +4,83 @@ using UnityEngine;
 
 public class RandomPositionState : IState
 {
-    private Enemy _enemy;
+    private EnemyController _enemy;
     Vector3 direction;
     private float changeDirectionTime = 2f;
     private float timeSinceLastChange;
 
-    public RandomPositionState(Enemy enemy)
+    private float randomChangeTime;
+
+    private bool isMoving;
+    private bool isRandomChangeDirection;
+    private bool isChangeDirection;
+    public RandomPositionState(EnemyController enemy)
     {
         _enemy = enemy;
     }
 
     public void OnEnter()
     {
-        timeSinceLastChange = 0f;
+        OnInit();
+        DecideIfShouldChangeDirection();
         ChangeDirection();
+        _enemy.transform.LookAt(_enemy.transform.position + direction);
+    }
+
+    private void DecideIfShouldChangeDirection()
+    {
+        isRandomChangeDirection = UnityEngine.Random.value > 0.5f;
+        if (isRandomChangeDirection)
+        {
+            randomChangeTime = UnityEngine.Random.Range(0f, changeDirectionTime);
+        }
     }
 
     private void ChangeDirection()
     {
-        direction = UnityEngine.Random.onUnitSphere;
-        direction.y = 0;
+        float angle = UnityEngine.Random.Range(0f, 360f);
+        direction = Quaternion.Euler(0, angle, 0) * Vector3.forward;
     }
 
     public void OnExecute()
     {
-        _enemy.Move(direction);
         timeSinceLastChange += Time.deltaTime;
+        isMoving = true;
+        _enemy.ChangeAnim("run");
+        _enemy.Move(direction);
+
+        _enemy.transform.LookAt(_enemy.transform.position + direction);
+
+        if (timeSinceLastChange >= randomChangeTime && isRandomChangeDirection && !isChangeDirection)
+        {
+            ChangeDirectionRandomlyDuringRun();
+        }
         if (timeSinceLastChange >= changeDirectionTime)
         {
-            ChangeDirection();
             timeSinceLastChange = 0f;
+            isMoving = false;
+            _enemy.transform.LookAt(_enemy.transform.position + direction);
+            if (!isMoving)
+            {
+                _enemy.SetState(new IdleState(_enemy));
+            }
         }
     }
-
+    public void ChangeDirectionRandomlyDuringRun()
+    {
+        isChangeDirection = true;
+        ChangeDirection();
+        _enemy.transform.LookAt(_enemy.transform.position + direction);
+    }
     public void OnExit()
     {
+        OnInit();
+
+    }
+    private void OnInit()
+    {
+        isRandomChangeDirection = false;
+        isChangeDirection = false;
+        timeSinceLastChange = 0f;
     }
 }

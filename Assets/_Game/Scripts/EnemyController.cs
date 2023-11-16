@@ -7,9 +7,11 @@ public class EnemyController : MonoBehaviour
     [SerializeField] private Enemy enemy;
     private IState currentState;
 
+    public Enemy Enemy { get => enemy; set => enemy = value; }
+
     public void Start()
     {
-        SetState(new RandomPositionState(enemy));
+        SetState(new IdleState(this));
     }
     private void Update()
     {
@@ -22,5 +24,12 @@ public class EnemyController : MonoBehaviour
         currentState = newState;
         currentState?.OnEnter();
     }
- 
+    public void Move(Vector3 direction)
+    {
+        Enemy.Move(direction);
+    }
+    public void ChangeAnim(string anim)
+    {
+        Enemy.ChangeAnim(anim);
+    }
 }
