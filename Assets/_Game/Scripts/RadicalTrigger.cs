@@ -60,7 +60,7 @@ public class RadicalTrigger : MonoBehaviour
         if (combatant != null)
         {
             combatantQueue = new Queue<ICombatant>(combatantQueue.Where(e => e != combatant));
-            //enemy.OnEnemyKilled -= Enemy_OnEnemyKilled; // Loại bỏ listener
+            combatant.OnCombatantKilled -= Combatant_OnCombatantKilled;
 
             // Ẩn detected circle nếu có
             combatant.Undetect();

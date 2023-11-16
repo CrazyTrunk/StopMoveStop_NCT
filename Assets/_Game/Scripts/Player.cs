@@ -9,7 +9,6 @@ public class Player : Character, ICombatant
 
     public void Detect()
     {
-        throw new NotImplementedException();
     }
 
     public Transform GetTransform()
@@ -19,6 +18,5 @@ public class Player : Character, ICombatant
 
     public void Undetect()
     {
-        throw new NotImplementedException();
     }
 }
