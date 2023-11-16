@@ -12,6 +12,7 @@ public class RadicalTrigger : MonoBehaviour
     private bool IsAttacking;
     private float attackTime;
     private float animSpeed = 1.5f;
+    private Coroutine attackCoroutine;
 
     public ICombatant CurrentTarget { get => currentTarget; set => currentTarget = value; }
 
@@ -116,9 +117,10 @@ public class RadicalTrigger : MonoBehaviour
 
     private void AttackCurrentEnemy()
     {
-        if (!character.IsMoving)
+
+        if (!character.IsMoving && attackCoroutine == null)
         {
-            StartCoroutine(WaitForAnimation());
+            attackCoroutine = StartCoroutine(WaitForAnimation());
         }
     }
     IEnumerator WaitForAnimation()
@@ -146,5 +148,6 @@ public class RadicalTrigger : MonoBehaviour
         yield return new WaitForSeconds(0.4f);
 
         IsAttacking = false;
+        attackCoroutine = null;
     }
 }
