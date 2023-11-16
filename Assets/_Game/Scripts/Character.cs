@@ -12,6 +12,8 @@ public class Character : MonoBehaviour
     public bool IsMoving;
     public float speed;
     [SerializeField] private Animator animator;
+    [SerializeField] private ThrowWeapon throwWeapon;
+    [SerializeField] public GameObject Weapon;
 
     public bool CanAttack { get => canAttack; set => canAttack = value; }
     public Animator Animator { get => animator; set => animator = value; }
@@ -25,5 +27,21 @@ public class Character : MonoBehaviour
             CurrentAnim = animName;
             Animator.SetTrigger(CurrentAnim);
         }
+    }
+    public void LookAtTarget(Transform target)
+    {
+        transform.LookAt(target.position);
+    }
+    public void ThrowWeapon()
+    {
+        throwWeapon.Throw();
+    }
+    public void HideWeapon()
+    {
+        Weapon.SetActive(false);
+    }
+    public void ShowWeapon()
+    {
+        Weapon.SetActive(true);
     }
 }

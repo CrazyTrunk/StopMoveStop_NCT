@@ -5773,6 +5773,37 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 1372552226}
   m_SourcePrefab: {fileID: 100100000, guid: bd3fad7d186920849a46df4d66b07f4b, type: 3}
+--- !u!1 &569013888
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 569013889}
+  m_Layer: 0
+  m_Name: ThrowPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &569013889
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 569013888}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1882555830}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &673304308
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -12337,6 +12368,7 @@ Transform:
   m_Children:
   - {fileID: 298940320}
   - {fileID: 1852785663}
+  - {fileID: 569013889}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1882555831
@@ -12354,6 +12386,8 @@ MonoBehaviour:
   IsMoving: 0
   speed: 5
   animator: {fileID: 298940319}
+  throwWeapon: {fileID: 0}
+  Weapon: {fileID: 0}
   enemyNumber: 0
 --- !u!114 &1882555832
 MonoBehaviour:
@@ -12592,7 +12626,7 @@ SceneRoots:
   - {fileID: 963194228}
   - {fileID: 705507995}
   - {fileID: 424253567}
-  - {fileID: 1882555830}
   - {fileID: 105624654}
   - {fileID: 726397872}
   - {fileID: 2073510394}
+  - {fileID: 1882555830}

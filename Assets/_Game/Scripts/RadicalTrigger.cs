@@ -9,7 +9,6 @@ public class RadicalTrigger : MonoBehaviour
     private Queue<Enemy> enemyQueue = new Queue<Enemy>();
     private Enemy currentTargetEnemy = null;
     private Character character;
-    private Player player;
     public Enemy CurrentTargetEnemy { get => currentTargetEnemy; set => currentTargetEnemy = value; }
     public bool IsAttacking;
     private float attackTime;
@@ -17,10 +16,6 @@ public class RadicalTrigger : MonoBehaviour
     private void Awake()
     {
         character = GetComponentInParent<Character>();
-        if (character is Player currentPlayer)
-        {
-            player = currentPlayer;
-        }
         character.Animator.SetFloat("attackSpeed", animSpeed);
         UpdateAnimClipTimes();
     }
@@ -136,7 +131,7 @@ public class RadicalTrigger : MonoBehaviour
 
     private void AttackCurrentEnemy()
     {
-        if (!player.IsMoving)
+        if (!character.IsMoving)
         {
             StartCoroutine(WaitForAnimation());
         }
@@ -144,22 +139,22 @@ public class RadicalTrigger : MonoBehaviour
     IEnumerator WaitForAnimation()
     {
         IsAttacking = true;
-        player.LookAtTarget(currentTargetEnemy);
+        character.LookAtTarget(currentTargetEnemy.transform);
         character.ChangeAnim("attack");
         yield return new WaitForSeconds(attackTime / 2);
-        player.HideWeapon();
+        character.HideWeapon();
         if (character.Animator.GetCurrentAnimatorStateInfo(0).IsName("Attack"))
         {
-            player.ThrowWeapon();
+            character.ThrowWeapon();
         }
         else
         {
-            player.ShowWeapon();
+            character.ShowWeapon();
         }
         yield return new WaitForSeconds(attackTime / 2);
-        player.ShowWeapon();
+        character.ShowWeapon();
 
-        if (!player.IsMoving)
+        if (!character.IsMoving)
         {
             character.ChangeAnim("idle");
         }
