@@ -9,7 +9,6 @@ public class RadicalTrigger : MonoBehaviour
     private Queue<ICombatant> combatantQueue = new Queue<ICombatant>();
     private ICombatant currentTarget = null;
     private Character character;
-    private bool IsAttacking;
     private float attackTime;
     private float animSpeed = 1.5f;
     private Coroutine attackCoroutine;
@@ -79,7 +78,7 @@ public class RadicalTrigger : MonoBehaviour
                 {
                     // Không còn enemy nào, cần ngừng tấn công
                     CurrentTarget = null;
-                    IsAttacking = false;
+                    character.IsAttacking = false;
                     character.HasEnemyInSight = false;
                 }
             }
@@ -87,7 +86,7 @@ public class RadicalTrigger : MonoBehaviour
     }
     private void OnTriggerStay(Collider other)
     {
-        if (CurrentTarget != null && !IsAttacking && !CurrentTarget.IsDead)
+        if (CurrentTarget != null && !character.IsAttacking && !CurrentTarget.IsDead)
         {
             AttackCurrentEnemy();
         }
@@ -103,7 +102,7 @@ public class RadicalTrigger : MonoBehaviour
         else
         {
             CurrentTarget = null;
-            IsAttacking = false;
+            character.IsAttacking = false;
             character.HasEnemyInSight = false;
         }
     }
@@ -117,7 +116,7 @@ public class RadicalTrigger : MonoBehaviour
     }
     IEnumerator WaitForAnimation()
     {
-        IsAttacking = true;
+        character.IsAttacking = true;
         character.LookAtTarget(currentTarget.GetTransform());
         character.ChangeAnim(Anim.ATTACK);
         yield return new WaitForSeconds(attackTime / 2);
@@ -139,7 +138,7 @@ public class RadicalTrigger : MonoBehaviour
         }
         yield return new WaitForSeconds(0.4f);
 
-        IsAttacking = false;
+        character.IsAttacking = false;
         attackCoroutine = null;
     }
     #region Event

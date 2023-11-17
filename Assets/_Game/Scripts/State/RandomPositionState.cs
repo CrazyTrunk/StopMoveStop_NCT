@@ -44,10 +44,18 @@ public class RandomPositionState : IState
 
     public void OnExecute()
     {
+        if (_enemy.Enemy.HasEnemyInSight)
+        {
+            isMoving = false;
+            _enemy.SetState(new IdleState(_enemy));
+            return;
+        }
+
         timeSinceLastChange += Time.deltaTime;
         isMoving = true;
         _enemy.ChangeAnim(Anim.RUN);
         _enemy.Move(direction);
+
 
         _enemy.transform.LookAt(_enemy.transform.position + direction);
 
@@ -65,6 +73,7 @@ public class RandomPositionState : IState
                 _enemy.SetState(new IdleState(_enemy));
             }
         }
+
     }
     public void ChangeDirectionRandomlyDuringRun()
     {
