@@ -12,12 +12,12 @@ public class MeleeWeapon : Weapon
 
     private void OnTriggerEnter(Collider other)
     {
-        //if (other.CompareTag("Enemy") && isThrown)
-        //{
-        //    Enemy enemy = other.GetComponent<Enemy>();
-        //    enemy.EnemyKilled();
-        //    enemy.DeactiveEnemy();
-        //    DestroyWeapon();
-        //}
+        if (other.CompareTag("Enemy") && isThrown)
+        {
+            Enemy enemy = other.GetComponent<Enemy>();
+            enemy.EnemyKilled();
+            enemy.DeactiveEnemy();
+            DestroyWeapon();
+        }
     }
 }

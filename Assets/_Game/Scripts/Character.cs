@@ -14,11 +14,13 @@ public class Character : MonoBehaviour
     protected float range;
     protected bool isDead = false;
     private bool isMoving;
+    private bool hasEnemyInSight;
 
     public Animator Animator { get => animator; set => animator = value; }
     public bool IsDead { get => isDead; set => isDead = value; }
     public bool IsMoving { get => isMoving; set => isMoving = value; }
     public float Speed { get => speed; set => speed = value; }
+    public bool HasEnemyInSight { get => hasEnemyInSight; set => hasEnemyInSight = value; }
 
     public void ChangeAnim(string animName)
     {

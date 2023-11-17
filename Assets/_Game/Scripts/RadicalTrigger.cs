@@ -42,7 +42,7 @@ public class RadicalTrigger : MonoBehaviour
 
         if (combatant != null && !combatantQueue.Contains(combatant) && !combatant.IsDead)
         {
-
+            character.HasEnemyInSight = true;
             combatant.OnCombatantKilled += Combatant_OnCombatantKilled;
             combatantQueue.Enqueue(combatant);
             if (CurrentTarget == null)
@@ -80,6 +80,7 @@ public class RadicalTrigger : MonoBehaviour
                     // Không còn enemy nào, cần ngừng tấn công
                     CurrentTarget = null;
                     IsAttacking = false;
+                    character.HasEnemyInSight = false;
                 }
             }
         }
@@ -91,12 +92,7 @@ public class RadicalTrigger : MonoBehaviour
             AttackCurrentEnemy();
         }
     }
-    private void Combatant_OnCombatantKilled(ICombatant combatant)
-    {
-        OnDestroyEnemy(combatant);
-        combatantQueue = new Queue<ICombatant>(combatantQueue.Where(e => !e.IsDead));
-        UpdateTarget();
-    }
+
     private void UpdateTarget()
     {
         if (combatantQueue.Count > 0)
@@ -108,17 +104,13 @@ public class RadicalTrigger : MonoBehaviour
         {
             CurrentTarget = null;
             IsAttacking = false;
+            character.HasEnemyInSight = false;
         }
     }
-    private void OnDestroyEnemy(ICombatant combatant)
-    {
-        combatant.OnCombatantKilled -= Combatant_OnCombatantKilled;
-    }
-
     private void AttackCurrentEnemy()
     {
 
-        if (!character.IsMoving && attackCoroutine == null)
+        if (!character.IsMoving && attackCoroutine == null && !character.IsDead)
         {
             attackCoroutine = StartCoroutine(WaitForAnimation());
         }
@@ -150,4 +142,16 @@ public class RadicalTrigger : MonoBehaviour
         IsAttacking = false;
         attackCoroutine = null;
     }
+    #region Event
+    private void Combatant_OnCombatantKilled(ICombatant combatant)
+    {
+        OnDestroyEnemy(combatant);
+        combatantQueue = new Queue<ICombatant>(combatantQueue.Where(e => !e.IsDead));
+        UpdateTarget();
+    }
+    private void OnDestroyEnemy(ICombatant combatant)
+    {
+        combatant.OnCombatantKilled -= Combatant_OnCombatantKilled;
+    }
+    #endregion
 }
