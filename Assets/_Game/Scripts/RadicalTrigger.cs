@@ -119,7 +119,7 @@ public class RadicalTrigger : MonoBehaviour
     {
         IsAttacking = true;
         character.LookAtTarget(currentTarget.GetTransform());
-        character.ChangeAnim("attack");
+        character.ChangeAnim(Anim.ATTACK);
         yield return new WaitForSeconds(attackTime / 2);
         character.HideWeapon();
         if (character.Animator.GetCurrentAnimatorStateInfo(0).IsName("Attack"))
@@ -135,7 +135,7 @@ public class RadicalTrigger : MonoBehaviour
 
         if (!character.IsMoving)
         {
-            character.ChangeAnim("idle");
+            character.ChangeAnim(Anim.IDLE);
         }
         yield return new WaitForSeconds(0.4f);
 

@@ -16,7 +16,7 @@ public class IdleState : IState
     public void OnEnter()
     {
         timeSinceLastChange = 0f;
-        _enemy.ChangeAnim("idle");
+        _enemy.ChangeAnim(Anim.IDLE);
     }
     public void OnExecute()
     {

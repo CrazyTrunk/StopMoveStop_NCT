@@ -12,7 +12,7 @@ public class MeleeWeapon : Weapon
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Enemy") && isThrown)
+        if (other.CompareTag(Tag.Enemy) && isThrown)
         {
             Enemy enemy = other.GetComponent<Enemy>();
             enemy.EnemyKilled();

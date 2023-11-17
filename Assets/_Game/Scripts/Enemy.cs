@@ -33,7 +33,7 @@ public class Enemy : Character, ICombatant
     IEnumerator WaitForAnimation()
     {
         isAnimPlay = true;
-        ChangeAnim("die");
+        ChangeAnim(Anim.DIE);
         float animationLength = Animator.GetCurrentAnimatorStateInfo(0).length;
         yield return new WaitForSecondsRealtime(animationLength / 2);
         gameObject.SetActive(false);

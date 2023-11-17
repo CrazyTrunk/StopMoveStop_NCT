@@ -15,12 +15,12 @@ public class PlayerController : MonoBehaviour
         {
             player.IsMoving = true;
             transform.rotation = Quaternion.LookRotation(rb.velocity);
-            player.ChangeAnim("run");
+            player.ChangeAnim(Anim.RUN);
         }
         else if ((joystick.Horizontal == 0 || joystick.Vertical == 0))
         {
             player.IsMoving = false;
-            player.ChangeAnim("idle");
+            player.ChangeAnim(Anim.IDLE);
 
         }
     }

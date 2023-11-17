@@ -46,7 +46,7 @@ public class RandomPositionState : IState
     {
         timeSinceLastChange += Time.deltaTime;
         isMoving = true;
-        _enemy.ChangeAnim("run");
+        _enemy.ChangeAnim(Anim.RUN);
         _enemy.Move(direction);
 
         _enemy.transform.LookAt(_enemy.transform.position + direction);
