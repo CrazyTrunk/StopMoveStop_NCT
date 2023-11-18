@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections;
 using UnityEngine;
 
@@ -41,7 +41,12 @@ public class Enemy : Character, ICombatant
     {
         transform.position += Speed * Time.deltaTime * direction;
     }
-
+    public void StopMovement()
+    {
+        rb.velocity = Vector3.zero;
+        rb.angularVelocity = Vector3.zero;
+        rb.isKinematic = true;
+    }
     public void Detect()
     {
         detectedCircle.Show();

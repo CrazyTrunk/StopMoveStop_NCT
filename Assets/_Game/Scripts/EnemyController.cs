@@ -11,7 +11,7 @@ public class EnemyController : MonoBehaviour
 
     public void Start()
     {
-        SetState(new IdleState(this));
+       SetState(new IdleState(this));
     }
     private void Update()
     {
@@ -27,6 +27,10 @@ public class EnemyController : MonoBehaviour
     public void Move(Vector3 direction)
     {
         Enemy.Move(direction);
+    }
+    public void StopMovement()
+    {
+        Enemy.StopMovement();
     }
     public void ChangeAnim(string anim)
     {

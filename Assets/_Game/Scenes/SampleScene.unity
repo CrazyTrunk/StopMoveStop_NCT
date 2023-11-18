@@ -244,7 +244,7 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 5
+  m_Radius: 6
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &81862260
 MonoBehaviour:
@@ -384,7 +384,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d7df10942c42bf446880a8d94d7cfb33, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  throwForce: 200
+  throwForce: 500
   weaponToThrow: {fileID: 5159135373981515232, guid: 17d6755b79e3a214eb1f528273043f3c, type: 3}
   attackPoint: {fileID: 159340417}
 --- !u!1 &221497907
@@ -439,7 +439,7 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 5
+  m_Radius: 6
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &221497910
 MonoBehaviour:
@@ -5956,7 +5956,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d7df10942c42bf446880a8d94d7cfb33, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  throwForce: 200
+  throwForce: 500
   weaponToThrow: {fileID: 5159135373981515232, guid: 17d6755b79e3a214eb1f528273043f3c, type: 3}
   attackPoint: {fileID: 569013889}
 --- !u!1001 &673304308
@@ -12583,7 +12583,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1882555825}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: afcb46e8f86883f439cd78684ba139dc, type: 3}
   m_Name: 

@@ -86,7 +86,7 @@ public class RadicalTrigger : MonoBehaviour
     }
     private void OnTriggerStay(Collider other)
     {
-        if (CurrentTarget != null && !character.IsAttacking && !CurrentTarget.IsDead)
+        if (CurrentTarget != null && !character.IsMoving && attackCoroutine == null && !character.IsDead)
         {
             AttackCurrentEnemy();
         }
@@ -108,16 +108,13 @@ public class RadicalTrigger : MonoBehaviour
     }
     private void AttackCurrentEnemy()
     {
-
-        if (!character.IsMoving && attackCoroutine == null && !character.IsDead)
-        {
-            attackCoroutine = StartCoroutine(WaitForAnimation());
-        }
+      attackCoroutine = StartCoroutine(WaitForAnimation());
     }
     IEnumerator WaitForAnimation()
     {
         character.IsAttacking = true;
         character.LookAtTarget(currentTarget.GetTransform());
+
         character.ChangeAnim(Anim.ATTACK);
         yield return new WaitForSeconds(attackTime / 2);
         character.HideWeapon();
