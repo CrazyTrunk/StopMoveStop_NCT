@@ -7,7 +7,7 @@ public class EnemyController : MonoBehaviour
     [SerializeField] private Enemy currentBot;
     private IState currentState;
 
-    public Enemy Enemy { get => currentBot; set => currentBot = value; }
+    public Enemy CurrentBot { get => currentBot; set => currentBot = value; }
 
     public void Start()
     {
@@ -30,10 +30,10 @@ public class EnemyController : MonoBehaviour
     }
     public void Move(Vector3 direction)
     {
-        Enemy.Move(direction);
+        CurrentBot.Move(direction);
     }
     public void ChangeAnim(string anim)
     {
-        Enemy.ChangeAnim(anim);
+        CurrentBot.ChangeAnim(anim);
     }
 }

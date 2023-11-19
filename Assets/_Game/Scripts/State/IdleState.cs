@@ -22,12 +22,12 @@ public class IdleState : IState
     }
     public void OnExecute()
     {
-        if (_enemy.Enemy.HasEnemyInSight)
+        if (_enemy.CurrentBot.HasEnemyInSight)
         {
             timeSinceLastChangeWithEnemy += Time.deltaTime;
             if (timeSinceLastChangeWithEnemy >= idleTime)
             {
-                _enemy.Enemy.IsMoving = true;
+                _enemy.CurrentBot.IsMoving = true;
                 _enemy.SetState(new RandomPositionState(_enemy));
 
             }

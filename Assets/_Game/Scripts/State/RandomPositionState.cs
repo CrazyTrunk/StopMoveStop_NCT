@@ -44,7 +44,7 @@ public class RandomPositionState : IState
     public void OnExecute()
     {
         timeSinceLastChange += Time.deltaTime;
-        _enemy.Enemy.IsMoving = true;
+        _enemy.CurrentBot.IsMoving = true;
         _enemy.ChangeAnim(Anim.RUN);
         _enemy.Move(direction);
 
@@ -58,9 +58,9 @@ public class RandomPositionState : IState
         if (timeSinceLastChange >= changeDirectionTime)
         {
             timeSinceLastChange = 0f;
-            _enemy.Enemy.IsMoving = false;
+            _enemy.CurrentBot.IsMoving = false;
             _enemy.transform.LookAt(_enemy.transform.position + direction);
-            if (!_enemy.Enemy.IsMoving)
+            if (!_enemy.CurrentBot.IsMoving)
             {
                 _enemy.SetState(new IdleState(_enemy));
             }
@@ -79,7 +79,7 @@ public class RandomPositionState : IState
     }
     private void OnInit()
     {
-        _enemy.Enemy.IsMoving = false;
+        _enemy.CurrentBot.IsMoving = false;
         isRandomChangeDirection = false;
         isChangeDirection = false;
         timeSinceLastChange = 0f;
