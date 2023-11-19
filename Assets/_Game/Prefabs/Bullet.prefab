@@ -10,7 +10,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 100000, guid: 90389cac50942cb4ca38583e6531094a, type: 3}
       propertyPath: m_Name
-      value: Hammer
+      value: Bullet
       objectReference: {fileID: 0}
     - target: {fileID: 100000, guid: 90389cac50942cb4ca38583e6531094a, type: 3}
       propertyPath: m_TagString
@@ -80,9 +80,6 @@ PrefabInstance:
       addedObject: {fileID: 4762686462605955265}
     - targetCorrespondingSourceObject: {fileID: 100000, guid: 90389cac50942cb4ca38583e6531094a, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 4534459034854749169}
-    - targetCorrespondingSourceObject: {fileID: 100000, guid: 90389cac50942cb4ca38583e6531094a, type: 3}
-      insertIndex: -1
       addedObject: {fileID: 2723794833434620639}
   m_SourcePrefab: {fileID: 100100000, guid: 90389cac50942cb4ca38583e6531094a, type: 3}
 --- !u!1 &5159135373981515232 stripped
@@ -138,20 +135,6 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.012711929, y: 0.025178244, z: 0.0060594566}
   m_Center: {x: 0.00005817413, y: -0.00064957864, z: 1.935894e-11}
---- !u!114 &4534459034854749169
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5159135373981515232}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7ae74c4b732031c448bfdc26ed184742, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  isMelee: 1
-  isThrown: 0
 --- !u!114 &2723794833434620639
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -164,3 +147,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9d095d2fba4cf144ebd7fd624e940bd5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  targetPoint: {x: 0, y: 0, z: 0}
+  hasReached: 0

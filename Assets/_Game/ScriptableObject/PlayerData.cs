@@ -2,7 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RangeWeapon : Weapon
+[System.Serializable]
+public class PlayerData : ScriptableObject
 {
 
 }

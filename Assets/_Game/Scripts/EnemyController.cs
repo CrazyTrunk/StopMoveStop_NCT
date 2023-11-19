@@ -11,7 +11,7 @@ public class EnemyController : MonoBehaviour
 
     public void Start()
     {
-       SetState(new IdleState(this));
+        SetState(new IdleState(this));
     }
     private void Update()
     {

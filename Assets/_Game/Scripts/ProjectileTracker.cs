@@ -26,4 +26,19 @@ public class ProjectileTracker : MonoBehaviour
     {
         targetPoint = target;
     }
+    public void DestroyWeapon()
+    {
+        Destroy(gameObject);
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag(Tag.Enemy))
+        {
+            Enemy enemy = other.GetComponent<Enemy>();
+            enemy.EnemyKilled();
+            enemy.DeactiveEnemy();
+            DestroyWeapon();
+        }
+    }
 }

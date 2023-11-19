@@ -22,13 +22,8 @@ public class ThrowWeapon : MonoBehaviour
 
         projectRb.AddForce((targetPoint - attackPoint.position).normalized * throwForce);
         projectRb.AddTorque(transform.up * throwForce, ForceMode.Impulse);
-        Weapon weapon = projectile.GetComponent<Weapon>();
         ProjectileTracker tracker = projectile.GetComponent<ProjectileTracker>();
 
-        if (weapon != null)
-        {
-            weapon.isThrown = true; 
-        }
         if(tracker != null)
         {
             tracker.SetTargetPoint(targetPoint);
