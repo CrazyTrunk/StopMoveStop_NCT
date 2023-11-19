@@ -18,7 +18,7 @@ public class ProjectileTracker : MonoBehaviour
             if (Vector3.Distance(transform.position, targetPoint) < 0.1f)
             {
                 hasReached = true;
-                Destroy(gameObject);
+                DestroyWeapon();
             }
         }
     }

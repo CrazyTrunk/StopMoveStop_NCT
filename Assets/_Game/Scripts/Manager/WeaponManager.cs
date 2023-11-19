@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class WeaponManager : MonoBehaviour
+public class WeaponManager : Singleton<WeaponManager>
 {
     public WeaponData weaponData;
     private Dictionary<string, bool> ownedWeapons = new Dictionary<string, bool>();
@@ -17,13 +17,13 @@ public class WeaponManager : MonoBehaviour
             ownedWeapons[weapon.name] = PlayerPrefs.GetInt(weapon.name, 0) == 1;
         }
     }
-    public Weapon LoadCurrentWeapon()
+    public GameObject LoadCurrentWeapon()
     {
         foreach (Weapon weapon in weaponData.allWeapons)
         {
             if (weapon.isEquiqed && weapon.isOwned)
             {
-                return weapon;
+                return weapon.prefab;
             }
         }
         return null;

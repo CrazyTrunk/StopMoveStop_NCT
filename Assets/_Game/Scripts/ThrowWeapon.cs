@@ -11,12 +11,27 @@ public class ThrowWeapon : MonoBehaviour
 
     public GameObject weaponToThrow;
     public Transform attackPoint;
+    private WeaponManager weaponManager;
+
+    private void Awake()
+    {
+        weaponManager = WeaponManager.Instance;
+    }
 
     public void Throw()
     {
-        GameObject projectile = Instantiate(weaponToThrow, attackPoint.position, Quaternion.identity);
+        GameObject weaponPrefab = weaponManager.LoadCurrentWeapon();
+
+        GameObject projectile = Instantiate(weaponPrefab, attackPoint.position, Quaternion.identity);
         projectile.transform.rotation = Quaternion.Euler(90f, 90f, 0);
+        projectile.AddComponent<Rigidbody>();
+        projectile.AddComponent<ProjectileTracker>();
+        projectile.AddComponent<BoxCollider>().isTrigger = true;
+
         Rigidbody projectRb = projectile.GetComponent<Rigidbody>();
+        projectRb.useGravity = false;
+        projectRb.constraints = RigidbodyConstraints.FreezePositionY;
+
         //5f is range
         Vector3 targetPoint = attackPoint.position + attackPoint.forward * 5f;
 
