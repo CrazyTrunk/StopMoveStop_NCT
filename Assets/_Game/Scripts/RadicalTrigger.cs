@@ -129,7 +129,7 @@ public class RadicalTrigger : MonoBehaviour
         yield return new WaitForSeconds(attackTime / 2);
         character.ShowWeapon();
 
-        if (!character.IsMoving)
+        if (!character.IsMoving && !character.IsDead)
         {
             character.ChangeAnim(Anim.IDLE);
         }
