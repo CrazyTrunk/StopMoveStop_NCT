@@ -18,6 +18,7 @@ public class Enemy : Character, ICombatant
     {
         IsDead = true;
         OnCombatantKilled?.Invoke(this);
+        ChangeAnim(Anim.DIE);
         if (!isAnimPlay)
         {
             StartCoroutine(WaitForAnimation());
@@ -31,7 +32,6 @@ public class Enemy : Character, ICombatant
     IEnumerator WaitForAnimation()
     {
         isAnimPlay = true;
-        ChangeAnim(Anim.DIE);
         float animationLength = Animator.GetCurrentAnimatorStateInfo(0).length;
         yield return new WaitForSecondsRealtime(animationLength / 2);
         gameObject.SetActive(false);
@@ -49,7 +49,7 @@ public class Enemy : Character, ICombatant
     }
     public void Detect()
     {
-        detectedCircle.Show();
+        detectedCircle?.Show();
     }
 
     public void Undetect()

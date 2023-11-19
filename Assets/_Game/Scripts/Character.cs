@@ -7,7 +7,7 @@ public class Character : MonoBehaviour
 {
     [SerializeField] private Animator animator;
     [SerializeField] private ThrowWeapon throwWeapon;
-    [SerializeField] public GameObject Weapon;
+    [SerializeField] public HandWeapon Weapon;
     [SerializeField] private float speed;
 
     protected string CurrentAnim;
@@ -42,10 +42,10 @@ public class Character : MonoBehaviour
     }
     public void HideWeapon()
     {
-        Weapon.SetActive(false);
+        Weapon.HideWeapon();
     }
     public void ShowWeapon()
     {
-        Weapon.SetActive(true);
+        Weapon.ShowWeapon();
     }
 }
