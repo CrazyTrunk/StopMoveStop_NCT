@@ -9,7 +9,6 @@ public class ThrowWeapon : MonoBehaviour
     [Header("Throwing")]
     [SerializeField] private float throwForce;
 
-    public GameObject weaponToThrow;
     public Transform attackPoint;
     private WeaponManager weaponManager;
 
@@ -18,7 +17,7 @@ public class ThrowWeapon : MonoBehaviour
         weaponManager = WeaponManager.Instance;
     }
 
-    public void Throw()
+    public void Throw(float range)
     {
         GameObject weaponPrefab = weaponManager.LoadCurrentWeapon();
 
@@ -33,8 +32,7 @@ public class ThrowWeapon : MonoBehaviour
         projectRb.constraints = RigidbodyConstraints.FreezePositionY;
 
         //5f is range
-        Vector3 targetPoint = attackPoint.position + attackPoint.forward * 5f;
-
+        Vector3 targetPoint = attackPoint.position + attackPoint.forward * range;
         projectRb.AddForce((targetPoint - attackPoint.position).normalized * throwForce);
         projectRb.AddTorque(transform.up * throwForce, ForceMode.Impulse);
         ProjectileTracker tracker = projectile.GetComponent<ProjectileTracker>();

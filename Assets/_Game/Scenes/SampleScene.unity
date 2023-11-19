@@ -470,8 +470,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d7df10942c42bf446880a8d94d7cfb33, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  throwForce: 500
-  weaponToThrow: {fileID: 5159135373981515232, guid: 17d6755b79e3a214eb1f528273043f3c, type: 3}
+  throwForce: 400
   attackPoint: {fileID: 159340417}
 --- !u!1 &221497907
 GameObject:
@@ -5985,6 +5984,7 @@ MonoBehaviour:
   throwWeapon: {fileID: 159340421}
   Weapon: {fileID: 2063900402}
   speed: 5
+  range: 5
 --- !u!1 &429417302
 GameObject:
   m_ObjectHideFlags: 0
@@ -6347,8 +6347,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d7df10942c42bf446880a8d94d7cfb33, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  throwForce: 500
-  weaponToThrow: {fileID: 5159135373981515232, guid: 17d6755b79e3a214eb1f528273043f3c, type: 3}
+  throwForce: 400
   attackPoint: {fileID: 569013889}
 --- !u!1 &600819939
 GameObject:
@@ -14093,6 +14092,7 @@ MonoBehaviour:
   throwWeapon: {fileID: 569013890}
   Weapon: {fileID: 679520128}
   speed: 5
+  range: 5
   detectedCircle: {fileID: 1852785665}
 --- !u!114 &1882555832
 MonoBehaviour:

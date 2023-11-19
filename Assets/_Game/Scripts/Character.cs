@@ -9,9 +9,9 @@ public class Character : MonoBehaviour
     [SerializeField] private ThrowWeapon throwWeapon;
     [SerializeField] public HandWeapon Weapon;
     [SerializeField] private float speed;
+    [SerializeField] private float range;
 
     protected string CurrentAnim;
-    protected float range;
     protected bool isDead = false;
     private bool isMoving;
     private bool hasEnemyInSight;
@@ -38,7 +38,8 @@ public class Character : MonoBehaviour
     }
     public void ThrowWeapon()
     {
-        throwWeapon.Throw();
+        Debug.Log(range);
+        throwWeapon.Throw(range);
     }
     public void HideWeapon()
     {

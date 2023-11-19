@@ -28,10 +28,6 @@ public class EnemyController : MonoBehaviour
     {
         Enemy.Move(direction);
     }
-    public void StopMovement()
-    {
-        Enemy.StopMovement();
-    }
     public void ChangeAnim(string anim)
     {
         Enemy.ChangeAnim(anim);

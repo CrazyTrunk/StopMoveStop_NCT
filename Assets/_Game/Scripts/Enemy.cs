@@ -33,19 +33,13 @@ public class Enemy : Character, ICombatant
     {
         isAnimPlay = true;
         float animationLength = Animator.GetCurrentAnimatorStateInfo(0).length;
-        yield return new WaitForSecondsRealtime(animationLength / 2);
-        gameObject.SetActive(false);
+        yield return new WaitForSecondsRealtime(animationLength);
         isAnimPlay = false;
+        gameObject.SetActive(false);
     }
     public void Move(Vector3 direction)
     {
         transform.position += Speed * Time.deltaTime * direction;
-    }
-    public void StopMovement()
-    {
-        rb.velocity = Vector3.zero;
-        rb.angularVelocity = Vector3.zero;
-        rb.isKinematic = true;
     }
     public void Detect()
     {
