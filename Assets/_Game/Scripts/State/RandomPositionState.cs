@@ -43,29 +43,26 @@ public class RandomPositionState : IState
 
     public void OnExecute()
     {
-        if (!_enemy.Enemy.IsDead)
+        timeSinceLastChange += Time.deltaTime;
+        _enemy.Enemy.IsMoving = true;
+        _enemy.ChangeAnim(Anim.RUN);
+        _enemy.Move(direction);
+
+
+        _enemy.transform.LookAt(_enemy.transform.position + direction);
+
+        if (timeSinceLastChange >= randomChangeTime && isRandomChangeDirection && !isChangeDirection)
         {
-            timeSinceLastChange += Time.deltaTime;
-            _enemy.Enemy.IsMoving = true;
-            _enemy.ChangeAnim(Anim.RUN);
-            _enemy.Move(direction);
-
-
+            ChangeDirectionRandomlyDuringRun();
+        }
+        if (timeSinceLastChange >= changeDirectionTime)
+        {
+            timeSinceLastChange = 0f;
+            _enemy.Enemy.IsMoving = false;
             _enemy.transform.LookAt(_enemy.transform.position + direction);
-
-            if (timeSinceLastChange >= randomChangeTime && isRandomChangeDirection && !isChangeDirection)
+            if (!_enemy.Enemy.IsMoving)
             {
-                ChangeDirectionRandomlyDuringRun();
-            }
-            if (timeSinceLastChange >= changeDirectionTime)
-            {
-                timeSinceLastChange = 0f;
-                _enemy.Enemy.IsMoving = false;
-                _enemy.transform.LookAt(_enemy.transform.position + direction);
-                if (!_enemy.Enemy.IsMoving)
-                {
-                    _enemy.SetState(new IdleState(_enemy));
-                }
+                _enemy.SetState(new IdleState(_enemy));
             }
         }
 

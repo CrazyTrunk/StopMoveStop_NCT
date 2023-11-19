@@ -15,6 +15,10 @@ public class EnemyController : MonoBehaviour
     }
     private void Update()
     {
+        if (currentBot.IsDead)
+        {
+            return;
+        }
         currentState?.OnExecute();
     }
     public void SetState(IState newState)

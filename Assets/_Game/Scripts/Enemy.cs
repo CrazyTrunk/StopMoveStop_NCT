@@ -7,8 +7,8 @@ public class Enemy : Character, ICombatant
     [SerializeField] private DetectedCircle detectedCircle;
     private CapsuleCollider capsuleCollider;
     private Rigidbody rb;
-    private bool isAnimPlay = false;
     public event Action<ICombatant> OnCombatantKilled;
+
     private void Awake()
     {
         capsuleCollider = GetComponent<CapsuleCollider>();
@@ -18,24 +18,22 @@ public class Enemy : Character, ICombatant
     {
         IsDead = true;
         OnCombatantKilled?.Invoke(this);
-        ChangeAnim(Anim.DIE);
-        if (!isAnimPlay)
-        {
-            StartCoroutine(WaitForAnimation());
-        }
+        StartCoroutine(WaitForAnimation(Anim.DIE));
     }
     public void DeactiveEnemy()
     {
         capsuleCollider.isTrigger = true;
         rb.isKinematic = true;
     }
-    IEnumerator WaitForAnimation()
+
+    private IEnumerator WaitForAnimation(string animName)
     {
-        isAnimPlay = true;
-        float animationLength = Animator.GetCurrentAnimatorStateInfo(0).length;
-        yield return new WaitForSecondsRealtime(animationLength);
-        isAnimPlay = false;
+        ChangeAnim(animName);
+        yield return null;
+
+        yield return new WaitUntil(() => Animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1f);
         gameObject.SetActive(false);
+
     }
     public void Move(Vector3 direction)
     {

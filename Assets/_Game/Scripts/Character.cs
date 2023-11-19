@@ -38,7 +38,6 @@ public class Character : MonoBehaviour
     }
     public void ThrowWeapon()
     {
-        Debug.Log(range);
         throwWeapon.Throw(range);
     }
     public void HideWeapon()

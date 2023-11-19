@@ -141,6 +141,7 @@ public class RadicalTrigger : MonoBehaviour
     #region Event
     private void Combatant_OnCombatantKilled(ICombatant combatant)
     {
+        if (combatant == null || combatant.IsDead) return;
         OnDestroyEnemy(combatant);
         combatantQueue = new Queue<ICombatant>(combatantQueue.Where(e => !e.IsDead));
         UpdateTarget();

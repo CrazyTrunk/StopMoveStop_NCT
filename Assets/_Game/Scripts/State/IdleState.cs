@@ -22,30 +22,25 @@ public class IdleState : IState
     }
     public void OnExecute()
     {
-        if (!_enemy.Enemy.IsDead)
+        if (_enemy.Enemy.HasEnemyInSight)
         {
-            if (_enemy.Enemy.HasEnemyInSight)
+            timeSinceLastChangeWithEnemy += Time.deltaTime;
+            if (timeSinceLastChangeWithEnemy >= idleTime)
             {
-                timeSinceLastChangeWithEnemy += Time.deltaTime;
-                if (timeSinceLastChangeWithEnemy >= idleTime)
-                {
-                    _enemy.Enemy.IsMoving = true;
-                    _enemy.SetState(new RandomPositionState(_enemy));
+                _enemy.Enemy.IsMoving = true;
+                _enemy.SetState(new RandomPositionState(_enemy));
 
-                }
-            }
-            else
-            {
-                timeSinceLastChange += Time.deltaTime;
-
-                if (timeSinceLastChange >= idleTime)
-                {
-                    _enemy.SetState(new RandomPositionState(_enemy));
-                }
             }
         }
-       
+        else
+        {
+            timeSinceLastChange += Time.deltaTime;
 
+            if (timeSinceLastChange >= idleTime)
+            {
+                _enemy.SetState(new RandomPositionState(_enemy));
+            }
+        }
     }
 
     public void OnExit()
