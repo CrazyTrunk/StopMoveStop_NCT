@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 [CreateAssetMenu(fileName = "WeaponData", menuName = "Game Data/Weapons")]
 public class WeaponData : ScriptableObject
