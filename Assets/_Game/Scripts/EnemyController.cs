@@ -5,6 +5,7 @@ using UnityEngine;
 public class EnemyController : MonoBehaviour
 {
     [SerializeField] private Enemy currentBot;
+    [SerializeField] private Transform infoCanvasTransform;
     private IState currentState;
 
     public Enemy CurrentBot { get => currentBot; set => currentBot = value; }
@@ -20,6 +21,11 @@ public class EnemyController : MonoBehaviour
             return;
         }
         currentState?.OnExecute();
+    }
+    private void LateUpdate()
+    {
+        infoCanvasTransform.LookAt(infoCanvasTransform.position +
+            Camera.main.transform.rotation * Vector3.forward, Vector3.up);
     }
     public void SetState(IState newState)
     {
