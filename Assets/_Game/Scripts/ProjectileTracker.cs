@@ -37,7 +37,6 @@ public class ProjectileTracker : MonoBehaviour
         {
             Enemy enemy = other.GetComponent<Enemy>();
             enemy.EnemyKilled();
-            enemy.DeactiveEnemy();
             DestroyWeapon();
         }
     }

@@ -20,6 +20,7 @@ public class RadicalTrigger : MonoBehaviour
         character = GetComponentInParent<Character>();
         character.Animator.SetFloat("attackSpeed", animSpeed);
         UpdateAnimClipTimes();
+        OnInit();
     }
 
     public void UpdateAnimClipTimes()
@@ -86,7 +87,7 @@ public class RadicalTrigger : MonoBehaviour
     }
     private void OnTriggerStay(Collider other)
     {
-        if (CurrentTarget != null && !character.IsMoving && attackCoroutine == null && !character.IsDead)
+        if (CurrentTarget != null && !character.IsMoving && attackCoroutine == null && !currentTarget.IsDead)
         {
             AttackCurrentEnemy();
         }
@@ -108,7 +109,7 @@ public class RadicalTrigger : MonoBehaviour
     }
     private void AttackCurrentEnemy()
     {
-      attackCoroutine = StartCoroutine(WaitForAnimation());
+        attackCoroutine = StartCoroutine(WaitForAnimation());
     }
     IEnumerator WaitForAnimation()
     {
@@ -141,14 +142,30 @@ public class RadicalTrigger : MonoBehaviour
     #region Event
     private void Combatant_OnCombatantKilled(ICombatant combatant)
     {
-        if (combatant == null || combatant.IsDead) return;
+        if (combatant == null) return;
+
         OnDestroyEnemy(combatant);
         combatantQueue = new Queue<ICombatant>(combatantQueue.Where(e => !e.IsDead));
         UpdateTarget();
+
+        LevelManager.Instance.BotKilled(combatant);
+    }
+    public void OnInit()
+    {
+        CurrentTarget = null;
+        attackCoroutine = null;
     }
     private void OnDestroyEnemy(ICombatant combatant)
     {
         combatant.OnCombatantKilled -= Combatant_OnCombatantKilled;
+    }
+    public void StopAttackCaroutine()
+    {
+        if (attackCoroutine != null)
+        {
+            StopCoroutine(attackCoroutine);
+            attackCoroutine = null;
+        }
     }
     #endregion
 }
