@@ -14,9 +14,9 @@ public class LevelManager : Singleton<LevelManager>
     public Vector2 spawnAreaMax;
     private HashSet<Vector3> usedPositions = new HashSet<Vector3>();
 
-    private void Update()
+    private void Awake()
     {
-        if (currentBots < maxBotsAtOnce && (totalBotsToKill - botsKilled) > currentBots)
+        if (currentBots < maxBotsAtOnce)
         {
             SpawnBots();
         }

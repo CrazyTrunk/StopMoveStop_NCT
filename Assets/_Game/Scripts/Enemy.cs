@@ -22,8 +22,6 @@ public class Enemy : Character, ICombatant
     {
         IsDead = true;
         StartCoroutine(WaitForAnimation(Anim.DIE));
-        radicalTrigger.OnInit();
-        OnCombatantKilled?.Invoke(this);
     }
     public void DeactiveEnemy()
     {
@@ -37,7 +35,8 @@ public class Enemy : Character, ICombatant
         yield return null;
 
         yield return new WaitUntil(() => Animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1f);
-
+        OnCombatantKilled?.Invoke(this);
+        radicalTrigger.OnInit();
     }
     public void Move(Vector3 direction)
     {
@@ -68,7 +67,7 @@ public class Enemy : Character, ICombatant
         capsuleCollider.isTrigger = false;
 
         // Reset any necessary animations
-        ChangeAnim("idle");
+        //ChangeAnim("idle");
 
         // Clear event subscriptions to avoid duplicates
         OnCombatantKilled = null;

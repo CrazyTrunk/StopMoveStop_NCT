@@ -87,7 +87,7 @@ public class RadicalTrigger : MonoBehaviour
     }
     private void OnTriggerStay(Collider other)
     {
-        if (CurrentTarget != null && !character.IsMoving && attackCoroutine == null && !currentTarget.IsDead)
+        if (CurrentTarget != null && !character.IsMoving && attackCoroutine == null && !currentTarget.IsDead && !character.IsDead)
         {
             AttackCurrentEnemy();
         }
