@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.TextCore.Text;
 
 
 public class RadicalTrigger : MonoBehaviour
@@ -50,7 +51,10 @@ public class RadicalTrigger : MonoBehaviour
             if (CurrentTarget == combatant)
             {
                 combatant.Undetect();
+                CurrentTarget = combatantQueue.Peek();
+                CurrentTarget.Detect();
             }
+
         }
     }
     private void OnTriggerStay(Collider other)
@@ -126,6 +130,7 @@ public class RadicalTrigger : MonoBehaviour
         else
         {
             character.ShowWeaponOnHand();
+            character.IsAttacking = false;
             StopAllCoroutines();
         }
     }

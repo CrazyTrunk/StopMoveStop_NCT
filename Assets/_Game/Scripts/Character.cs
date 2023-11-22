@@ -27,11 +27,6 @@ public class Character : MonoBehaviour
     {
         if (CurrentAnim != animName)
         {
-            if (this is Player)
-            {
-                Debug.Log(animName);
-            }
-
             Animator.ResetTrigger(animName);
             CurrentAnim = animName;
             Animator.SetTrigger(CurrentAnim);
