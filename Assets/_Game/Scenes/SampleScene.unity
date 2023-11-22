@@ -345,7 +345,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animSpeed: 1.5
-  animPlayTime: 3
+  animPlayTime: 1
 --- !u!4 &93225215 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3373197664844238778, guid: 38f9296dc39c27647a0119314baf12a2, type: 3}

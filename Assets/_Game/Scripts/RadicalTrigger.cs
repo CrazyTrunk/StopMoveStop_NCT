@@ -20,13 +20,27 @@ public class RadicalTrigger : MonoBehaviour
     {
         character = GetComponentInParent<Character>();
         character.Animator.speed = animSpeed;
-        //OnInit();
     }
 
     private void OnTriggerEnter(Collider other)
     {
         ICombatant combatant = other.GetComponent<ICombatant>();
         HandleAddEnemyToQueue(combatant);
+    }
+    private void OnTriggerStay(Collider other)
+    {
+
+        UpdateTarget();
+        if (CurrentTarget != null && !character.IsAttacking && !character.IsMoving)
+        {
+            HandleAttackCurrentEnemy();
+        }
+    }
+    private void OnTriggerExit(Collider other)
+    {
+        ICombatant combatant = other.GetComponent<ICombatant>();
+
+        HandleRemoveEnemyFromQueue(combatant);
     }
     private void HandleAddEnemyToQueue(ICombatant combatant)
     {
@@ -36,12 +50,7 @@ public class RadicalTrigger : MonoBehaviour
             combatantQueue.Enqueue(combatant);
         }
     }
-    private void OnTriggerExit(Collider other)
-    {
-        ICombatant combatant = other.GetComponent<ICombatant>();
-
-        HandleRemoveEnemyFromQueue(combatant);
-    }
+   
     private void HandleRemoveEnemyFromQueue(ICombatant combatant)
     {
         if (combatant != null)
@@ -57,15 +66,7 @@ public class RadicalTrigger : MonoBehaviour
 
         }
     }
-    private void OnTriggerStay(Collider other)
-    {
-
-        UpdateTarget();
-        if (CurrentTarget != null && !character.IsAttacking && !character.IsMoving)
-        {
-            HandleAttackCurrentEnemy();
-        }
-    }
+   
 
     private void UpdateTarget()
     {
