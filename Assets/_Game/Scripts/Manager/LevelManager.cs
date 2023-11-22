@@ -6,7 +6,7 @@ using UnityEngine.UIElements;
 public class LevelManager : Singleton<LevelManager>
 {
     [SerializeField] public LeanGameObjectPool botPool;
-    public int maxBotsAtOnce = 1;
+    public int maxBotsAtOnce = 5;
     public int totalBotsToKill = 50;
     private int currentBots = 0;
     private int botsKilled = 0;
@@ -16,9 +16,11 @@ public class LevelManager : Singleton<LevelManager>
 
     private void Awake()
     {
-        if (currentBots < maxBotsAtOnce)
+
+        for (int i = 0; i < maxBotsAtOnce; i++)
         {
             SpawnBots();
+
         }
     }
     private Vector3 GenerateSpawnPosition()

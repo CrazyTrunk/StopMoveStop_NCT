@@ -21,7 +21,7 @@ public class Enemy : Character, ICombatant
     public void EnemyKilled()
     {
         IsDead = true;
-        StartCoroutine(WaitForAnimation(Anim.DIE));
+        //StartCoroutine(WaitForAnimation(Anim.DIE));
     }
     public void DeactiveEnemy()
     {
@@ -29,15 +29,14 @@ public class Enemy : Character, ICombatant
         rb.isKinematic = true;
     }
 
-    private IEnumerator WaitForAnimation(string animName)
-    {
-        ChangeAnim(animName);
-        yield return null;
-
-        yield return new WaitUntil(() => Animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1f);
-        OnCombatantKilled?.Invoke(this);
-        radicalTrigger.OnInit();
-    }
+    //private IEnumerator WaitForAnimation(string animName)
+    //{
+    //    ChangeAnim(animName);
+    //    yield return null;
+    //    yield return new WaitUntil(() => Animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1f);
+    //    //radicalTrigger.OnInit();
+    //    OnCombatantKilled?.Invoke(this);
+    //}
     public void Move(Vector3 direction)
     {
         transform.position += Speed * Time.deltaTime * direction;

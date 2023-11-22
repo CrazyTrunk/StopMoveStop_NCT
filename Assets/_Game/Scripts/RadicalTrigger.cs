@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -9,87 +10,56 @@ public class RadicalTrigger : MonoBehaviour
     private Queue<ICombatant> combatantQueue = new Queue<ICombatant>();
     private ICombatant currentTarget = null;
     private Character character;
-    private float attackTime;
-    private float animSpeed = 1.5f;
-    private Coroutine attackCoroutine;
+    [SerializeField] private float animSpeed = 1.5f;
+    [SerializeField] private float animPlayTime = 1f;
 
     public ICombatant CurrentTarget { get => currentTarget; set => currentTarget = value; }
 
     private void Awake()
     {
         character = GetComponentInParent<Character>();
-        character.Animator.SetFloat("attackSpeed", animSpeed);
-        UpdateAnimClipTimes();
-        OnInit();
+        character.Animator.speed = animSpeed;
+        //OnInit();
     }
 
-    public void UpdateAnimClipTimes()
-    {
-        AnimationClip[] clips = character.Animator.runtimeAnimatorController.animationClips;
-        foreach (AnimationClip clip in clips)
-        {
-            switch (clip.name)
-            {
-                case "Attack":
-                    attackTime = clip.length / animSpeed;
-                    break;
-            }
-        }
-    }
     private void OnTriggerEnter(Collider other)
     {
         ICombatant combatant = other.GetComponent<ICombatant>();
-
-        if (combatant != null && !combatantQueue.Contains(combatant) && !combatant.IsDead)
+        HandleAddEnemyToQueue(combatant);
+    }
+    private void HandleAddEnemyToQueue(ICombatant combatant)
+    {
+        if (combatant != null && !combatantQueue.Contains(combatant))
         {
             character.HasEnemyInSight = true;
-            combatant.OnCombatantKilled += Combatant_OnCombatantKilled;
             combatantQueue.Enqueue(combatant);
-            if (CurrentTarget == null)
-            {
-                //hien tai neu khong co targetnao => lay thang dau tien luon
-                CurrentTarget = combatantQueue.Peek();
-                combatant.Detect();
-            }
         }
     }
-
     private void OnTriggerExit(Collider other)
     {
         ICombatant combatant = other.GetComponent<ICombatant>();
 
+        HandleRemoveEnemyFromQueue(combatant);
+    }
+    private void HandleRemoveEnemyFromQueue(ICombatant combatant)
+    {
         if (combatant != null)
         {
+            //update Queue
             combatantQueue = new Queue<ICombatant>(combatantQueue.Where(e => e != combatant));
-            combatant.OnCombatantKilled -= Combatant_OnCombatantKilled;
-
-            // Ẩn detected circle nếu có
-            combatant.Undetect();
-
-            // Nếu enemy hiện tại rời khỏi, cần chọn target mới hoặc ngừng tấn công
             if (CurrentTarget == combatant)
             {
-                if (combatantQueue.Count > 0)
-                {
-                    // Có enemy khác trong hàng đợi, chọn làm mục tiêu mới
-                    CurrentTarget = combatantQueue.Peek();
-                    CurrentTarget.Detect();
-                }
-                else
-                {
-                    // Không còn enemy nào, cần ngừng tấn công
-                    CurrentTarget = null;
-                    character.IsAttacking = false;
-                    character.HasEnemyInSight = false;
-                }
+                combatant.Undetect();
             }
         }
     }
     private void OnTriggerStay(Collider other)
     {
-        if (CurrentTarget != null && !character.IsMoving && attackCoroutine == null && !currentTarget.IsDead && !character.IsDead)
+
+        UpdateTarget();
+        if (CurrentTarget != null && !character.IsAttacking && !character.IsMoving)
         {
-            AttackCurrentEnemy();
+            HandleAttackCurrentEnemy();
         }
     }
 
@@ -97,8 +67,13 @@ public class RadicalTrigger : MonoBehaviour
     {
         if (combatantQueue.Count > 0)
         {
-            CurrentTarget = combatantQueue.Peek();
-            CurrentTarget.Detect();
+            if (CurrentTarget == null)
+            {
+                //Set Enemy from queue
+                CurrentTarget = combatantQueue.Peek();
+                CurrentTarget.Detect();
+            }
+
         }
         else
         {
@@ -107,65 +82,80 @@ public class RadicalTrigger : MonoBehaviour
             character.HasEnemyInSight = false;
         }
     }
-    private void AttackCurrentEnemy()
+    private void HandleAttackCurrentEnemy()
     {
-        attackCoroutine = StartCoroutine(WaitForAnimation());
+        StartCoroutine(WaitForAnimation());
+    }
+    private void LookAtEnemyAndAttack()
+    {
+        character.LookAtTarget(currentTarget.GetTransform());
+        character.ChangeAnim(Anim.ATTACK);
+    }
+    private void ThrowWeapon()
+    {
+        character.HideWeaponOnHand();
+        CheckingAnimationAttackDone("Attack");
+    }
+    private void WhenDoneThrowWeapon()
+    {
+        character.ShowWeaponOnHand();
+        if (!character.IsMoving)
+        {
+            character.ChangeAnim(Anim.IDLE);
+        }
     }
     IEnumerator WaitForAnimation()
     {
         character.IsAttacking = true;
-        character.LookAtTarget(currentTarget.GetTransform());
+        LookAtEnemyAndAttack();
+        yield return new WaitForSeconds((animPlayTime / animSpeed) / 2);
+        ThrowWeapon();
+        yield return new WaitForSeconds((animPlayTime / animSpeed) / 2);
+        WhenDoneThrowWeapon();
+        //wait for 0,4s before can attack again
+        yield return new WaitForSeconds(0.4f);
+        character.IsAttacking = false;
+    }
 
-        character.ChangeAnim(Anim.ATTACK);
-        yield return new WaitForSeconds(attackTime / 2);
-        character.HideWeapon();
-        if (character.Animator.GetCurrentAnimatorStateInfo(0).IsName("Attack"))
+    private void CheckingAnimationAttackDone(string animName)
+    {
+        if (character.Animator.GetCurrentAnimatorStateInfo(0).IsName(animName))
         {
             character.ThrowWeapon();
         }
         else
         {
-            character.ShowWeapon();
+            character.ShowWeaponOnHand();
+            StopAllCoroutines();
         }
-        yield return new WaitForSeconds(attackTime / 2);
-        character.ShowWeapon();
-
-        if (!character.IsMoving && !character.IsDead)
-        {
-            character.ChangeAnim(Anim.IDLE);
-        }
-        yield return new WaitForSeconds(0.4f);
-
-        character.IsAttacking = false;
-        attackCoroutine = null;
     }
     #region Event
-    private void Combatant_OnCombatantKilled(ICombatant combatant)
-    {
-        if (combatant == null) return;
+    //private void Combatant_OnCombatantKilled(ICombatant combatant)
+    //{
+    //    if (combatant == null) return;
 
-        OnDestroyEnemy(combatant);
-        combatantQueue = new Queue<ICombatant>(combatantQueue.Where(e => !e.IsDead));
-        UpdateTarget();
+    //    OnDestroyEnemy(combatant);
+    //    combatantQueue = new Queue<ICombatant>(combatantQueue.Where(e => !e.IsDead));
+    //UpdateTarget();
 
-        LevelManager.Instance.BotKilled(combatant);
-    }
-    public void OnInit()
-    {
-        CurrentTarget = null;
-        attackCoroutine = null;
-    }
-    private void OnDestroyEnemy(ICombatant combatant)
-    {
-        combatant.OnCombatantKilled -= Combatant_OnCombatantKilled;
-    }
-    public void StopAttackCaroutine()
-    {
-        if (attackCoroutine != null)
-        {
-            StopCoroutine(attackCoroutine);
-            attackCoroutine = null;
-        }
-    }
+    //    LevelManager.Instance.BotKilled(combatant);
+    //}
+    //public void OnInit()
+    //{
+    //    CurrentTarget = null;
+    //    attackCoroutine = null;
+    //}
+    //private void OnDestroyEnemy(ICombatant combatant)
+    //{
+    //    combatant.OnCombatantKilled -= Combatant_OnCombatantKilled;
+    //}
+    //public void StopAttackCaroutine()
+    //{
+    //    if (attackCoroutine != null)
+    //    {
+    //        StopCoroutine(attackCoroutine);
+    //        attackCoroutine = null;
+    //    }
+    //}
     #endregion
 }

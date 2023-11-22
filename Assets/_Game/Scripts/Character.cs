@@ -27,6 +27,11 @@ public class Character : MonoBehaviour
     {
         if (CurrentAnim != animName)
         {
+            if (this is Player)
+            {
+                Debug.Log(animName);
+            }
+
             Animator.ResetTrigger(animName);
             CurrentAnim = animName;
             Animator.SetTrigger(CurrentAnim);
@@ -40,11 +45,11 @@ public class Character : MonoBehaviour
     {
         throwWeapon.Throw(range);
     }
-    public void HideWeapon()
+    public void HideWeaponOnHand()
     {
         Weapon.HideWeapon();
     }
-    public void ShowWeapon()
+    public void ShowWeaponOnHand()
     {
         Weapon.ShowWeapon();
     }

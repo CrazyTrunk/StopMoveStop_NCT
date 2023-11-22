@@ -33,11 +33,12 @@ public class ProjectileTracker : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag(Tag.Enemy))
-        {
-            Enemy enemy = other.GetComponent<Enemy>();
-            enemy.EnemyKilled();
-            DestroyWeapon();
-        }
+        //if (other.CompareTag(Tag.Enemy))
+        //{
+        //    Enemy enemy = other.GetComponent<Enemy>();
+        //    enemy.EnemyKilled();
+        //    Destroy(enemy.gameObject);
+        //    DestroyWeapon();
+        //}
     }
 }
