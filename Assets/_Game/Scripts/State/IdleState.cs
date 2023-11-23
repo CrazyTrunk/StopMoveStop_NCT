@@ -18,11 +18,7 @@ public class IdleState : IState
     public void OnEnter()
     {
         timeSinceLastChange = 0f;
-        if (!_enemy.CurrentBot.IsDead)
-        {
-            _enemy.ChangeAnim(Anim.IDLE);
-
-        }
+        _enemy.ChangeAnim(Anim.IDLE);
     }
     public void OnExecute()
     {

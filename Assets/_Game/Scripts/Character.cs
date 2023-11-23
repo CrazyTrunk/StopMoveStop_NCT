@@ -44,10 +44,6 @@ public class Character : MonoBehaviour, ICombatant
     {
         if (CurrentAnim != animName)
         {
-            if (this is Enemy)
-            {
-                Debug.Log(animName);
-            }
             Animator.ResetTrigger(animName);
             CurrentAnim = animName;
             Animator.SetTrigger(CurrentAnim);
@@ -92,10 +88,11 @@ public class Character : MonoBehaviour, ICombatant
         OnCombatantKilled?.Invoke(this);
     }
 
-    public void OnSpawn()
+    public virtual void OnSpawn()
     {
         IsDead = false;
         IsAttacking = false;
+        IsMoving = false;
         HasEnemyInSight = false;
         Undetect();
     }

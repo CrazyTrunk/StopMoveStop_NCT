@@ -5,6 +5,7 @@ using UnityEngine.TextCore.Text;
 
 public class Enemy : Character
 {
+    [SerializeField] private EnemyController controller;
     public void Move(Vector3 direction)
     {
         transform.position += Speed * Time.deltaTime * direction;
@@ -15,13 +16,18 @@ public class Enemy : Character
         IsDead = true;
         StopAllCoroutines();
         StartCoroutine(WaitForAnimation());
-        //then Invoke
     }
     IEnumerator WaitForAnimation()
     {
         ChangeAnim(Anim.DIE);
+
         Undetect();
         yield return new WaitForSeconds((AnimPlayTime / AnimSpeed));
         base.OnDeath();
+    }
+    public override void OnSpawn()
+    {
+        base.OnSpawn();
+        controller.Start();
     }
 }

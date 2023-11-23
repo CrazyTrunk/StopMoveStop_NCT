@@ -30,14 +30,13 @@ public class RadicalTrigger : MonoBehaviour
     {
         CurrentTarget = null;
         StopAllCoroutines();
-        character.IsAttacking = false;
         combatantQueue = new Queue<ICombatant>();
     }
     private void OnTriggerStay(Collider other)
     {
-        if (character.IsDead)
+        if (character.IsDead || (CurrentTarget != null && CurrentTarget.IsDead))
         {
-            return;
+            return; 
         }
         UpdateTarget();
         if (CurrentTarget != null && !character.IsAttacking && !character.IsMoving)
@@ -121,10 +120,6 @@ public class RadicalTrigger : MonoBehaviour
     private void WhenDoneThrowWeapon()
     {
         character.ShowWeaponOnHand();
-        if (!character.IsMoving)
-        {
-            character.ChangeAnim(Anim.IDLE);
-        }
     }
     IEnumerator WaitForAnimation()
     {
@@ -157,14 +152,14 @@ public class RadicalTrigger : MonoBehaviour
     #region Event
     private void Combatant_OnCombatantKilled(ICombatant combatant)
     {
+        combatant.OnCombatantKilled -= Combatant_OnCombatantKilled;
         //Update Queue
         if (CurrentTarget == combatant)
         {
-            currentTarget = null;
+            CurrentTarget = null;
             combatantQueue = new Queue<ICombatant>(combatantQueue.Where(e => e != combatant));
             LevelManager.Instance.BotKilled(combatant);
         }
-        combatant.OnCombatantKilled -= Combatant_OnCombatantKilled;
     }
     #endregion
 }
