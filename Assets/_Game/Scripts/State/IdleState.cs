@@ -22,6 +22,11 @@ public class IdleState : IState
     }
     public void OnExecute()
     {
+        if (_enemy.CurrentBot.IsDead)
+        {
+            return;
+        }
+
         if (_enemy.CurrentBot.HasEnemyInSight)
         {
             timeSinceLastChangeWithEnemy += Time.deltaTime;

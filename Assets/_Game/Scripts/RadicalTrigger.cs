@@ -12,7 +12,6 @@ public class RadicalTrigger : MonoBehaviour
     private ICombatant currentTarget = null;
     private Character character;
 
-
     public ICombatant CurrentTarget { get => currentTarget; set => currentTarget = value; }
 
     private void Awake()
@@ -34,17 +33,28 @@ public class RadicalTrigger : MonoBehaviour
     }
     private void OnTriggerStay(Collider other)
     {
-        if (character.IsDead || (CurrentTarget != null && CurrentTarget.IsDead))
-        {
-            return;
-        }
         UpdateTarget();
-        if (CurrentTarget != null && !character.IsAttacking && !character.IsMoving)
+
+        if (CanAttack())
         {
             HandleAttackCurrentEnemy();
         }
 
     }
+
+    private bool CanAttack()
+    {
+        if (character.IsDead)
+        {
+            return false;
+        }
+        if (CurrentTarget != null && !character.IsAttacking)
+        {
+            return true;
+        }
+        return false;
+    }
+
     private void OnTriggerExit(Collider other)
     {
         ICombatant combatant = other.GetComponent<ICombatant>();
@@ -69,7 +79,10 @@ public class RadicalTrigger : MonoBehaviour
             combatantQueue = new Queue<ICombatant>(combatantQueue.Where(e => e != combatant));
             if (CurrentTarget == combatant)
             {
-                combatant.Undetect();
+                if(character is Player)
+                {
+                    combatant.Undetect();
+                }
                 combatant.OnCombatantKilled -= Combatant_OnCombatantKilled;
                 //if theres still enemy in Queue
                 if (combatantQueue.Count > 0)
@@ -83,7 +96,10 @@ public class RadicalTrigger : MonoBehaviour
     private void GetTheFirstEnemyFromQueue()
     {
         CurrentTarget = combatantQueue.Peek();
-        CurrentTarget.Detect();
+        if(character is Player)
+        {
+            CurrentTarget.Detect();
+        }
     }
 
     private void UpdateTarget()
@@ -152,6 +168,7 @@ public class RadicalTrigger : MonoBehaviour
     #region Event
     private void Combatant_OnCombatantKilled(ICombatant combatant)
     {
+        combatantQueue = new Queue<ICombatant>(combatantQueue.Where(e =>  e != combatant));
     }
     #endregion
 }

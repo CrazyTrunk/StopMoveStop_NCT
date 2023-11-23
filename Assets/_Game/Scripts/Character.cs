@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
@@ -16,7 +16,10 @@ public class Character : MonoBehaviour, ICombatant
 
     [SerializeField] private float animSpeed = 1.5f;
     [SerializeField] private float animPlayTime = 1f;
+    [SerializeField] Rigidbody rb;
+    [SerializeField] CapsuleCollider capsuleCollider;
 
+    private float respawnTime = 1f;
 
     protected string CurrentAnim;
     private bool isMoving;
@@ -38,6 +41,7 @@ public class Character : MonoBehaviour, ICombatant
     private void Awake()
     {
         Animator.speed = animSpeed;
+        ResetState();
     }
     public void ChangeAnim(string animName)
     {
@@ -83,8 +87,38 @@ public class Character : MonoBehaviour, ICombatant
     }
     public virtual void OnDeath()
     {
+        IsDead = true;
         StopAllCoroutines();
         radicalTrigger.OnInit();
+        Undetect();
+        ChangeAnim("die");
+        capsuleCollider.isTrigger = true;
+        rb.isKinematic = true;
+        StartCoroutine(RespawnCoroutine());
         OnCombatantKilled?.Invoke(this);
+    }
+    private IEnumerator RespawnCoroutine()
+    {
+        // Đợi animation "die" chạy xong
+        yield return new WaitForSeconds(AnimPlayTime / animSpeed);
+
+        // Ẩn nhân vật (hoặc làm nhân vật không hoạt động) khi nó chết
+        yield return new WaitForSeconds(respawnTime);
+        LevelManager.Instance.BotKilled(this);
+        Respawn();
+    }
+    private void Respawn()
+    {
+        ResetState();
+    }
+
+    private void ResetState()
+    {
+        IsDead = false;
+        IsMoving = false;
+        IsAttacking = false;
+        HasEnemyInSight = false;
+        capsuleCollider.isTrigger = false;
+        rb.isKinematic = false;
     }
 }
