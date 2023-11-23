@@ -44,10 +44,6 @@ public class LevelManager : Singleton<LevelManager>
     {
         Vector3 spawnPosition = GenerateSpawnPosition();
         Enemy enemy = botPool.Spawn(spawnPosition, Quaternion.identity, botPool.transform).GetComponent<Enemy>();
-        if (enemy != null)
-        {
-            enemy.OnSpawn();
-        }
         // Set up the bot (e.g., adding it to a list, setting up callbacks, etc.)
         currentBots++;
     }

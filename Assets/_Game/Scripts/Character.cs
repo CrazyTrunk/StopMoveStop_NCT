@@ -38,7 +38,6 @@ public class Character : MonoBehaviour, ICombatant
     private void Awake()
     {
         Animator.speed = animSpeed;
-        OnSpawn();
     }
     public void ChangeAnim(string animName)
     {
@@ -84,16 +83,8 @@ public class Character : MonoBehaviour, ICombatant
     }
     public virtual void OnDeath()
     {
+        StopAllCoroutines();
         radicalTrigger.OnInit();
         OnCombatantKilled?.Invoke(this);
-    }
-
-    public virtual void OnSpawn()
-    {
-        IsDead = false;
-        IsAttacking = false;
-        IsMoving = false;
-        HasEnemyInSight = false;
-        Undetect();
     }
 }

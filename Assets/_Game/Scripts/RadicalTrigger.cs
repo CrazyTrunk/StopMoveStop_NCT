@@ -36,7 +36,7 @@ public class RadicalTrigger : MonoBehaviour
     {
         if (character.IsDead || (CurrentTarget != null && CurrentTarget.IsDead))
         {
-            return; 
+            return;
         }
         UpdateTarget();
         if (CurrentTarget != null && !character.IsAttacking && !character.IsMoving)
@@ -152,14 +152,6 @@ public class RadicalTrigger : MonoBehaviour
     #region Event
     private void Combatant_OnCombatantKilled(ICombatant combatant)
     {
-        combatant.OnCombatantKilled -= Combatant_OnCombatantKilled;
-        //Update Queue
-        if (CurrentTarget == combatant)
-        {
-            CurrentTarget = null;
-            combatantQueue = new Queue<ICombatant>(combatantQueue.Where(e => e != combatant));
-            LevelManager.Instance.BotKilled(combatant);
-        }
     }
     #endregion
 }

@@ -12,22 +12,7 @@ public class Enemy : Character
     }
     public override void OnDeath()
     {
-        //Set Value First
-        IsDead = true;
-        StopAllCoroutines();
-        StartCoroutine(WaitForAnimation());
-    }
-    IEnumerator WaitForAnimation()
-    {
-        ChangeAnim(Anim.DIE);
-
-        Undetect();
-        yield return new WaitForSeconds((AnimPlayTime / AnimSpeed));
         base.OnDeath();
     }
-    public override void OnSpawn()
-    {
-        base.OnSpawn();
-        controller.Start();
-    }
+
 }
