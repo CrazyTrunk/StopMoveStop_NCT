@@ -36,8 +36,12 @@ public class ProjectileTracker : MonoBehaviour
         if (other.CompareTag(Tag.Enemy))
         {
             Enemy enemy = other.GetComponent<Enemy>();
-            enemy.OnDeath();
-            DestroyWeapon();
+            if (!enemy.IsDead)
+            {
+                enemy.OnDeath();
+                DestroyWeapon();
+            }
+        
         }
     }
 }

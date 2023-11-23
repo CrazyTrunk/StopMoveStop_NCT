@@ -13,6 +13,7 @@ public class Enemy : Character
     public override void OnDeath()
     {
         base.OnDeath();
+
         controller.SetState(new IdleState(controller));
     }
 

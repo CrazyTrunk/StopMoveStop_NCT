@@ -28,7 +28,6 @@ public class RadicalTrigger : MonoBehaviour
     public void OnInit()
     {
         CurrentTarget = null;
-        StopAllCoroutines();
         combatantQueue = new Queue<ICombatant>();
     }
     private void OnTriggerStay(Collider other)
@@ -44,11 +43,11 @@ public class RadicalTrigger : MonoBehaviour
 
     private bool CanAttack()
     {
-        if (character.IsDead)
+        if (character.IsDead || (CurrentTarget != null && CurrentTarget.IsDead))
         {
             return false;
         }
-        if (CurrentTarget != null && !character.IsAttacking)
+        if (CurrentTarget != null && !character.IsAttacking && !character.IsMoving)
         {
             return true;
         }
@@ -79,7 +78,7 @@ public class RadicalTrigger : MonoBehaviour
             combatantQueue = new Queue<ICombatant>(combatantQueue.Where(e => e != combatant));
             if (CurrentTarget == combatant)
             {
-                if(character is Player)
+                if (character is Player)
                 {
                     combatant.Undetect();
                 }
@@ -96,7 +95,7 @@ public class RadicalTrigger : MonoBehaviour
     private void GetTheFirstEnemyFromQueue()
     {
         CurrentTarget = combatantQueue.Peek();
-        if(character is Player)
+        if (character is Player)
         {
             CurrentTarget.Detect();
         }
@@ -111,6 +110,7 @@ public class RadicalTrigger : MonoBehaviour
                 //Set Enemy from queue
                 GetTheFirstEnemyFromQueue();
             }
+           
         }
         else
         {
@@ -168,7 +168,12 @@ public class RadicalTrigger : MonoBehaviour
     #region Event
     private void Combatant_OnCombatantKilled(ICombatant combatant)
     {
-        combatantQueue = new Queue<ICombatant>(combatantQueue.Where(e =>  e != combatant));
+        combatant.OnCombatantKilled -= Combatant_OnCombatantKilled;
+        combatantQueue = new Queue<ICombatant>(combatantQueue.Where(e => e != combatant));
+        if (CurrentTarget == combatant)
+        {
+            CurrentTarget = null;
+        }
     }
     #endregion
 }

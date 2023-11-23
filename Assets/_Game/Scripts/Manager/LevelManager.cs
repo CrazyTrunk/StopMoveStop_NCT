@@ -43,7 +43,7 @@ public class LevelManager : Singleton<LevelManager>
     public void SpawnBots()
     {
         Vector3 spawnPosition = GenerateSpawnPosition();
-        botPool.Spawn(Vector3.zero, Quaternion.identity, botPool.transform);
+        botPool.Spawn(spawnPosition, Quaternion.identity, botPool.transform);
         // Set up the bot (e.g., adding it to a list, setting up callbacks, etc.)
         currentBots++;
     }

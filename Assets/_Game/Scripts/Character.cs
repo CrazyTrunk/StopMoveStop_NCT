@@ -89,13 +89,13 @@ public class Character : MonoBehaviour, ICombatant
     {
         IsDead = true;
         StopAllCoroutines();
-        radicalTrigger.OnInit();
         Undetect();
         ChangeAnim("die");
         capsuleCollider.isTrigger = true;
         rb.isKinematic = true;
         StartCoroutine(RespawnCoroutine());
         OnCombatantKilled?.Invoke(this);
+        OnCombatantKilled = null;
     }
     private IEnumerator RespawnCoroutine()
     {
@@ -106,6 +106,7 @@ public class Character : MonoBehaviour, ICombatant
         yield return new WaitForSeconds(respawnTime);
         LevelManager.Instance.BotKilled(this);
         Respawn();
+      
     }
     private void Respawn()
     {
@@ -115,10 +116,11 @@ public class Character : MonoBehaviour, ICombatant
     private void ResetState()
     {
         IsDead = false;
-        IsMoving = false;
-        IsAttacking = false;
-        HasEnemyInSight = false;
+        isMoving = false;
+        isAttacking = false;
+        hasEnemyInSight = false;
         capsuleCollider.isTrigger = false;
         rb.isKinematic = false;
+        radicalTrigger.OnInit();
     }
 }
