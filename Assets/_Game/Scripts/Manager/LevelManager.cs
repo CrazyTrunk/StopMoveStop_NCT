@@ -43,14 +43,13 @@ public class LevelManager : Singleton<LevelManager>
     public void SpawnBots()
     {
         Vector3 spawnPosition = GenerateSpawnPosition();
-        GameObject bot = botPool.Spawn(spawnPosition, Quaternion.identity, botPool.transform);
-        // Set up the bot (e.g., adding it to a list, setting up callbacks, etc.)
-        currentBots++;
-        Enemy enemy = bot.GetComponent<Enemy>();
+        Enemy enemy = botPool.Spawn(spawnPosition, Quaternion.identity, botPool.transform).GetComponent<Enemy>();
         if (enemy != null)
         {
             enemy.OnSpawn();
         }
+        // Set up the bot (e.g., adding it to a list, setting up callbacks, etc.)
+        currentBots++;
     }
     public void BotKilled(ICombatant combatant)
     {
@@ -63,9 +62,5 @@ public class LevelManager : Singleton<LevelManager>
         {
             SpawnBots();
         }
-    }
-    public void RemoveBot(GameObject bot)
-    {
-        botPool.Despawn(bot);
     }
 }
