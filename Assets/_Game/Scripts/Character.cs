@@ -17,7 +17,6 @@ public class Character : MonoBehaviour, ICombatant
 
     [SerializeField] private float animSpeed = 1.5f;
     [SerializeField] private float animPlayTime = 1f;
-    [SerializeField] Rigidbody rb;
     [SerializeField] CapsuleCollider capsuleCollider;
 
     private float respawnTime = 1f;
@@ -91,6 +90,7 @@ public class Character : MonoBehaviour, ICombatant
         isMoving = false;
         isAttacking = false;
         hasEnemyInSight = false;
+        capsuleCollider.enabled = false;
         Undetect();
         ChangeAnim(Anim.DIE);
         OnCombatantKilled?.Invoke(this);
@@ -116,8 +116,7 @@ public class Character : MonoBehaviour, ICombatant
         isMoving = false;
         isAttacking = false;
         hasEnemyInSight = false;
-        capsuleCollider.isTrigger = false;
-        rb.isKinematic = false;
+        capsuleCollider.enabled = true;
         radicalTrigger.OnInit();
     }
 }

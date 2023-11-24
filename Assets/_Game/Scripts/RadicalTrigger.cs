@@ -36,7 +36,7 @@ public class RadicalTrigger : MonoBehaviour
 
         if (CanAttack())
         {
-            HandleAttackCurrentEnemy();
+            StartCoroutine(AttackCorotine());
         }
 
     }
@@ -119,10 +119,6 @@ public class RadicalTrigger : MonoBehaviour
             character.HasEnemyInSight = false;
         }
     }
-    private void HandleAttackCurrentEnemy()
-    {
-        StartCoroutine(WaitForAnimation());
-    }
     private void LookAtEnemyAndAttack()
     {
         character.LookAtTarget(currentTarget.GetTransform());
@@ -137,8 +133,12 @@ public class RadicalTrigger : MonoBehaviour
     {
         character.ShowWeaponOnHand();
     }
-    IEnumerator WaitForAnimation()
+    IEnumerator AttackCorotine()
     {
+        if (character.IsAttacking)
+        {
+            yield break; // Coroutine is already running, exit early.
+        }
         character.IsAttacking = true;
         LookAtEnemyAndAttack();
         yield return new WaitForSeconds((character.AnimPlayTime / character.AnimSpeed) / 2);

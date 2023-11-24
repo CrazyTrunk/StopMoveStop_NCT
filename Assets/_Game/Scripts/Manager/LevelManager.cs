@@ -30,7 +30,7 @@ public class LevelManager : Singleton<LevelManager>
         {
             float x = Random.Range(spawnAreaMin.x, spawnAreaMax.x);
             float z = Random.Range(spawnAreaMin.y, spawnAreaMax.y);
-            potentialPosition = new Vector3(x, 0, z); // '0' is the y-coordinate on the plane
+            potentialPosition = new Vector3(x, 0.08f, z); // '0' is the y-coordinate on the plane
         }
         while (usedPositions.Contains(potentialPosition));
         if (potentialPosition != Vector3.zero)
