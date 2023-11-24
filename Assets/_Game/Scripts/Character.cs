@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using static UnityEngine.EventSystems.EventTrigger;
 
 public class Character : MonoBehaviour, ICombatant
 {
@@ -41,7 +42,6 @@ public class Character : MonoBehaviour, ICombatant
     private void Awake()
     {
         Animator.speed = animSpeed;
-        ResetState();
     }
     public void ChangeAnim(string animName)
     {
@@ -88,32 +88,29 @@ public class Character : MonoBehaviour, ICombatant
     public virtual void OnDeath()
     {
         IsDead = true;
-        StopAllCoroutines();
+        isMoving = false;
+        isAttacking = false;
+        hasEnemyInSight = false;
         Undetect();
-        ChangeAnim("die");
-        capsuleCollider.isTrigger = true;
-        rb.isKinematic = true;
-        StartCoroutine(RespawnCoroutine());
+        ChangeAnim(Anim.DIE);
         OnCombatantKilled?.Invoke(this);
-        OnCombatantKilled = null;
+
+        StartCoroutine(RespawnCoroutine());
+
     }
     private IEnumerator RespawnCoroutine()
     {
+
         // Đợi animation "die" chạy xong
         yield return new WaitForSeconds(AnimPlayTime / animSpeed);
 
         // Ẩn nhân vật (hoặc làm nhân vật không hoạt động) khi nó chết
         yield return new WaitForSeconds(respawnTime);
         LevelManager.Instance.BotKilled(this);
-        Respawn();
-      
-    }
-    private void Respawn()
-    {
-        ResetState();
+
     }
 
-    private void ResetState()
+    public void ResetState()
     {
         IsDead = false;
         isMoving = false;

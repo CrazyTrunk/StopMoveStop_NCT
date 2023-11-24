@@ -40,8 +40,9 @@ public class ProjectileTracker : MonoBehaviour
             {
                 enemy.OnDeath();
                 DestroyWeapon();
+
             }
-        
+
         }
     }
 }

@@ -6552,7 +6552,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   botPool: {fileID: 1664224345}
-  maxBotsAtOnce: 5
+  maxBotsAtOnce: 4
   totalBotsToKill: 50
   spawnAreaMin: {x: -10, y: -10}
   spawnAreaMax: {x: 10, y: 10}
@@ -14341,8 +14341,8 @@ MonoBehaviour:
   prefab: {fileID: 5047329666932212505, guid: 77666643464a82840b06975bd1a51c47, type: 3}
   notification: 3
   strategy: 0
-  preload: 5
-  capacity: 5
+  preload: 4
+  capacity: 4
   recycle: 0
   persist: 0
   stamp: 0
