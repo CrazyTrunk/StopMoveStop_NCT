@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
-using static UnityEngine.EventSystems.EventTrigger;
 
 public class Character : MonoBehaviour, ICombatant
 {
@@ -23,7 +19,7 @@ public class Character : MonoBehaviour, ICombatant
     [SerializeField] private DetectedCircle detectedCircle;
     [SerializeField] private RadicalTrigger radicalTrigger;
     [SerializeField] private CharacterSphere characterSphere;
-    CapsuleCollider capsuleCollider;
+    protected CapsuleCollider capsuleCollider;
     public const float RangeIncreasePerTenLevels = 2f;
     private float baseRange = 5f;
     private float maxRangeIncrese = 10f;
@@ -40,7 +36,6 @@ public class Character : MonoBehaviour, ICombatant
     public Vector3 baseScale = new Vector3(1, 1, 1);
     public float maxScale = 2f;
     public float scaleIncrement = 0.1f;
-    private float respawnTime = 1f;
     private Vector3 originalColliderSize;
     private Vector3 originalColliderCenter;
 
@@ -111,31 +106,6 @@ public class Character : MonoBehaviour, ICombatant
     {
         return transform;
     }
-    public virtual void OnDeath()
-    {
-        IsDead = true;
-        isMoving = false;
-        isAttacking = false;
-        hasEnemyInSight = false;
-        capsuleCollider.enabled = false;
-        Undetect();
-        ChangeAnim(Anim.DIE);
-        OnCombatantKilled?.Invoke(this);
-
-        StartCoroutine(RespawnCoroutine());
-
-    }
-    private IEnumerator RespawnCoroutine()
-    {
-
-        // Đợi animation "die" chạy xong
-        yield return new WaitForSeconds(AnimPlayTime / animSpeed);
-
-        // Ẩn nhân vật (hoặc làm nhân vật không hoạt động) khi nó chết
-        yield return new WaitForSeconds(respawnTime);
-        LevelManager.Instance.BotKilled(this);
-
-    }
 
     public void ResetState()
     {
@@ -201,5 +171,9 @@ public class Character : MonoBehaviour, ICombatant
         // Điều chỉnh center của collider
         // Bạn có thể cần điều chỉnh giá trị này dựa trên vị trí cụ thể của model của bạn
         capsuleCollider.center = new Vector3(originalColliderCenter.x, originalColliderCenter.y * scale, originalColliderCenter.z);
+    }
+    protected void InvokeOnDeath()
+    {
+        OnCombatantKilled?.Invoke(this);
     }
 }

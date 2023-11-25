@@ -13,8 +13,6 @@ public class RadicalTrigger : MonoBehaviour
     private ICombatant currentTarget = null;
     private Character character;
 
-    private float attackCooldown = 1f;
-    private float attackTimer = 0f;
 
     public ICombatant CurrentTarget { get => currentTarget; set => currentTarget = value; }
 
@@ -45,16 +43,14 @@ public class RadicalTrigger : MonoBehaviour
     //    }
 
     //}
-    private void Update()
+    private void FixedUpdate()
     {
-        attackTimer += Time.deltaTime;
 
-        if (attackTimer >= attackCooldown && !character.IsAttacking)
+        if (!character.IsAttacking)
         {
             UpdateTarget();
             if (CurrentTarget != null && CanAttack())
             {
-                attackTimer = 0f;
                 StartCoroutine(AttackCoroutine());
             }
         }
@@ -123,6 +119,7 @@ public class RadicalTrigger : MonoBehaviour
         else if (combatantQueue.Count == 0)
         {
             CurrentTarget = null;
+            StopAllCoroutines();
         }
     }
     private void LookAtEnemyAndAttack()
@@ -141,10 +138,6 @@ public class RadicalTrigger : MonoBehaviour
     }
     IEnumerator AttackCoroutine()
     {
-        if (character.IsAttacking)
-        {
-            yield break; // Coroutine is already running, exit early.
-        }
         character.IsAttacking = true;
         LookAtEnemyAndAttack();
         yield return new WaitForSeconds((character.AnimPlayTime / character.AnimSpeed) / 2);
@@ -152,7 +145,7 @@ public class RadicalTrigger : MonoBehaviour
         yield return new WaitForSeconds((character.AnimPlayTime / character.AnimSpeed) / 2);
         WhenDoneThrowWeapon();
         //wait for 0,4s before can attack again
-        yield return new WaitForSeconds(attackCooldown);
+        yield return new WaitForSeconds(0.5f);
         character.IsAttacking = false;
     }
 
