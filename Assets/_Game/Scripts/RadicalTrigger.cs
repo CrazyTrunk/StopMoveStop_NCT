@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.SocialPlatforms;
 using UnityEngine.TextCore.Text;
 
 
@@ -11,6 +12,7 @@ public class RadicalTrigger : MonoBehaviour
     private Queue<ICombatant> combatantQueue = new Queue<ICombatant>();
     private ICombatant currentTarget = null;
     private Character character;
+
 
     public ICombatant CurrentTarget { get => currentTarget; set => currentTarget = value; }
 
@@ -176,4 +178,5 @@ public class RadicalTrigger : MonoBehaviour
         }
     }
     #endregion
+
 }

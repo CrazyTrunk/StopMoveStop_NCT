@@ -1750,13 +1750,16 @@ MonoBehaviour:
   throwWeapon: {fileID: 9205972103333988174}
   Weapon: {fileID: 721604041766842279}
   speed: 5
-  range: 5
   detectedCircle: {fileID: 9129917577514363121}
   radicalTrigger: {fileID: 4248651964168576709}
+  playerSphere: {fileID: 0}
   animSpeed: 1.5
   animPlayTime: 1
-  rb: {fileID: 5929924585937042879}
-  capsuleCollider: {fileID: 5050918453655139715}
+  characterModel: {fileID: 0}
+  Level: 50
+  baseScale: {x: 1, y: 1, z: 1}
+  scaleIncrement: 0.1
+  range: 5
   controller: {fileID: 2041422886903663996}
 --- !u!114 &2041422886903663996
 MonoBehaviour:

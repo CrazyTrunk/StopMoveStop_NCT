@@ -17,7 +17,7 @@ public class ThrowWeapon : MonoBehaviour
         weaponManager = WeaponManager.Instance;
     }
 
-    public void Throw(float range)
+    public void Throw(float range, Character attacker)
     {
         GameObject weaponPrefab = weaponManager.LoadCurrentWeapon();
 
@@ -39,7 +39,7 @@ public class ThrowWeapon : MonoBehaviour
 
         if(tracker != null)
         {
-            tracker.SetTargetPoint(targetPoint);
+            tracker.SetTargetPoint(targetPoint, attacker);
         }
     }
 }
