@@ -13,6 +13,8 @@ public class RadicalTrigger : MonoBehaviour
     private ICombatant currentTarget = null;
     private Character character;
 
+    private float attackCooldown = 1f;
+    private float attackTimer = 0f;
 
     public ICombatant CurrentTarget { get => currentTarget; set => currentTarget = value; }
 
@@ -30,30 +32,37 @@ public class RadicalTrigger : MonoBehaviour
     public void OnInit()
     {
         CurrentTarget = null;
-        combatantQueue = new Queue<ICombatant>();
+        combatantQueue.Clear();
+        character.IsAttacking = false;
     }
-    private void OnTriggerStay(Collider other)
+    //private void OnTriggerStay(Collider other)
+    //{
+    //    UpdateTarget();
+
+    //    if (CanAttack())
+    //    {
+    //        StartCoroutine(AttackCorotine());
+    //    }
+
+    //}
+    private void Update()
     {
-        UpdateTarget();
+        attackTimer += Time.deltaTime;
 
-        if (CanAttack())
+        if (attackTimer >= attackCooldown && !character.IsAttacking)
         {
-            StartCoroutine(AttackCorotine());
+            UpdateTarget();
+            if (CurrentTarget != null && CanAttack())
+            {
+                attackTimer = 0f;
+                StartCoroutine(AttackCoroutine());
+            }
         }
-
     }
 
     private bool CanAttack()
     {
-        if (character.IsDead || (CurrentTarget != null && CurrentTarget.IsDead))
-        {
-            return false;
-        }
-        if (CurrentTarget != null && !character.IsAttacking && !character.IsMoving)
-        {
-            return true;
-        }
-        return false;
+        return character != null && !character.IsDead && CurrentTarget != null && !CurrentTarget.IsDead && !character.IsMoving;
     }
 
     private void OnTriggerExit(Collider other)
@@ -80,6 +89,7 @@ public class RadicalTrigger : MonoBehaviour
             combatantQueue = new Queue<ICombatant>(combatantQueue.Where(e => e != combatant));
             if (CurrentTarget == combatant)
             {
+                CurrentTarget = null;
                 if (character is Player)
                 {
                     combatant.Undetect();
@@ -105,20 +115,14 @@ public class RadicalTrigger : MonoBehaviour
 
     private void UpdateTarget()
     {
-        if (combatantQueue.Count > 0)
+        if (combatantQueue.Count > 0 && (CurrentTarget == null))
         {
-            if (CurrentTarget == null)
-            {
-                //Set Enemy from queue
-                GetTheFirstEnemyFromQueue();
-            }
-           
+            //Set Enemy from queue
+            GetTheFirstEnemyFromQueue();
         }
-        else
+        else if (combatantQueue.Count == 0)
         {
             CurrentTarget = null;
-            character.IsAttacking = false;
-            character.HasEnemyInSight = false;
         }
     }
     private void LookAtEnemyAndAttack()
@@ -135,7 +139,7 @@ public class RadicalTrigger : MonoBehaviour
     {
         character.ShowWeaponOnHand();
     }
-    IEnumerator AttackCorotine()
+    IEnumerator AttackCoroutine()
     {
         if (character.IsAttacking)
         {
@@ -148,7 +152,7 @@ public class RadicalTrigger : MonoBehaviour
         yield return new WaitForSeconds((character.AnimPlayTime / character.AnimSpeed) / 2);
         WhenDoneThrowWeapon();
         //wait for 0,4s before can attack again
-        yield return new WaitForSeconds(0.6f);
+        yield return new WaitForSeconds(attackCooldown);
         character.IsAttacking = false;
     }
 
@@ -170,11 +174,14 @@ public class RadicalTrigger : MonoBehaviour
     #region Event
     private void Combatant_OnCombatantKilled(ICombatant combatant)
     {
-        combatant.OnCombatantKilled -= Combatant_OnCombatantKilled;
-        combatantQueue = new Queue<ICombatant>(combatantQueue.Where(e => e != combatant));
-        if (CurrentTarget == combatant)
+        if (combatantQueue.Contains(combatant))
         {
-            CurrentTarget = null;
+            combatant.OnCombatantKilled -= Combatant_OnCombatantKilled;
+            combatantQueue = new Queue<ICombatant>(combatantQueue.Where(e => e != combatant));
+            if (CurrentTarget == combatant)
+            {
+                CurrentTarget = null;
+            }
         }
     }
     #endregion
