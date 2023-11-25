@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerSphere : MonoBehaviour
+public class CharacterSphere : MonoBehaviour
 {
     [SerializeField] private SphereCollider sphereCollider;
     [SerializeField] private ParticleSystem particalEffectOne;
@@ -11,13 +11,16 @@ public class PlayerSphere : MonoBehaviour
     public void UpdateTriggerSize(float newRange)
     {
         sphereCollider.radius = newRange;
-        if(character is Player)
+        if (character is Player)
         {
-            var sh = particalEffectOne.shape;
-            var sh2 = particalEffectTwo.shape;
-            sh.radius = newRange;
-            sh2.radius = newRange;
+            UpdateCharacterParticalRange(newRange);
         }
-     
+    }
+    private void UpdateCharacterParticalRange(float newRange)
+    {
+        var sh = particalEffectOne.shape;
+        var sh2 = particalEffectTwo.shape;
+        sh.radius = newRange;
+        sh2.radius = newRange;
     }
 }

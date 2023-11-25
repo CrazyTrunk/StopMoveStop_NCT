@@ -9,6 +9,7 @@ public class FloatingText : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        //Todo : Add Leanpool
         Destroy(gameObject, DestroyTime);
         transform.localPosition += offset;
     }

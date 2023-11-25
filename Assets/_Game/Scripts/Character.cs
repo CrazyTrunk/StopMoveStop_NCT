@@ -7,17 +7,32 @@ using static UnityEngine.EventSystems.EventTrigger;
 
 public class Character : MonoBehaviour, ICombatant
 {
+    [Header("Animation")]
     [SerializeField] private Animator animator;
+    [SerializeField] private float animSpeed = 1.5f;
+    [SerializeField] private float animPlayTime = 1f;
+    protected string CurrentAnim;
+
+    [Header("Combat")]
     [SerializeField] private ThrowWeapon throwWeapon;
     [SerializeField] public HandWeapon Weapon;
     [SerializeField] private float speed;
+    [SerializeField] private float range;
+
+    [Header("Sphere Detection")]
     [SerializeField] private DetectedCircle detectedCircle;
     [SerializeField] private RadicalTrigger radicalTrigger;
-    [SerializeField] private PlayerSphere playerSphere;
-    [SerializeField] private float animSpeed = 1.5f;
-    [SerializeField] private float animPlayTime = 1f;
+    [SerializeField] private CharacterSphere characterSphere;
     CapsuleCollider capsuleCollider;
-    [Header("Scale")]
+    public const float RangeIncreasePerTenLevels = 2f;
+    private float baseRange = 5f;
+    private float maxRangeIncrese = 10f;
+
+    [Header("UI Canvas Info and noti")]
+    [SerializeField] private LevelDisplay levelDisplayInfo;
+
+
+    [Header("Basic CharacterInfo")]
     [SerializeField] private Transform characterModel;
     public int Level = 0;
     public const int MaxLevelIncreseGap = 3;
@@ -30,13 +45,7 @@ public class Character : MonoBehaviour, ICombatant
     private Vector3 originalColliderCenter;
 
 
-    [Header("Scale Sphere")]
-    public const float LevelIncreasePerTenLevels = 2f;
-    [SerializeField] private float range;
-    private float baseRange = 5f;
-    private float maxRangeIncrese = 10f;
-
-    protected string CurrentAnim;
+    [Header("Boolean")]
     private bool isMoving;
     private bool hasEnemyInSight;
     private bool isAttacking;
@@ -90,14 +99,12 @@ public class Character : MonoBehaviour, ICombatant
 
     public void Detect()
     {
-        if (detectedCircle != null)
-            detectedCircle.Show();
+        detectedCircle?.Show();
     }
 
     public void Undetect()
     {
-        if (detectedCircle != null)
-            detectedCircle.Hide();
+        detectedCircle?.Hide();
     }
 
     public Transform GetTransform()
@@ -132,6 +139,7 @@ public class Character : MonoBehaviour, ICombatant
 
     public void ResetState()
     {
+        Level = 0;
         IsDead = false;
         isMoving = false;
         isAttacking = false;
@@ -139,13 +147,23 @@ public class Character : MonoBehaviour, ICombatant
         capsuleCollider.enabled = true;
         radicalTrigger.OnInit();
     }
+    public void InitLevelBot(int level)
+    {
+        Level = level;
+        float currentRange = CalculateRange();
+        ScaleModel(level);
+        AdjustCollider();
+        characterSphere.UpdateTriggerSize(currentRange);
+        levelDisplayInfo.UpdateUILevelPlayer(Level);
+    }
     public void LevelUp(int enemyLevel)
     {
         int level = CalculateLevel(enemyLevel);
         float currentRange = CalculateRange();
         ScaleModel(level);
         AdjustCollider();
-        playerSphere.UpdateTriggerSize(currentRange);
+        characterSphere.UpdateTriggerSize(currentRange);
+        levelDisplayInfo.UpdateUILevelPlayer(Level);
     }
     private int CalculateLevel(int enemyLevel)
     {
@@ -163,7 +181,7 @@ public class Character : MonoBehaviour, ICombatant
     }
     private float CalculateRange()
     {
-        float increment = (Level / 10) * LevelIncreasePerTenLevels;
+        float increment = (Level / 10) * RangeIncreasePerTenLevels;
         return range = Mathf.Min(baseRange + increment, maxRangeIncrese);
 
     }

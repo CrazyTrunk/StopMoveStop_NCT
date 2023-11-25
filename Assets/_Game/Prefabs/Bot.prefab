@@ -1657,6 +1657,7 @@ GameObject:
   - component: {fileID: 5929924585937042879}
   - component: {fileID: 3170740837600521104}
   - component: {fileID: 2041422886903663996}
+  - component: {fileID: -185975078280628}
   m_Layer: 0
   m_Name: Bot
   m_TagString: Enemy
@@ -1747,19 +1748,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 2676705831491289446}
+  animSpeed: 1.5
+  animPlayTime: 1
   throwWeapon: {fileID: 9205972103333988174}
   Weapon: {fileID: 721604041766842279}
   speed: 5
+  range: 5
   detectedCircle: {fileID: 9129917577514363121}
   radicalTrigger: {fileID: 4248651964168576709}
-  playerSphere: {fileID: 0}
-  animSpeed: 1.5
-  animPlayTime: 1
-  characterModel: {fileID: 0}
-  Level: 50
+  characterSphere: {fileID: 5755871892658538801}
+  levelDisplayInfo: {fileID: 5985223093016099182}
+  characterModel: {fileID: 4058133212734950908}
+  Level: 0
   baseScale: {x: 1, y: 1, z: 1}
+  maxScale: 2
   scaleIncrement: 0.1
-  range: 5
   controller: {fileID: 2041422886903663996}
 --- !u!114 &2041422886903663996
 MonoBehaviour:
@@ -1775,6 +1778,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentBot: {fileID: 3170740837600521104}
   infoCanvasTransform: {fileID: 9088740839875765780}
+--- !u!114 &-185975078280628
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5047329666932212505}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 213fad87794cc3e4fa7a25b772c32619, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  infoCanvasTransform: {fileID: 9088740839875765780}
+  characterModel: {fileID: 4058133212734950908}
+  yOffset: 3
 --- !u!1 &5202626692195656735
 GameObject:
   m_ObjectHideFlags: 0
@@ -1985,6 +2003,7 @@ GameObject:
   - component: {fileID: 7451998674344887541}
   - component: {fileID: 5624284576174363275}
   - component: {fileID: 5135658005717144654}
+  - component: {fileID: 5985223093016099182}
   m_Layer: 5
   m_Name: Level
   m_TagString: Untagged
@@ -2050,6 +2069,20 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &5985223093016099182
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5439183057712047052}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1fd12820fd73dd04184062104fbd3df4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  textMeshUI: {fileID: 4779127462685825215}
+  character: {fileID: 3170740837600521104}
 --- !u!1 &5580484807500214132
 GameObject:
   m_ObjectHideFlags: 0
@@ -2474,6 +2507,7 @@ GameObject:
   - component: {fileID: 696629871131034081}
   - component: {fileID: 479308965267334230}
   - component: {fileID: 4248651964168576709}
+  - component: {fileID: 5755871892658538801}
   m_Layer: 0
   m_Name: DetectSphere
   m_TagString: Untagged
@@ -2529,6 +2563,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ece76e654833faf4cb404180d62a6aa0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &5755871892658538801
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6923661589840178151}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6c24789513d46fe45990b9086fb080c7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sphereCollider: {fileID: 479308965267334230}
+  particalEffectOne: {fileID: 0}
+  particalEffectTwo: {fileID: 0}
+  character: {fileID: 3170740837600521104}
 --- !u!1 &7059705445157719542
 GameObject:
   m_ObjectHideFlags: 0

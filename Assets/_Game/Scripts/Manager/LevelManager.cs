@@ -6,6 +6,8 @@ using UnityEngine.UIElements;
 public class LevelManager : Singleton<LevelManager>
 {
     [SerializeField] public LeanGameObjectPool botPool;
+    [SerializeField] public Player player;
+
     public int maxBotsAtOnce = 5;
     public int totalBotsToKill = 50;
     private int currentBots = 0;
@@ -45,6 +47,7 @@ public class LevelManager : Singleton<LevelManager>
         Vector3 spawnPosition = GenerateSpawnPosition();
         Enemy enemy = botPool.Spawn(spawnPosition, Quaternion.identity, botPool.transform).GetComponent<Enemy>();
         enemy.ResetState();
+        enemy.InitLevelBot(player.Level + Random.Range(3, 5 + 1));
         // Set up the bot (e.g., adding it to a list, setting up callbacks, etc.)
         currentBots++;
     }
