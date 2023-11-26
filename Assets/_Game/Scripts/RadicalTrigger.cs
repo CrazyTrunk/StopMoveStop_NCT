@@ -31,18 +31,7 @@ public class RadicalTrigger : MonoBehaviour
     {
         CurrentTarget = null;
         combatantQueue.Clear();
-        character.IsAttacking = false;
     }
-    //private void OnTriggerStay(Collider other)
-    //{
-    //    UpdateTarget();
-
-    //    if (CanAttack())
-    //    {
-    //        StartCoroutine(AttackCorotine());
-    //    }
-
-    //}
     private void FixedUpdate()
     {
 

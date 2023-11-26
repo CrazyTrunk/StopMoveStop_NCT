@@ -65,6 +65,7 @@ public class Character : MonoBehaviour, ICombatant
         capsuleCollider = GetComponent<CapsuleCollider>();
         originalColliderSize = new Vector3(capsuleCollider.radius, capsuleCollider.height, capsuleCollider.radius);
         originalColliderCenter = capsuleCollider.center;
+        ResetState();
     }
     public void ChangeAnim(string animName)
     {
@@ -79,9 +80,10 @@ public class Character : MonoBehaviour, ICombatant
     {
         transform.LookAt(target.position);
     }
+    #region Weapon - Bullet
     public void ThrowWeapon()
     {
-        float scaleMultiplier = 1 + (Level / (float)MaxLevel * (maxScale - 1));;
+        float scaleMultiplier = 1 + (Level / (float)MaxLevel * (maxScale - 1)); ;
 
         throwWeapon.Throw(range, this, scaleMultiplier);
     }
@@ -93,7 +95,8 @@ public class Character : MonoBehaviour, ICombatant
     {
         Weapon.ShowWeapon();
     }
-
+    #endregion
+    #region Circle UnderFeet (interface)
     public void Detect()
     {
         detectedCircle?.Show();
@@ -103,11 +106,12 @@ public class Character : MonoBehaviour, ICombatant
     {
         detectedCircle?.Hide();
     }
-
     public Transform GetTransform()
     {
         return transform;
     }
+    #endregion
+
 
     public void ResetState()
     {
@@ -117,8 +121,9 @@ public class Character : MonoBehaviour, ICombatant
         isAttacking = false;
         hasEnemyInSight = false;
         capsuleCollider.enabled = true;
-        radicalTrigger.OnInit();
+        radicalTrigger?.OnInit();
     }
+    #region Level Init and other calculate related
     public void InitLevelBot(int level)
     {
         Level = level;
@@ -174,8 +179,11 @@ public class Character : MonoBehaviour, ICombatant
         // Bạn có thể cần điều chỉnh giá trị này dựa trên vị trí cụ thể của model của bạn
         capsuleCollider.center = new Vector3(originalColliderCenter.x, originalColliderCenter.y * scale, originalColliderCenter.z);
     }
+    #endregion
+    #region Event
     protected void InvokeOnDeath()
     {
         OnCombatantKilled?.Invoke(this);
     }
+    #endregion
 }
