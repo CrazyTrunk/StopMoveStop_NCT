@@ -81,7 +81,9 @@ public class Character : MonoBehaviour, ICombatant
     }
     public void ThrowWeapon()
     {
-        throwWeapon.Throw(range, this);
+        float scaleMultiplier = 1 + (Level / (float)MaxLevel * (maxScale - 1));;
+
+        throwWeapon.Throw(range, this, scaleMultiplier);
     }
     public void HideWeaponOnHand()
     {

@@ -12,6 +12,7 @@ public class WeaponData : ScriptableObject
 public class Weapon
 {
     public string name;
+    public WeaponType type;
     public int cost;
     public GameObject prefab;
     public bool isOwned;

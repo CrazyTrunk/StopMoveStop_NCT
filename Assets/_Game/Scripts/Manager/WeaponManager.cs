@@ -19,9 +19,21 @@ public class WeaponManager : Singleton<WeaponManager>
     }
     public GameObject LoadCurrentWeapon()
     {
+        //temprary
         foreach (Weapon weapon in weaponData.allWeapons)
         {
             if (weapon.isEquiqed && weapon.isOwned)
+            {
+                return weapon.prefab;
+            }
+        }
+        return null;
+    }
+    public GameObject LoadWeaponByType(WeaponType weaponType)
+    {
+        foreach (Weapon weapon in weaponData.allWeapons)
+        {
+            if (weaponType == weapon.type)
             {
                 return weapon.prefab;
             }

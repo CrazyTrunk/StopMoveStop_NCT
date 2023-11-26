@@ -16,26 +16,29 @@ public class ThrowWeapon : MonoBehaviour
     {
         weaponManager = WeaponManager.Instance;
     }
-
-    public void Throw(float range, Character attacker)
+    private GameObject InitProjectile(GameObject bulletPrefab , float chracterScale)
     {
-        GameObject weaponPrefab = weaponManager.LoadCurrentWeapon();
-
-        GameObject projectile = Instantiate(weaponPrefab, attackPoint.position, Quaternion.identity);
+        GameObject projectile = Instantiate(bulletPrefab, attackPoint.position, Quaternion.identity);
+        projectile.transform.localScale *= chracterScale;
         projectile.transform.rotation = Quaternion.Euler(90f, 90f, 0);
         projectile.AddComponent<Rigidbody>();
         projectile.AddComponent<ProjectileTracker>();
         projectile.AddComponent<BoxCollider>().isTrigger = true;
+        return projectile;
+    }
+    public void Throw(float range, Character attacker, float characterScale)
+    {
+        GameObject weaponPrefab = weaponManager.LoadCurrentWeapon();
 
-        Rigidbody projectRb = projectile.GetComponent<Rigidbody>();
+        GameObject bullet = InitProjectile(weaponPrefab, characterScale);
+        Rigidbody projectRb = bullet.GetComponent<Rigidbody>();
         projectRb.useGravity = false;
         projectRb.constraints = RigidbodyConstraints.FreezePositionY;
 
-        //5f is range
         Vector3 targetPoint = attackPoint.position + attackPoint.forward * range;
         projectRb.AddForce((targetPoint - attackPoint.position).normalized * throwForce);
         projectRb.AddTorque(transform.up * throwForce, ForceMode.Impulse);
-        ProjectileTracker tracker = projectile.GetComponent<ProjectileTracker>();
+        ProjectileTracker tracker = bullet.GetComponent<ProjectileTracker>();
 
         if(tracker != null)
         {
