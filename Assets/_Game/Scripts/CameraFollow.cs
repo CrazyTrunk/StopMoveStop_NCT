@@ -8,6 +8,8 @@ public class CameraFollow : MonoBehaviour
     Vector3 offset;
     [SerializeField] private float smoothTime = 0.25f;
     [SerializeField] private Transform target;
+    [SerializeField] private Vector3 playerView = new Vector3(0, 15f, -8f);
+    private bool followTarget = true;
 
     private Vector3 _currentVelocity = Vector3.zero;
     private void Awake()
@@ -18,5 +20,10 @@ public class CameraFollow : MonoBehaviour
     {
         Vector3 targetPosition = target.position + offset;
         transform.position = Vector3.SmoothDamp(transform.position, targetPosition, ref _currentVelocity, smoothTime);
+    }
+    public void SwitchCameraViewToPlayer()
+    {
+        offset = playerView;
+        transform.rotation = Quaternion.Euler(70f, 0, 0);
     }
 }
