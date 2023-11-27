@@ -47,7 +47,10 @@ public class RandomPositionState : IState
         _enemy.CurrentBot.IsMoving = true;
         _enemy.ChangeAnim(Anim.RUN);
         _enemy.Move(direction);
-
+        if (_enemy.IsFacingWall(direction))
+        {
+            ChangeDirectionRandomlyDuringRun();
+        }
 
         _enemy.transform.LookAt(_enemy.transform.position + direction);
 

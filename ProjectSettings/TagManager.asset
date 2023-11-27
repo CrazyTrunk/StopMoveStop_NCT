@@ -7,6 +7,8 @@ TagManager:
   - MeleeWeapon
   - RangeWeapon
   - Enemy
+  - Wall
+  - Obstacle
   layers:
   - Default
   - TransparentFX

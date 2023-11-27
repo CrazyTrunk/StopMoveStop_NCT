@@ -7,6 +7,7 @@ public class Enemy : Character
 {
     [SerializeField] private EnemyController controller;
     private float respawnTime = 1f;
+
     public void Move(Vector3 direction)
     {
         transform.position += Speed * Time.deltaTime * direction;
