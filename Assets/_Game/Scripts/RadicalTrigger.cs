@@ -34,15 +34,18 @@ public class RadicalTrigger : MonoBehaviour
     }
     private void FixedUpdate()
     {
-
-        if (!character.IsAttacking)
+        if (GameManager.Instance.IsState(GameState.Playing))
         {
-            UpdateTarget();
-            if (CurrentTarget != null && CanAttack())
+            if (!character.IsAttacking)
             {
-                StartCoroutine(AttackCoroutine());
+                UpdateTarget();
+                if (CurrentTarget != null && CanAttack())
+                {
+                    StartCoroutine(AttackCoroutine());
+                }
             }
         }
+      
     }
 
     private bool CanAttack()
