@@ -15,7 +15,6 @@ public class Enemy : Character
     public void OnDeath()
     {
         OnEnemyDeath();
-        controller.SetState(new IdleState(controller));
     }
     public void OnEnemyDeath()
     {

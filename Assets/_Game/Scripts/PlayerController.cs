@@ -1,4 +1,5 @@
 ﻿
+using System;
 using UnityEngine;
 [RequireComponent(typeof(Rigidbody), typeof(CapsuleCollider))]
 public class PlayerController : MonoBehaviour
@@ -18,8 +19,17 @@ public class PlayerController : MonoBehaviour
         else if ((joystick.Horizontal == 0 || joystick.Vertical == 0))
         {
             player.IsMoving = false;
-            player.ChangeAnim(Anim.IDLE);
+            if (CanIdle())
+            {
+                player.ChangeAnim(Anim.IDLE);
+            }
+
         }
+    }
+
+    private bool CanIdle()
+    {
+       return !player.IsAttacking && !player.HasEnemyInSight;
     }
 
     private void FixedUpdate()

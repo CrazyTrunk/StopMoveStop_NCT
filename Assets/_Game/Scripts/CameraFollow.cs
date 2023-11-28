@@ -9,7 +9,6 @@ public class CameraFollow : MonoBehaviour
     [SerializeField] private float smoothTime = 0.25f;
     [SerializeField] private Transform target;
     [SerializeField] private Vector3 playerView = new Vector3(0, 15f, -8f);
-    private bool followTarget = true;
 
     private Vector3 _currentVelocity = Vector3.zero;
     private void Awake()

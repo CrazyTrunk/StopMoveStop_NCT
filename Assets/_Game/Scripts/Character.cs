@@ -71,7 +71,7 @@ public class Character : MonoBehaviour, ICombatant
     {
         if (CurrentAnim != animName)
         {
-            Animator.ResetTrigger(animName);
+            Animator.ResetTrigger(CurrentAnim);
             CurrentAnim = animName;
             Animator.SetTrigger(CurrentAnim);
         }

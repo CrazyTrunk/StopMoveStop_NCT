@@ -85,6 +85,10 @@ public class RadicalTrigger : MonoBehaviour
                 {
                     GetTheFirstEnemyFromQueue();
                 }
+                else
+                {
+                    character.HasEnemyInSight = false;
+                }
             }
 
         }
@@ -114,7 +118,6 @@ public class RadicalTrigger : MonoBehaviour
     private void LookAtEnemyAndAttack()
     {
         character.LookAtTarget(currentTarget.GetTransform());
-        character.ChangeAnim(Anim.ATTACK);
     }
     private void ThrowWeapon()
     {
@@ -129,12 +132,17 @@ public class RadicalTrigger : MonoBehaviour
     {
         character.IsAttacking = true;
         LookAtEnemyAndAttack();
+        character.ChangeAnim(Anim.ATTACK);
         yield return new WaitForSeconds((character.AnimPlayTime / character.AnimSpeed) / 2);
         ThrowWeapon();
         yield return new WaitForSeconds((character.AnimPlayTime / character.AnimSpeed) / 2);
         WhenDoneThrowWeapon();
         //wait for 0,4s before can attack again
         yield return new WaitForSeconds(0.5f);
+        if (!character.IsDead)
+        {
+            character.ChangeAnim(Anim.IDLE);
+        }
         character.IsAttacking = false;
     }
 
@@ -163,6 +171,7 @@ public class RadicalTrigger : MonoBehaviour
             if (CurrentTarget == combatant)
             {
                 CurrentTarget = null;
+                character.HasEnemyInSight = false;
             }
         }
     }
