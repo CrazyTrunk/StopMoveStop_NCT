@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -16,6 +17,23 @@ public class CharacterSphere : MonoBehaviour
             UpdateCharacterParticalRange(newRange);
         }
     }
+    private void Awake()
+    {
+        MainMenu.Instance.OnPlayButtonPressed += SetActiveTrue;
+        gameObject.SetActive(false);
+    }
+    private void OnDestroy()
+    {
+        if (MainMenu.Instance != null)
+        {
+            MainMenu.Instance.OnPlayButtonPressed -= SetActiveTrue;
+        }
+    }
+    private void SetActiveTrue()
+    {
+        gameObject.SetActive(true);
+    }
+
     private void UpdateCharacterParticalRange(float newRange)
     {
         var sh = particalEffectOne.shape;

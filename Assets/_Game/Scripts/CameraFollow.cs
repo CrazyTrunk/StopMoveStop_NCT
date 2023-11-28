@@ -28,7 +28,7 @@ public class CameraFollow : MonoBehaviour
     }
     public void SwitchCameraViewToPlayer()
     {
-        StartCoroutine(SwitchToNewCameraView(newCameraPos, newRotationPos, 2f)); // 2f là thời gian chuyển đổi
+        StartCoroutine(SwitchToNewCameraView(newCameraPos, newRotationPos, 1f)); // 2f là thời gian chuyển đổi
     }
     IEnumerator SwitchToNewCameraView(Vector3 newPosition, Quaternion newRotation, float duration)
     {
