@@ -17,6 +17,7 @@ public class WeaponMenu : Menu<WeaponMenu>
     private WeaponOnShop currentWeapon;
     private void Start()
     {
+        PlayerPrefs.DeleteAll();
         coinText.text = coin.ToString();
         SetCostData();
     }
