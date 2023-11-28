@@ -141,8 +141,8 @@ public class RadicalTrigger : MonoBehaviour
         yield return new WaitForSeconds((character.AnimPlayTime / character.AnimSpeed) / 2);
         WhenDoneThrowWeapon();
         //wait for 0,4s before can attack again
-        yield return new WaitForSeconds(0.5f);
-        if (!character.IsDead)
+        yield return new WaitForSeconds(0.2f);
+        if (!character.IsDead && !character.IsMoving)
         {
             character.ChangeAnim(Anim.IDLE);
         }

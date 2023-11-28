@@ -29,7 +29,7 @@ public class PlayerController : MonoBehaviour
 
     private bool CanIdle()
     {
-       return !player.IsAttacking && !player.HasEnemyInSight;
+       return !player.HasEnemyInSight && !player.IsAttacking;
     }
 
     private void FixedUpdate()

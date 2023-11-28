@@ -8,7 +8,7 @@ public class ProjectileTracker : MonoBehaviour
     public bool hasReached = false;
     private Rigidbody rb;
     //Determine who shoot it
-    public ICombatant Shooter { get; set; }
+    public Character Shooter { get; set; }
 
     private void Start()
     {
@@ -25,7 +25,7 @@ public class ProjectileTracker : MonoBehaviour
             }
         }
     }
-    public void SetTargetPoint(Vector3 target, ICombatant shooter)
+    public void SetTargetPoint(Vector3 target, Character shooter)
     {
         targetPoint = target;
         Shooter = shooter;
@@ -40,7 +40,7 @@ public class ProjectileTracker : MonoBehaviour
         if (other.CompareTag(Tag.ENEMY))
         {
             Enemy enemy = other.GetComponent<Enemy>();
-            if (!enemy.IsDead)
+            if (!enemy.IsDead && enemy != Shooter)
             {
                 enemy.LastAttacker = Shooter;
                 enemy.OnDeath();
