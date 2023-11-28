@@ -1,16 +1,16 @@
 ﻿
 public enum WeaponType
 {
-    Arrow,
-    Axe0,
-    Axe1,
-    Boomerang,
-    Candy0,
-    Candy1,
-    Candy2,
-    Candy4,
-    Hammer,
-    Knife, 
-    Uzi,
+    HAMMER,
+    AXE0,
+    AXE1,
+    BOOMERANG,
+    CANDY0,
+    CANDY1,
+    CANDY2,
+    CANDY4,
+    KNIFE,
+    ARROW,
+    UZI,
     Z
 }

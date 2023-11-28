@@ -10,7 +10,7 @@ public class Character : MonoBehaviour, ICombatant
     protected string CurrentAnim;
 
     [Header("Combat")]
-    [SerializeField] private ThrowWeapon throwWeapon;
+    [SerializeField] private Weapon weaponThrow;
     [SerializeField] public HandWeapon Weapon;
     [SerializeField] private float speed;
     [SerializeField] private float range;
@@ -69,7 +69,7 @@ public class Character : MonoBehaviour, ICombatant
     }
     public void ChangeAnim(string animName)
     {
-        if (CurrentAnim != animName)
+        if (!string.IsNullOrEmpty(CurrentAnim) && CurrentAnim != animName)
         {
             Animator.ResetTrigger(CurrentAnim);
             CurrentAnim = animName;
@@ -85,7 +85,7 @@ public class Character : MonoBehaviour, ICombatant
     {
         float scaleMultiplier = 1 + (Level / (float)MaxLevel * (maxScale - 1)); ;
 
-        throwWeapon.Throw(range, this, scaleMultiplier);
+        weaponThrow.Throw(range, this, scaleMultiplier);
     }
     public void HideWeaponOnHand()
     {

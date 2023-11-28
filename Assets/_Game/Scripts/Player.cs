@@ -5,7 +5,6 @@ public class Player : Character, ICombatant
 {
     [SerializeField] private GameObject floatingLevelTextPrefab;
     [SerializeField] private Transform canvasPopup;
-
     public void ShowFloatingText(int level)
     {
         var floatText = Instantiate(floatingLevelTextPrefab, canvasPopup.position , Quaternion.identity, canvasPopup);
