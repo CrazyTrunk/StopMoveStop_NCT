@@ -15,6 +15,10 @@ public class WeaponShopManagerItem : Singleton<WeaponShopManagerItem>
     {
         weaponData.UnlockWeapon(weaponType);
     }
+    public void SelectWeapon(WeaponType weaponType)
+    {
+        weaponData.SelectWeapon(weaponType);
+    }
     public bool IsUnlockItem(WeaponType weaponType)
     {
         return weaponData.IsUnlocked(weaponType);
@@ -22,7 +26,7 @@ public class WeaponShopManagerItem : Singleton<WeaponShopManagerItem>
     public void LoadFistItemInList()
     {
         currentDataIndex = 0;
-        currentWeaponOnShop = weaponData.allWeapons[currentDataIndex];
+        currentWeaponOnShop = weaponData.listWeapon[currentDataIndex];
         SpawnWeaponPrefab(currentWeaponOnShop);
     }
     public WeaponOnShop GetCurrentWeaponOnShop()
@@ -32,10 +36,10 @@ public class WeaponShopManagerItem : Singleton<WeaponShopManagerItem>
     public void NextItemInList()
     {
 
-        if (currentDataIndex < weaponData.allWeapons.Count - 1)
+        if (currentDataIndex < weaponData.listWeapon.Count - 1)
         {
             currentDataIndex++;
-            currentWeaponOnShop = weaponData.allWeapons[currentDataIndex];
+            currentWeaponOnShop = weaponData.listWeapon[currentDataIndex];
             SpawnWeaponPrefab(currentWeaponOnShop);
         }
     }
@@ -44,7 +48,7 @@ public class WeaponShopManagerItem : Singleton<WeaponShopManagerItem>
         if (currentDataIndex > 0)
         {
             currentDataIndex--;
-            currentWeaponOnShop = weaponData.allWeapons[currentDataIndex];
+            currentWeaponOnShop = weaponData.listWeapon[currentDataIndex];
             SpawnWeaponPrefab(currentWeaponOnShop);
         }
     }

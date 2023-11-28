@@ -5,7 +5,7 @@ using UnityEngine.UI;
 [CreateAssetMenu(fileName = "WeaponData", menuName = "Game Data/Weapons")]
 public class WeaponData : ScriptableObject
 {
-    public List<WeaponOnShop> allWeapons;
+    public List<WeaponOnShop> listWeapon;
     private const string Prefix = "Weapon_";
     private const string SelectedWeapon = "SelectedWeapon";
     public void SelectWeapon(WeaponType weaponType)
@@ -15,9 +15,9 @@ public class WeaponData : ScriptableObject
     public WeaponOnShop GetSelectedWeapon()
     {
         int skinIndex = PlayerPrefs.GetInt(SelectedWeapon, 0);
-        if (skinIndex >= 0 && skinIndex < allWeapons.Count)
+        if (skinIndex >= 0 && skinIndex < listWeapon.Count)
         {
-            return allWeapons[skinIndex];
+            return listWeapon[skinIndex];
         }
         return null;
     }
