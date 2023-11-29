@@ -7,19 +7,26 @@ public class HandWeapon : MonoBehaviour
     private GameObject weaponOnHandPrefab;
     [SerializeField]private Transform parentHolder;
 
-    private void Awake()
+    public void InitWeapon()
     {
-        InitWeapon();
+        GameObject weaponPrefab = WeaponShopManagerItem.Instance.GetSelectWeapon().prefabWeapon;
+        if(weaponOnHandPrefab != null)
+        {
+            Destroy(weaponOnHandPrefab);
+        }
+        weaponOnHandPrefab = Instantiate(weaponPrefab, transform.position, Quaternion.identity, parentHolder);
+        weaponOnHandPrefab.transform.localRotation = Quaternion.Euler(0, 0, -90f);
     }
-
-    private void InitWeapon()
+    public void InitWeapon(WeaponType weaponType)
     {
-        //GameObject weaponPrefab = weaponManager.LoadCurrentWeapon();
-
-        //weaponOnHandPrefab = Instantiate(weaponPrefab, transform.position, Quaternion.identity, parentHolder);
-        //weaponOnHandPrefab.transform.localRotation = Quaternion.Euler(0, 0, -90f);
+        GameObject weaponPrefab = WeaponShopManagerItem.Instance.GetSelectWeapon(weaponType).prefabWeapon;
+        if (weaponOnHandPrefab != null)
+        {
+            Destroy(weaponOnHandPrefab);
+        }
+        weaponOnHandPrefab = Instantiate(weaponPrefab, transform.position, Quaternion.identity, parentHolder);
+        weaponOnHandPrefab.transform.localRotation = Quaternion.Euler(0, 0, -90f);
     }
-
     public void HideWeapon()
     {
         weaponOnHandPrefab.SetActive(false);

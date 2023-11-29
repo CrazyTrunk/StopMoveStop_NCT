@@ -5588,7 +5588,7 @@ MonoBehaviour:
   animSpeed: 1.5
   animPlayTime: 1
   weaponThrow: {fileID: 0}
-  Weapon: {fileID: 2063900402}
+  weaponOnHand: {fileID: 2063900402}
   speed: 5
   range: 5
   detectedCircle: {fileID: 0}
@@ -5602,7 +5602,6 @@ MonoBehaviour:
   scaleIncrement: 0.1
   floatingLevelTextPrefab: {fileID: 8004888681745737096, guid: 1216b4a7ea34abd4e9a6c91bbe943699, type: 3}
   canvasPopup: {fileID: 1970996851}
-  Coin: 0
 --- !u!1001 &445529402
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -11577,6 +11576,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   weaponData: {fileID: 11400000, guid: 34b351d3227797b44a958a6b11129d10, type: 2}
   parentSpawn: {fileID: 266159617}
+  player: {fileID: 424253570}
 --- !u!1 &1313326775
 GameObject:
   m_ObjectHideFlags: 0
@@ -13231,7 +13231,7 @@ GameObject:
   - component: {fileID: 2063900401}
   - component: {fileID: 2063900402}
   m_Layer: 0
-  m_Name: WeaponHandler
+  m_Name: WeaponHand
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

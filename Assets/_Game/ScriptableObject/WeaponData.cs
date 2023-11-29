@@ -21,6 +21,17 @@ public class WeaponData : ScriptableObject
         }
         return null;
     }
+    public WeaponOnShop GetWeaponByType(WeaponType weaponType)
+    {
+        for (int i = 0; i < listWeapon.Count; i++)
+        {
+            if (listWeapon[i].type == weaponType)
+            {
+                return listWeapon[i];
+            }
+        }
+        return null;
+    }
     public void UnlockWeapon(WeaponType weaponType)
     {
         //da unlock hay chua

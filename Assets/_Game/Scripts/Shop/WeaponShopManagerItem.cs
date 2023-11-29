@@ -6,7 +6,7 @@ public class WeaponShopManagerItem : Singleton<WeaponShopManagerItem>
 {
     [SerializeField] private WeaponData weaponData;
     [SerializeField] private Transform parentSpawn;
-
+    [SerializeField] private Player player;
 
     private GameObject currentWeaponPrefabInstance;
     private WeaponOnShop currentWeaponOnShop;
@@ -18,10 +18,15 @@ public class WeaponShopManagerItem : Singleton<WeaponShopManagerItem>
     public void SelectWeapon(WeaponType weaponType)
     {
         weaponData.SelectWeapon(weaponType);
+        player.InitWeaponOnHand();
     }
     public WeaponOnShop GetSelectWeapon()
     {
        return weaponData.GetSelectedWeapon();
+    }
+    public WeaponOnShop GetSelectWeapon(WeaponType weaponType)
+    {
+        return weaponData.GetWeaponByType(weaponType);
     }
     public bool IsUnlockItem(WeaponType weaponType)
     {
@@ -32,6 +37,7 @@ public class WeaponShopManagerItem : Singleton<WeaponShopManagerItem>
         currentDataIndex = 0;
         currentWeaponOnShop = weaponData.listWeapon[currentDataIndex];
         SpawnWeaponPrefab(currentWeaponOnShop);
+        player.InitWeaponOnHand();
     }
     public WeaponOnShop GetCurrentWeaponOnShop()
     {

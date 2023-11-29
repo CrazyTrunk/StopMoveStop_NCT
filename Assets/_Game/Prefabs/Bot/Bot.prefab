@@ -1750,8 +1750,8 @@ MonoBehaviour:
   animator: {fileID: 2676705831491289446}
   animSpeed: 1.5
   animPlayTime: 1
-  throwWeapon: {fileID: 9205972103333988174}
-  Weapon: {fileID: 721604041766842279}
+  weaponThrow: {fileID: 0}
+  weaponOnHand: {fileID: 721604041766842279}
   speed: 5
   range: 5
   detectedCircle: {fileID: 9129917577514363121}
@@ -2862,7 +2862,7 @@ GameObject:
   - component: {fileID: 2879410776542331614}
   - component: {fileID: 721604041766842279}
   m_Layer: 0
-  m_Name: WeaponHandler
+  m_Name: WeaponHand
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

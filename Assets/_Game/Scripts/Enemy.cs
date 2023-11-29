@@ -7,7 +7,10 @@ public class Enemy : Character
 {
     [SerializeField] private EnemyController controller;
     private float respawnTime = 1f;
-
+    private void Start()
+    {
+        InitWeaponOnHand();
+    }
     public void Move(Vector3 direction)
     {
         transform.position += Speed * Time.deltaTime * direction;
@@ -40,5 +43,8 @@ public class Enemy : Character
         LevelManager.Instance.BotKilled(this);
 
     }
-
+    public void InitWeaponOnHand()
+    {
+        WeaponOnHand.InitWeapon(WeaponType.HAMMER);
+    }
 }

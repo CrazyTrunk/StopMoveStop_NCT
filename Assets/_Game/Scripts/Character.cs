@@ -11,7 +11,7 @@ public class Character : MonoBehaviour, ICombatant
 
     [Header("Combat")]
     [SerializeField] private Weapon weaponThrow;
-    [SerializeField] public HandWeapon Weapon;
+    [SerializeField] private HandWeapon weaponOnHand;
     [SerializeField] private float speed;
     [SerializeField] private float range;
 
@@ -55,9 +55,10 @@ public class Character : MonoBehaviour, ICombatant
     public float AnimSpeed { get => animSpeed; set => animSpeed = value; }
     public float AnimPlayTime { get => animPlayTime; set => animPlayTime = value; }
     public ICombatant LastAttacker { get; set; }
+    public HandWeapon WeaponOnHand { get => weaponOnHand; set => weaponOnHand = value; }
+
     //Event
     public event Action<ICombatant> OnCombatantKilled;
-    public event Action OnLevelUp;
 
     private void Awake()
     {
@@ -89,11 +90,11 @@ public class Character : MonoBehaviour, ICombatant
     }
     public void HideWeaponOnHand()
     {
-        Weapon.HideWeapon();
+        weaponOnHand.HideWeapon();
     }
     public void ShowWeaponOnHand()
     {
-        Weapon.ShowWeapon();
+        weaponOnHand.ShowWeapon();
     }
     #endregion
     #region Circle UnderFeet (interface)
@@ -148,12 +149,9 @@ public class Character : MonoBehaviour, ICombatant
         Level += levelIncrease;
         if (this is Player player)
         {
-            //trigger Text Ui
-            Debug.Log("Level Up");
             player.ShowFloatingText(levelIncrease);
         }
         Level = Mathf.Clamp(Level, 0, MaxLevel);
-        OnLevelUp?.Invoke();
         return Level;
     }
     private float CalculateRange()

@@ -12,7 +12,7 @@ public class Player : Character, ICombatant
             WeaponShopManagerItem.Instance.BuyItem(WeaponType.HAMMER);
             WeaponShopManagerItem.Instance.SelectWeapon(WeaponType.HAMMER);
         }
-        
+        InitWeaponOnHand();
     }
     public void ShowFloatingText(int level)
     {
@@ -23,5 +23,9 @@ public class Player : Character, ICombatant
     {
         canvasPopup.LookAt(canvasPopup.position +
             Camera.main.transform.rotation * Vector3.forward, Vector3.up);
+    }
+    public void InitWeaponOnHand()
+    {
+        WeaponOnHand.InitWeapon();
     }
 }

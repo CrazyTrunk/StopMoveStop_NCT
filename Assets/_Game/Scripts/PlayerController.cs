@@ -9,27 +9,31 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private Joystick joystick;
     private void Update()
     {
-        rb.velocity = new Vector3(joystick.Horizontal * player.Speed, rb.velocity.y, joystick.Vertical * player.Speed);
+        if (GameManager.Instance.IsState(GameState.Playing))
+        {
+            rb.velocity = new Vector3(joystick.Horizontal * player.Speed, rb.velocity.y, joystick.Vertical * player.Speed);
 
-        if (joystick.Horizontal != 0 || joystick.Vertical != 0)
-        {
-            player.IsMoving = true;
-            player.ChangeAnim(Anim.RUN);
-        }
-        else if ((joystick.Horizontal == 0 || joystick.Vertical == 0))
-        {
-            player.IsMoving = false;
-            if (CanIdle())
+            if (joystick.Horizontal != 0 || joystick.Vertical != 0)
             {
-                player.ChangeAnim(Anim.IDLE);
+                player.IsMoving = true;
+                player.ChangeAnim(Anim.RUN);
             }
+            else if ((joystick.Horizontal == 0 || joystick.Vertical == 0))
+            {
+                player.IsMoving = false;
+                if (CanIdle())
+                {
+                    player.ChangeAnim(Anim.IDLE);
+                }
 
+            }
         }
+
     }
 
     private bool CanIdle()
     {
-       return !player.HasEnemyInSight && !player.IsAttacking;
+        return !player.HasEnemyInSight && !player.IsAttacking;
     }
 
     private void FixedUpdate()
