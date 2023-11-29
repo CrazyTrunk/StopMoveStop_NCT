@@ -6,35 +6,47 @@ using UnityEngine.SocialPlatforms;
 
 public class Weapon : MonoBehaviour
 {
-    [Header("Throwing")]
-    [SerializeField] private float throwForce;
-    public Transform attackPoint;
-    private GameObject InitProjectile(GameObject bulletPrefab , float chracterScale)
+    public float speed = 5f;
+    public float range = 5f;
+    private Vector3 startPosition;
+    private Rigidbody rb;
+
+    public Character Shooter { get; set; }
+
+    void Start()
     {
-        GameObject projectile = Instantiate(bulletPrefab, attackPoint.position, Quaternion.identity);
-        projectile.transform.localScale *= chracterScale;
-        projectile.transform.rotation = Quaternion.Euler(90f, 90f, 0);
-        projectile.AddComponent<Rigidbody>();
-        projectile.AddComponent<BoxCollider>().isTrigger = true;
-        return projectile;
+        startPosition = transform.position;
+        rb = GetComponent<Rigidbody>();
+        rb.velocity = transform.forward * speed;
     }
-    public virtual void Throw(float range, Character attacker, float characterScale)
+    public void Initialize(float scaleSize, Character shooter)
     {
-        //GameObject weaponPrefab = weaponManager.LoadCurrentWeapon();
-
-        //GameObject bullet = InitProjectile(weaponPrefab, characterScale);
-        //Rigidbody projectRb = bullet.GetComponent<Rigidbody>();
-        //projectRb.useGravity = false;
-        //projectRb.constraints = RigidbodyConstraints.FreezePositionY;
-
-        //Vector3 targetPoint = attackPoint.position + attackPoint.forward * range;
-        //projectRb.AddForce((targetPoint - attackPoint.position).normalized * throwForce);
-        //projectRb.AddTorque(transform.up * throwForce, ForceMode.Impulse);
-        //ProjectileTracker tracker = bullet.GetComponent<ProjectileTracker>();
-
-        //if(tracker != null)
-        //{
-        //    tracker.SetTargetPoint(targetPoint, attacker);
-        //}
+        transform.localScale *=scaleSize;
+        Shooter = shooter;  
     }
+    void Update()
+    {
+        if (Vector3.Distance(startPosition, transform.position) > range)
+        {
+            Destroy(gameObject);
+        }
+    }
+    //private void OnTriggerEnter(Collider other)
+    //{
+    //    if (other.CompareTag(Tag.ENEMY))
+    //    {
+    //        Enemy enemy = other.GetComponent<Enemy>();
+    //        if (!enemy.IsDead && enemy != Shooter)
+    //        {
+    //            enemy.LastAttacker = Shooter;
+    //            enemy.OnDeath();
+    //            Destroy(gameObject);
+    //            if (enemy.LastAttacker != null && !enemy.LastAttacker.IsDead)
+    //            {
+    //                enemy.LastAttacker.LevelUp(enemy.Level);
+    //            }
+    //        }
+
+    //    }
+    //}
 }

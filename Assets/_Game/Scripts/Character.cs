@@ -10,7 +10,8 @@ public class Character : MonoBehaviour, ICombatant
     protected string CurrentAnim;
 
     [Header("Combat")]
-    [SerializeField] private Weapon weaponThrow;
+    private GameObject weaponThrowPrefab;
+    [SerializeField] private Transform spawnBulletPoint;
     [SerializeField] private HandWeapon weaponOnHand;
     [SerializeField] private float speed;
     [SerializeField] private float range;
@@ -72,7 +73,8 @@ public class Character : MonoBehaviour, ICombatant
     {
         if (!string.IsNullOrEmpty(animName) && CurrentAnim != animName)
         {
-            Animator.ResetTrigger(CurrentAnim);
+            if (!string.IsNullOrEmpty(CurrentAnim))
+                Animator.ResetTrigger(CurrentAnim);
             CurrentAnim = animName;
             Animator.SetTrigger(CurrentAnim);
         }
@@ -84,9 +86,21 @@ public class Character : MonoBehaviour, ICombatant
     #region Weapon - Bullet
     public void ThrowWeapon()
     {
-        float scaleMultiplier = 1 + (Level / (float)MaxLevel * (maxScale - 1)); ;
+        float scaleMultiplier = 1 + (Level / (float)MaxLevel * (maxScale - 1));
+        weaponThrowPrefab = WeaponShopManagerItem.Instance.GetSelectWeapon().prefabBullet;
 
-        weaponThrow.Throw(range, this, scaleMultiplier);
+        Debug.Log(weaponThrowPrefab == null);
+        Debug.Log(spawnBulletPoint == null);
+
+        GameObject bullet = Instantiate(weaponThrowPrefab, spawnBulletPoint.position, spawnBulletPoint.rotation);
+
+        Weapon bulletScript = bullet.GetComponent<Weapon>();
+        if (bulletScript != null)
+        {
+            bulletScript.speed = speed;
+            bulletScript.range = range;
+            bulletScript.Initialize(scaleMultiplier, this);
+        }
     }
     public void HideWeaponOnHand()
     {

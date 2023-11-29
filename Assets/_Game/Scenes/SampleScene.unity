@@ -340,7 +340,6 @@ GameObject:
   m_Component:
   - component: {fileID: 159340417}
   - component: {fileID: 159340420}
-  - component: {fileID: 159340421}
   m_Layer: 0
   m_Name: ThrowPoint
   m_TagString: Untagged
@@ -371,20 +370,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 159340416}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!114 &159340421
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 159340416}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d7df10942c42bf446880a8d94d7cfb33, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  throwForce: 400
-  attackPoint: {fileID: 159340417}
 --- !u!1 &260786060
 GameObject:
   m_ObjectHideFlags: 0
@@ -5587,7 +5572,7 @@ MonoBehaviour:
   animator: {fileID: 1514492100}
   animSpeed: 1.5
   animPlayTime: 1
-  weaponThrow: {fileID: 0}
+  spawnBulletPoint: {fileID: 159340417}
   weaponOnHand: {fileID: 2063900402}
   speed: 5
   range: 5
@@ -5854,7 +5839,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   botPool: {fileID: 1664224345}
   player: {fileID: 424253570}
-  maxBotsAtOnce: 5
+  maxBotsAtOnce: 1
   totalBotsToKill: 50
   spawnAreaMin: {x: -10, y: -10}
   spawnAreaMax: {x: 10, y: 10}
@@ -12059,6 +12044,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1659511962}
+  - component: {fileID: 1659511963}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -12081,6 +12067,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1659511963
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1659511961}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bcf44425365f99f4eb35d1937bed7a63, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1664224344
 GameObject:
   m_ObjectHideFlags: 0
@@ -12113,8 +12111,8 @@ MonoBehaviour:
   prefab: {fileID: 5047329666932212505, guid: 77666643464a82840b06975bd1a51c47, type: 3}
   notification: 3
   strategy: 0
-  preload: 5
-  capacity: 5
+  preload: 1
+  capacity: 1
   recycle: 0
   persist: 0
   stamp: 0
