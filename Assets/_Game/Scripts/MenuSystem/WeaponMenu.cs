@@ -7,17 +7,20 @@ public class WeaponMenu : Menu<WeaponMenu>
     [SerializeField] private Button NextButton;
     [SerializeField] private Button PrevButton;
     [SerializeField] private Button buyButton;
+    [SerializeField] private Button adsButton;
+    [SerializeField] private Button selectButton;
 
     [SerializeField] private TextMeshProUGUI costText;
 
     [SerializeField] private TextMeshProUGUI coinText;
+    [SerializeField] private TextMeshProUGUI selectText;
+
     //PlayerData
     private float coin = 99999;
 
     private WeaponOnShop currentWeapon;
     private void Start()
     {
-        PlayerPrefs.DeleteAll();
         coinText.text = coin.ToString();
         SetCostData();
     }
@@ -33,6 +36,11 @@ public class WeaponMenu : Menu<WeaponMenu>
         WeaponShopManagerItem.Instance.NextItemInList();
         SetCostData();
     }
+    public void OnSelectButtonClicked()
+    {
+        WeaponShopManagerItem.Instance.SelectWeapon(currentWeapon.type);
+        SetCostData();
+    }
     public void OnPrevButtonClicked()
     {
         WeaponShopManagerItem.Instance.PrevItemInList();
@@ -45,13 +53,21 @@ public class WeaponMenu : Menu<WeaponMenu>
         if (WeaponShopManagerItem.Instance.IsUnlockItem(currentWeapon.type))
         {
             buyButton.gameObject.SetActive(false);
+            selectButton.gameObject.SetActive(true);
+            adsButton.gameObject.SetActive(false);
+            CheckingIfEquip();
         }
         else
         {
             buyButton.gameObject.SetActive(true);
+            selectButton.gameObject.SetActive(false);
+            adsButton.gameObject.SetActive(true);
         }
     }
-
+    public void CheckingIfEquip()
+    {
+        selectText.text = currentWeapon.type == WeaponShopManagerItem.Instance.GetSelectWeapon().type ? "Equipped" : "Select";
+    }
     public void OnBuyButtonClick()
     {
         if (coin >= currentWeapon.cost)

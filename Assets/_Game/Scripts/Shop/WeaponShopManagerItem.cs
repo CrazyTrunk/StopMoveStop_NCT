@@ -19,6 +19,10 @@ public class WeaponShopManagerItem : Singleton<WeaponShopManagerItem>
     {
         weaponData.SelectWeapon(weaponType);
     }
+    public WeaponOnShop GetSelectWeapon()
+    {
+       return weaponData.GetSelectedWeapon();
+    }
     public bool IsUnlockItem(WeaponType weaponType)
     {
         return weaponData.IsUnlocked(weaponType);
