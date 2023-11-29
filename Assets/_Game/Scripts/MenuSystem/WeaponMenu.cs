@@ -62,6 +62,7 @@ public class WeaponMenu : Menu<WeaponMenu>
             buyButton.gameObject.SetActive(true);
             selectButton.gameObject.SetActive(false);
             adsButton.gameObject.SetActive(true);
+            //buyButton.interactable = false;
         }
     }
     public void CheckingIfEquip()
