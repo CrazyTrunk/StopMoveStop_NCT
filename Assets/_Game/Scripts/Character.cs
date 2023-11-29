@@ -70,7 +70,7 @@ public class Character : MonoBehaviour, ICombatant
     }
     public void ChangeAnim(string animName)
     {
-        if (!string.IsNullOrEmpty(CurrentAnim) && CurrentAnim != animName)
+        if (!string.IsNullOrEmpty(animName) && CurrentAnim != animName)
         {
             Animator.ResetTrigger(CurrentAnim);
             CurrentAnim = animName;
