@@ -15,6 +15,7 @@ public class Character : MonoBehaviour, ICombatant
     [SerializeField] private Transform spawnWeaponPoint;
 
     private Weapon weapon;
+    private GameObject weaponPrefab;
     private Bullet bullet;
     [SerializeField] private float speed;
     [SerializeField] private float range;
@@ -85,7 +86,7 @@ public class Character : MonoBehaviour, ICombatant
     }
     public void InitWeaponOnHand()
     {
-        Instantiate(weapon, spawnWeaponPoint);
+        weaponPrefab = Instantiate(weapon, spawnWeaponPoint).gameObject;
     }
     public Bullet SpawnBullet()
     {
@@ -98,16 +99,16 @@ public class Character : MonoBehaviour, ICombatant
     #region Weapon - Bullet
     public void ThrowWeapon()
     {
-        weapon.InitBullet(SpawnBullet());
-        weapon.ThrowWeapon();
+        weaponPrefab.GetComponent<Weapon>().InitBullet(SpawnBullet());
+        weaponPrefab.GetComponent<Weapon>().ThrowWeapon();
     }
     public void HideWeaponOnHand()
     {
-        weapon.HideWeapon();
+        weaponPrefab.GetComponent<Weapon>().HideWeapon();
     }
     public void ShowWeaponOnHand()
     {
-        weapon.ShowWeapon();
+        weaponPrefab.GetComponent<Weapon>().ShowWeapon();
     }
     #endregion
     #region Circle UnderFeet (interface)

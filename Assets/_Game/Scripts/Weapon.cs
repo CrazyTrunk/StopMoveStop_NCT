@@ -5,13 +5,14 @@ using UnityEngine;
 public class Weapon : MonoBehaviour
 {
     private Bullet bullet;
+    [SerializeField]private MeshRenderer render;
     public void HideWeapon()
     {
-        gameObject.SetActive(false);
+        render.enabled = false;
     }
     public void ShowWeapon()
     {
-        gameObject.SetActive(true);
+        render.enabled = true;
     }
     public void InitBullet(Bullet bullet)
     {

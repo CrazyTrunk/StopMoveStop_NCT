@@ -17,9 +17,11 @@ public class Bullet : MonoBehaviour
     {
         startPosition = transform.position;
         rb.velocity = transform.forward * range;
+        transform.localRotation = Quaternion.identity;
     }
     void Update()
     {
+        transform.Rotate(new Vector3(0f, 0f, 360f) * Time.deltaTime);
         if (Vector3.Distance(startPosition, transform.position) > range)
         {
             Destroy(gameObject);
