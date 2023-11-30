@@ -86,6 +86,10 @@ public class Character : MonoBehaviour, ICombatant
     }
     public void InitWeaponOnHand()
     {
+        if(weaponPrefab != null)
+        {
+            Destroy(weaponPrefab);
+        }
         weaponPrefab = Instantiate(weapon, spawnWeaponPoint).gameObject;
     }
     public Bullet SpawnBullet()

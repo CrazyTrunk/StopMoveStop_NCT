@@ -18,6 +18,8 @@ public class WeaponShopManagerItem : Singleton<WeaponShopManagerItem>
     public void SelectWeapon(WeaponType weaponType)
     {
         weaponData.SelectWeapon(weaponType);
+        player.Weapon = GetSelectWeapon().prefabWeapon.GetComponent<Weapon>();
+        player.InitWeaponOnHand();
     }
     public WeaponOnShop GetSelectWeapon()
     {

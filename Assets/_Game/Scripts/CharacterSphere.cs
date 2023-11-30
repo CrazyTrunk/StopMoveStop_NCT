@@ -22,13 +22,14 @@ public class CharacterSphere : MonoBehaviour
         MainMenu.Instance.OnPlayButtonPressed += SetActiveTrue;
         gameObject.SetActive(false);
     }
-    private void OnDestroy()
-    {
-        if (MainMenu.Instance != null)
-        {
-            MainMenu.Instance.OnPlayButtonPressed -= SetActiveTrue;
-        }
-    }
+
+    //private void OnDestroy()
+    //{
+    //    if (MainMenu.Instance != null)
+    //    {
+    //        MainMenu.Instance.OnPlayButtonPressed -= SetActiveTrue;
+    //    }
+    //}
     private void SetActiveTrue()
     {
         gameObject.SetActive(true);
