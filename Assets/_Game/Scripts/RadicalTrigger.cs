@@ -21,14 +21,6 @@ public class RadicalTrigger : MonoBehaviour
         character = GetComponentInParent<Character>();
         OnInit();
     }
-    private void OnEnable()
-    {
-        character.OnCombatantKilled += Combatant_OnCombatantKilled;
-    }
-    private void OnDisable()
-    {
-        character.OnCombatantKilled -= Combatant_OnCombatantKilled;
-    }
     private void OnTriggerEnter(Collider other)
     {
         ICombatant combatant = other.GetComponent<ICombatant>();
@@ -68,10 +60,11 @@ public class RadicalTrigger : MonoBehaviour
     }
     private void HandleAddEnemyToQueue(ICombatant combatant)
     {
-        if (combatant != null && !combatantQueue.Contains(combatant))
+        if (combatant != null && !combatantQueue.Contains(combatant) && !combatant.IsDead)
         {
             character.HasEnemyInSight = true;
             combatantQueue.Enqueue(combatant);
+            combatant.OnCombatantKilled += Combatant_OnCombatantKilled;
         }
     }
 
@@ -89,6 +82,7 @@ public class RadicalTrigger : MonoBehaviour
                 {
                     combatant.Undetect();
                 }
+                combatant.OnCombatantKilled -= Combatant_OnCombatantKilled;
                 //if theres still enemy in Queue
                 if (combatantQueue.Count > 0)
                 {
@@ -175,6 +169,7 @@ public class RadicalTrigger : MonoBehaviour
     {
         if (combatantQueue.Contains(combatant))
         {
+            combatant.OnCombatantKilled -= Combatant_OnCombatantKilled;
             combatantQueue = new Queue<ICombatant>(combatantQueue.Where(e => e != combatant));
             if (CurrentTarget == combatant)
             {

@@ -195,12 +195,12 @@ public class Character : MonoBehaviour, ICombatant
     protected virtual void OnHitVictim(Character attacker, Character victim)
     {
         victim.PlayDead();
-        OnCombatantKilled?.Invoke(victim);
     }
 
     private void PlayDead()
     {
         IsDead = true;
+        OnCombatantKilled?.Invoke(this);
         StartCoroutine(RespawnCoroutine());
     }
     private IEnumerator RespawnCoroutine()
