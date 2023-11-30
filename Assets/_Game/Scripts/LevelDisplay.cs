@@ -10,7 +10,7 @@ public class LevelDisplay : MonoBehaviour
     // Start is called before the first frame update
     void Awake()
     {
-        textMeshUI.text = character.Level.ToString();
+        textMeshUI.text = character.level.ToString();
     }
     public void UpdateUILevelPlayer(int level)
     {

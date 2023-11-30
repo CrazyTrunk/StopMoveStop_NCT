@@ -25,7 +25,7 @@ public class Character : MonoBehaviour, ICombatant
     [SerializeField] private DetectedCircle detectedCircle;
     [SerializeField] private RadicalTrigger radicalTrigger;
     [SerializeField] private CharacterSphere characterSphere;
-    protected CapsuleCollider capsuleCollider;
+    protected CapsuleCollider capsuleColliderCharacter;
     public const float RangeIncreasePerTenLevels = 2f;
     private float baseRange = 5f;
     private float maxRangeIncrese = 10f;
@@ -36,7 +36,7 @@ public class Character : MonoBehaviour, ICombatant
 
     [Header("Basic CharacterInfo")]
     [SerializeField] private Transform characterModel;
-    public int Level = 0;
+    public int level = 0;
     public const int MaxLevelIncreseGap = 3;
     public const int MaxLevel = 55;
     public Vector3 baseScale = new Vector3(1, 1, 1);
@@ -50,27 +50,30 @@ public class Character : MonoBehaviour, ICombatant
     private bool isMoving;
     private bool hasEnemyInSight;
     private bool isAttacking;
+    private bool isDead;
 
-    public event Action<ICombatant> OnCombatantKilled;
 
     public Animator Animator { get => animator; set => animator = value; }
     public bool IsMoving { get => isMoving; set => isMoving = value; }
     public float Speed { get => speed; set => speed = value; }
     public bool HasEnemyInSight { get => hasEnemyInSight; set => hasEnemyInSight = value; }
     public bool IsAttacking { get => isAttacking; set => isAttacking = value; }
-    public bool IsDead { get; set; }
+    public bool IsDead { get => isDead; set => isDead = value; }
     public float AnimSpeed { get => animSpeed; set => animSpeed = value; }
     public float AnimPlayTime { get => animPlayTime; set => animPlayTime = value; }
     public Weapon Weapon { get => weapon; set => weapon = value; }
     public GameObject BulletPrefab { get => bulletPrefab; set => bulletPrefab = value; }
 
 
+    public event Action<ICombatant> OnCombatantKilled;
+
+
     private void Awake()
     {
         Animator.speed = animSpeed;
-        capsuleCollider = GetComponent<CapsuleCollider>();
-        originalColliderSize = new Vector3(capsuleCollider.radius, capsuleCollider.height, capsuleCollider.radius);
-        originalColliderCenter = capsuleCollider.center;
+        capsuleColliderCharacter = GetComponent<CapsuleCollider>();
+        originalColliderSize = new Vector3(capsuleColliderCharacter.radius, capsuleColliderCharacter.height, capsuleColliderCharacter.radius);
+        originalColliderCenter = capsuleColliderCharacter.center;
         ResetState();
     }
     public void ChangeAnim(string animName)
@@ -129,23 +132,23 @@ public class Character : MonoBehaviour, ICombatant
 
     public void ResetState()
     {
-        Level = 0;
-        IsDead = false;
+        level = 0;
+        isDead = false;
         isMoving = false;
         isAttacking = false;
         hasEnemyInSight = false;
-        capsuleCollider.enabled = true;
+        capsuleColliderCharacter.enabled = true;
         radicalTrigger?.OnInit();
     }
     #region Level Init and other calculate related
     public void InitLevelBot(int level)
     {
-        Level = level;
+        this.level = level;
         float currentRange = CalculateRange();
         ScaleModel(level);
         AdjustCollider();
         characterSphere.UpdateTriggerSize(currentRange);
-        levelDisplayInfo.UpdateUILevelPlayer(Level);
+        levelDisplayInfo.UpdateUILevelPlayer(this.level);
     }
     public void LevelUp(int enemyLevel)
     {
@@ -154,22 +157,22 @@ public class Character : MonoBehaviour, ICombatant
         ScaleModel(level);
         AdjustCollider();
         characterSphere.UpdateTriggerSize(currentRange);
-        levelDisplayInfo.UpdateUILevelPlayer(Level);
+        levelDisplayInfo.UpdateUILevelPlayer(this.level);
     }
     private int CalculateLevel(int enemyLevel)
     {
-        int levelIncrease = Mathf.Max(1, Mathf.Min(enemyLevel - Level, MaxLevelIncreseGap));
-        Level += levelIncrease;
+        int levelIncrease = Mathf.Max(1, Mathf.Min(enemyLevel - level, MaxLevelIncreseGap));
+        level += levelIncrease;
         if (this is Player player)
         {
             player.ShowFloatingText(levelIncrease);
         }
-        Level = Mathf.Clamp(Level, 0, MaxLevel);
-        return Level;
+        level = Mathf.Clamp(level, 0, MaxLevel);
+        return level;
     }
     private float CalculateRange()
     {
-        float increment = (Level / 10) * RangeIncreasePerTenLevels;
+        float increment = (level / 10) * RangeIncreasePerTenLevels;
         return range = Mathf.Min(baseRange + increment, maxRangeIncrese);
 
     }
@@ -183,23 +186,25 @@ public class Character : MonoBehaviour, ICombatant
         float scale = characterModel.localScale.y;
 
         // Điều chỉnh collider dựa trên tỉ lệ scale
-        capsuleCollider.radius = originalColliderSize.x * scale;
-        capsuleCollider.height = originalColliderSize.y * scale;
+        capsuleColliderCharacter.radius = originalColliderSize.x * scale;
+        capsuleColliderCharacter.height = originalColliderSize.y * scale;
 
         // Điều chỉnh center của collider
         // Bạn có thể cần điều chỉnh giá trị này dựa trên vị trí cụ thể của model của bạn
-        capsuleCollider.center = new Vector3(originalColliderCenter.x, originalColliderCenter.y * scale, originalColliderCenter.z);
+        capsuleColliderCharacter.center = new Vector3(originalColliderCenter.x, originalColliderCenter.y * scale, originalColliderCenter.z);
     }
     #endregion
     #region Event
     protected virtual void OnHitVictim(Character attacker, Character victim)
     {
         victim.PlayDead();
+        attacker.LevelUp(victim.level);
+
     }
 
     private void PlayDead()
     {
-        IsDead = true;
+        isDead = true;
         OnCombatantKilled?.Invoke(this);
         StartCoroutine(RespawnCoroutine());
     }
@@ -211,7 +216,7 @@ public class Character : MonoBehaviour, ICombatant
 
         // Ẩn nhân vật (hoặc làm nhân vật không hoạt động) khi nó chết
         yield return new WaitForSeconds(1f);
-        //LevelManager.Instance.BotKilled(this);
+        LevelManager.Instance.BotKilled(this);
     }
     #endregion
 }

@@ -21,8 +21,7 @@ public class LevelManager : Singleton<LevelManager>
 
         for (int i = 0; i < maxBotsAtOnce; i++)
         {
-            SpawnBots(player.Level);
-
+            SpawnBots(player.level);
         }
     }
     private Vector3 GenerateSpawnPosition()
@@ -47,7 +46,7 @@ public class LevelManager : Singleton<LevelManager>
         Vector3 spawnPosition = GenerateSpawnPosition();
         Enemy enemy = botPool.Spawn(spawnPosition, Quaternion.identity, botPool.transform).GetComponent<Enemy>();
         enemy.ResetState();
-        enemy.InitLevelBot(player.Level + Random.Range(3, 5 + 1));
+        enemy.InitLevelBot(player.level + Random.Range(3, 5 + 1));
         // Set up the bot (e.g., adding it to a list, setting up callbacks, etc.)
         currentBots++;
     }

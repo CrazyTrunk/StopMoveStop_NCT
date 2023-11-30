@@ -39,10 +39,9 @@ public class Bullet : MonoBehaviour
         if (other.CompareTag(Tag.CHARACTER))
         {
             Character victim = other.GetComponent<Character>();
-            if(victim is not Player)
+            if(victim is not Player && !victim.IsDead)
             {
                 onHit?.Invoke(shooter, victim);
-
             }
         }
     }

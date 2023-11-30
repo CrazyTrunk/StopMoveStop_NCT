@@ -5581,7 +5581,7 @@ MonoBehaviour:
   characterSphere: {fileID: 81862261}
   levelDisplayInfo: {fileID: 1379799501}
   characterModel: {fileID: 470747315}
-  Level: 0
+  level: 0
   baseScale: {x: 1, y: 1, z: 1}
   maxScale: 2
   scaleIncrement: 0.1
@@ -5839,7 +5839,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   botPool: {fileID: 1664224345}
   player: {fileID: 424253570}
-  maxBotsAtOnce: 4
+  maxBotsAtOnce: 1
   totalBotsToKill: 50
   spawnAreaMin: {x: -10, y: -10}
   spawnAreaMax: {x: 10, y: 10}
@@ -12111,8 +12111,8 @@ MonoBehaviour:
   prefab: {fileID: 5047329666932212505, guid: 77666643464a82840b06975bd1a51c47, type: 3}
   notification: 3
   strategy: 0
-  preload: 4
-  capacity: 4
+  preload: 1
+  capacity: 1
   recycle: 0
   persist: 0
   stamp: 0
