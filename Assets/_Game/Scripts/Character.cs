@@ -51,6 +51,7 @@ public class Character : MonoBehaviour, ICombatant
     private bool hasEnemyInSight;
     private bool isAttacking;
 
+    public event Action<ICombatant> OnCombatantKilled;
 
     public Animator Animator { get => animator; set => animator = value; }
     public bool IsMoving { get => isMoving; set => isMoving = value; }
@@ -194,6 +195,7 @@ public class Character : MonoBehaviour, ICombatant
     protected virtual void OnHitVictim(Character attacker, Character victim)
     {
         victim.PlayDead();
+        OnCombatantKilled?.Invoke(victim);
     }
 
     private void PlayDead()
@@ -210,7 +212,6 @@ public class Character : MonoBehaviour, ICombatant
         // Ẩn nhân vật (hoặc làm nhân vật không hoạt động) khi nó chết
         yield return new WaitForSeconds(1f);
         //LevelManager.Instance.BotKilled(this);
-
     }
     #endregion
 }

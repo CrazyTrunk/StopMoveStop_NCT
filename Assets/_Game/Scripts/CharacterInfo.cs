@@ -7,11 +7,11 @@ public class CharacterInfo : MonoBehaviour
     [SerializeField] private Transform infoCanvasTransform;
     [SerializeField] private Transform characterModel;
     [SerializeField] private float yOffset = 3.0f;
-    private void Awake()
-    {
-        MainMenu.Instance.OnPlayButtonPressed += SetActiveTrue;
-        gameObject.SetActive(false);
-    }
+    //private void Awake()
+    //{
+    //    MainMenu.Instance.OnPlayButtonPressed += SetActiveTrue;
+    //    gameObject.SetActive(false);
+    //}
 
     //private void OnDestroy()
     //{
