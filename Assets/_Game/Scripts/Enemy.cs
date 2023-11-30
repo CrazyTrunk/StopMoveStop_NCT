@@ -6,43 +6,14 @@ using UnityEngine.TextCore.Text;
 public class Enemy : Character
 {
     [SerializeField] private EnemyController controller;
-    private float respawnTime = 1f;
     private void Start()
     {
         Weapon = WeaponShopManagerItem.Instance.GetSelectWeapon(WeaponType.HAMMER).prefabWeapon.GetComponent<Weapon>();
         InitWeaponOnHand();
-        Bullet = WeaponShopManagerItem.Instance.GetSelectWeapon(WeaponType.HAMMER).prefabBullet.GetComponent<Bullet>();
+        BulletPrefab = WeaponShopManagerItem.Instance.GetSelectWeapon(WeaponType.HAMMER).prefabBullet;
     }
     public void Move(Vector3 direction)
     {
         transform.position += Speed * Time.deltaTime * direction;
-    }
-    public void OnDeath()
-    {
-        OnEnemyDeath();
-    }
-    public void OnEnemyDeath()
-    {
-        IsDead = true;
-        IsMoving = false;
-        IsAttacking = false;
-        HasEnemyInSight = false;
-        capsuleCollider.enabled = false;
-        Undetect();
-        ChangeAnim(Anim.DIE);
-        InvokeOnDeath();
-        StartCoroutine(RespawnCoroutine());
-
-    }
-    private IEnumerator RespawnCoroutine()
-    {
-
-        // Đợi animation "die" chạy xong
-        yield return new WaitForSeconds(AnimPlayTime / AnimSpeed);
-
-        // Ẩn nhân vật (hoặc làm nhân vật không hoạt động) khi nó chết
-        yield return new WaitForSeconds(respawnTime);
-        LevelManager.Instance.BotKilled(this);
-
     }
 }

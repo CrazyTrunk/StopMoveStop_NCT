@@ -1645,7 +1645,7 @@ GameObject:
   - component: {fileID: -185975078280628}
   m_Layer: 0
   m_Name: Bot
-  m_TagString: Enemy
+  m_TagString: Character
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

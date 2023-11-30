@@ -65,7 +65,6 @@ public class RadicalTrigger : MonoBehaviour
         {
             character.HasEnemyInSight = true;
             combatantQueue.Enqueue(combatant);
-            combatant.OnCombatantKilled += Combatant_OnCombatantKilled;
         }
     }
 
@@ -82,8 +81,6 @@ public class RadicalTrigger : MonoBehaviour
                 {
                     combatant.Undetect();
                 }
-                combatant.OnCombatantKilled -= Combatant_OnCombatantKilled;
-                //if theres still enemy in Queue
                 if (combatantQueue.Count > 0)
                 {
                     GetTheFirstEnemyFromQueue();
@@ -165,19 +162,6 @@ public class RadicalTrigger : MonoBehaviour
         }
     }
     #region Event
-    private void Combatant_OnCombatantKilled(ICombatant combatant)
-    {
-        if (combatantQueue.Contains(combatant))
-        {
-            combatant.OnCombatantKilled -= Combatant_OnCombatantKilled;
-            combatantQueue = new Queue<ICombatant>(combatantQueue.Where(e => e != combatant));
-            if (CurrentTarget == combatant)
-            {
-                CurrentTarget = null;
-                character.HasEnemyInSight = false;
-            }
-        }
-    }
     #endregion
 
 }

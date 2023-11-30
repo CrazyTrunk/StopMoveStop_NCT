@@ -14,7 +14,7 @@ public class Player : Character, ICombatant
         }
         Weapon = WeaponShopManagerItem.Instance.GetSelectWeapon().prefabWeapon.GetComponent<Weapon>();
         InitWeaponOnHand();
-        Bullet = WeaponShopManagerItem.Instance.GetSelectWeapon().prefabBullet.GetComponent<Bullet>();
+        BulletPrefab = WeaponShopManagerItem.Instance.GetSelectWeapon().prefabBullet;
     }
     public void ShowFloatingText(int level)
     {

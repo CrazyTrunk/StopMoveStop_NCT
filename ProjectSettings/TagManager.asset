@@ -4,11 +4,9 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - MeleeWeapon
-  - RangeWeapon
-  - Enemy
   - Wall
   - Obstacle
+  - Character
   layers:
   - Default
   - TransparentFX

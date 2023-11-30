@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using UnityEngine;
 
 public class Character : MonoBehaviour, ICombatant
@@ -16,7 +17,7 @@ public class Character : MonoBehaviour, ICombatant
 
     private Weapon weapon;
     private GameObject weaponPrefab;
-    private Bullet bullet;
+    private GameObject bulletPrefab;
     [SerializeField] private float speed;
     [SerializeField] private float range;
 
@@ -59,12 +60,9 @@ public class Character : MonoBehaviour, ICombatant
     public bool IsDead { get; set; }
     public float AnimSpeed { get => animSpeed; set => animSpeed = value; }
     public float AnimPlayTime { get => animPlayTime; set => animPlayTime = value; }
-    public ICombatant LastAttacker { get; set; }
     public Weapon Weapon { get => weapon; set => weapon = value; }
-    public Bullet Bullet { get => bullet; set => bullet = value; }
+    public GameObject BulletPrefab { get => bulletPrefab; set => bulletPrefab = value; }
 
-    //Event
-    public event Action<ICombatant> OnCombatantKilled;
 
     private void Awake()
     {
@@ -92,10 +90,7 @@ public class Character : MonoBehaviour, ICombatant
         }
         weaponPrefab = Instantiate(weapon, spawnWeaponPoint).gameObject;
     }
-    public Bullet SpawnBullet()
-    {
-       return Instantiate(bullet, spawnBulletPoint.position, spawnBulletPoint.rotation);
-    }
+
     public void LookAtTarget(Transform target)
     {
         transform.LookAt(target.position);
@@ -103,8 +98,7 @@ public class Character : MonoBehaviour, ICombatant
     #region Weapon - Bullet
     public void ThrowWeapon()
     {
-        weaponPrefab.GetComponent<Weapon>().InitBullet(SpawnBullet());
-        weaponPrefab.GetComponent<Weapon>().ThrowWeapon();
+        weaponPrefab.GetComponent<Weapon>().ThrowWeapon(BulletPrefab, spawnBulletPoint, this, OnHitVictim);
     }
     public void HideWeaponOnHand()
     {
@@ -197,9 +191,26 @@ public class Character : MonoBehaviour, ICombatant
     }
     #endregion
     #region Event
-    protected void InvokeOnDeath()
+    protected virtual void OnHitVictim(Character attacker, Character victim)
     {
-        OnCombatantKilled?.Invoke(this);
+        victim.PlayDead();
+    }
+
+    private void PlayDead()
+    {
+        IsDead = true;
+        StartCoroutine(RespawnCoroutine());
+    }
+    private IEnumerator RespawnCoroutine()
+    {
+        ChangeAnim(Anim.DIE);
+        // Đợi animation "die" chạy xong
+        yield return new WaitForSeconds(AnimPlayTime / AnimSpeed);
+
+        // Ẩn nhân vật (hoặc làm nhân vật không hoạt động) khi nó chết
+        yield return new WaitForSeconds(1f);
+        //LevelManager.Instance.BotKilled(this);
+
     }
     #endregion
 }
