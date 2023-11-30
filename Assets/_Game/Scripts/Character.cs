@@ -12,7 +12,10 @@ public class Character : MonoBehaviour, ICombatant
     [Header("Combat")]
     private GameObject weaponThrowPrefab;
     [SerializeField] private Transform spawnBulletPoint;
-    [SerializeField] private HandWeapon weaponOnHand;
+    [SerializeField] private Transform spawnWeaponPoint;
+
+    private Weapon weapon;
+    private Bullet bullet;
     [SerializeField] private float speed;
     [SerializeField] private float range;
 
@@ -56,7 +59,8 @@ public class Character : MonoBehaviour, ICombatant
     public float AnimSpeed { get => animSpeed; set => animSpeed = value; }
     public float AnimPlayTime { get => animPlayTime; set => animPlayTime = value; }
     public ICombatant LastAttacker { get; set; }
-    public HandWeapon WeaponOnHand { get => weaponOnHand; set => weaponOnHand = value; }
+    public Weapon Weapon { get => weapon; set => weapon = value; }
+    public Bullet Bullet { get => bullet; set => bullet = value; }
 
     //Event
     public event Action<ICombatant> OnCombatantKilled;
@@ -79,6 +83,14 @@ public class Character : MonoBehaviour, ICombatant
             Animator.SetTrigger(CurrentAnim);
         }
     }
+    public void InitWeaponOnHand()
+    {
+        Instantiate(weapon, spawnWeaponPoint);
+    }
+    public Bullet SpawnBullet()
+    {
+       return Instantiate(bullet, spawnBulletPoint.position, spawnBulletPoint.rotation);
+    }
     public void LookAtTarget(Transform target)
     {
         transform.LookAt(target.position);
@@ -86,29 +98,16 @@ public class Character : MonoBehaviour, ICombatant
     #region Weapon - Bullet
     public void ThrowWeapon()
     {
-        float scaleMultiplier = 1 + (Level / (float)MaxLevel * (maxScale - 1));
-        weaponThrowPrefab = WeaponShopManagerItem.Instance.GetSelectWeapon().prefabBullet;
-
-        Debug.Log(weaponThrowPrefab == null);
-        Debug.Log(spawnBulletPoint == null);
-
-        GameObject bullet = Instantiate(weaponThrowPrefab, spawnBulletPoint.position, spawnBulletPoint.rotation);
-
-        Weapon bulletScript = bullet.GetComponent<Weapon>();
-        if (bulletScript != null)
-        {
-            bulletScript.speed = speed;
-            bulletScript.range = range;
-            bulletScript.Initialize(scaleMultiplier, this);
-        }
+        weapon.InitBullet(SpawnBullet());
+        weapon.ThrowWeapon();
     }
     public void HideWeaponOnHand()
     {
-        weaponOnHand.HideWeapon();
+        weapon.HideWeapon();
     }
     public void ShowWeaponOnHand()
     {
-        weaponOnHand.ShowWeapon();
+        weapon.ShowWeapon();
     }
     #endregion
     #region Circle UnderFeet (interface)

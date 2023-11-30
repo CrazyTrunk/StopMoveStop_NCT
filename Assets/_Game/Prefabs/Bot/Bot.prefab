@@ -1736,7 +1736,7 @@ MonoBehaviour:
   animSpeed: 1.5
   animPlayTime: 1
   spawnBulletPoint: {fileID: 1077808362105935089}
-  weaponOnHand: {fileID: 721604041766842279}
+  spawnWeaponPoint: {fileID: 2879410776542331614}
   speed: 5
   range: 5
   detectedCircle: {fileID: 9129917577514363121}
@@ -2845,7 +2845,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2879410776542331614}
-  - component: {fileID: 721604041766842279}
   m_Layer: 0
   m_Name: WeaponHand
   m_TagString: Untagged
@@ -2861,26 +2860,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8008223364944748180}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: 1, y: 0, z: 0, w: 0}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1166070718980162118}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &721604041766842279
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8008223364944748180}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a5b86a4cad04fa745ba34cde2512c1b8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  parentHolder: {fileID: 2879410776542331614}
+  m_LocalEulerAnglesHint: {x: 180, y: 0, z: 0}
 --- !u!1 &8053449860591870702
 GameObject:
   m_ObjectHideFlags: 0

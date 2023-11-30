@@ -16,15 +16,15 @@ MonoBehaviour:
   - name: Hammer
     type: 0
     cost: 0
-    prefabWeapon: {fileID: 1006547234547947963, guid: cf3e0ca417ce484458dbbc4adab24895, type: 3}
-    prefabBullet: {fileID: 7033509980127978807, guid: bd9399e2336bad3499598a6dfa2a97a2, type: 3}
+    prefabWeapon: {fileID: 4881818127050708266, guid: fd9e5f8dd43ba3e4ba8313a20733f3b2, type: 3}
+    prefabBullet: {fileID: 7433476790954169535, guid: 42ff17afa6327c746917eebc4c5b99b6, type: 3}
     bonusSpeed: 0
     bonusRange: 0
   - name: Candy0
     type: 1
     cost: 50
-    prefabWeapon: {fileID: 5593230603505022384, guid: b934008db00bed94faf9e31a665dd1d7, type: 3}
-    prefabBullet: {fileID: 6712327660878053698, guid: e60426b74f541714aacf4c850f8def14, type: 3}
+    prefabWeapon: {fileID: 1534889056757590243, guid: 9b8cd451bfbad8a49a32e8e669ca7359, type: 3}
+    prefabBullet: {fileID: 1168385441038374467, guid: 4808d25a7500b964182aa0d665f04d05, type: 3}
     bonusSpeed: 5
     bonusRange: 5
   - name: Candy1

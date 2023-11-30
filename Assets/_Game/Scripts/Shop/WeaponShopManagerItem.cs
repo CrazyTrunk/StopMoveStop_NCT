@@ -18,7 +18,6 @@ public class WeaponShopManagerItem : Singleton<WeaponShopManagerItem>
     public void SelectWeapon(WeaponType weaponType)
     {
         weaponData.SelectWeapon(weaponType);
-        player.InitWeaponOnHand();
     }
     public WeaponOnShop GetSelectWeapon()
     {
@@ -37,7 +36,6 @@ public class WeaponShopManagerItem : Singleton<WeaponShopManagerItem>
         currentDataIndex = 0;
         currentWeaponOnShop = weaponData.listWeapon[currentDataIndex];
         SpawnWeaponPrefab(currentWeaponOnShop);
-        player.InitWeaponOnHand();
     }
     public WeaponOnShop GetCurrentWeaponOnShop()
     {

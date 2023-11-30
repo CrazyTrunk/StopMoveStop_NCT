@@ -9,7 +9,9 @@ public class Enemy : Character
     private float respawnTime = 1f;
     private void Start()
     {
+        Weapon = WeaponShopManagerItem.Instance.GetSelectWeapon(WeaponType.HAMMER).prefabWeapon.GetComponent<Weapon>();
         InitWeaponOnHand();
+        Bullet = WeaponShopManagerItem.Instance.GetSelectWeapon(WeaponType.HAMMER).prefabBullet.GetComponent<Bullet>();
     }
     public void Move(Vector3 direction)
     {
@@ -42,9 +44,5 @@ public class Enemy : Character
         yield return new WaitForSeconds(respawnTime);
         LevelManager.Instance.BotKilled(this);
 
-    }
-    public void InitWeaponOnHand()
-    {
-        WeaponOnHand.InitWeapon(WeaponType.HAMMER);
     }
 }

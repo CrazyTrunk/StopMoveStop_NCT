@@ -1,52 +1,24 @@
+﻿
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SocialPlatforms;
 
 public class Weapon : MonoBehaviour
 {
-    public float speed = 5f;
-    public float range = 5f;
-    private Vector3 startPosition;
-    private Rigidbody rb;
-
-    public Character Shooter { get; set; }
-
-    void Start()
+    private Bullet bullet;
+    public void HideWeapon()
     {
-        startPosition = transform.position;
-        rb = GetComponent<Rigidbody>();
-        rb.velocity = transform.forward * speed;
+        gameObject.SetActive(false);
     }
-    public void Initialize(float scaleSize, Character shooter)
+    public void ShowWeapon()
     {
-        transform.localScale *=scaleSize;
-        Shooter = shooter;  
+        gameObject.SetActive(true);
     }
-    void Update()
+    public void InitBullet(Bullet bullet)
     {
-        if (Vector3.Distance(startPosition, transform.position) > range)
-        {
-            Destroy(gameObject);
-        }
+        this.bullet = bullet;
     }
-    //private void OnTriggerEnter(Collider other)
-    //{
-    //    if (other.CompareTag(Tag.ENEMY))
-    //    {
-    //        Enemy enemy = other.GetComponent<Enemy>();
-    //        if (!enemy.IsDead && enemy != Shooter)
-    //        {
-    //            enemy.LastAttacker = Shooter;
-    //            enemy.OnDeath();
-    //            Destroy(gameObject);
-    //            if (enemy.LastAttacker != null && !enemy.LastAttacker.IsDead)
-    //            {
-    //                enemy.LastAttacker.LevelUp(enemy.Level);
-    //            }
-    //        }
-
-    //    }
-    //}
+    public void ThrowWeapon()
+    {
+        bullet.Shoot();
+    }
 }
