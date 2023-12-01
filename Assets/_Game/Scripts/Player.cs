@@ -12,18 +12,8 @@ public class Player : Character, ICombatant
     {
         base.Awake();
         //playerData = PlayerData.ReadFromJson(playerDataTxt) ?? new PlayerData();
-
-        //playerData = PlayerData.ReadFromJson(playerDataTxt) ?? new PlayerData();
-        //WeaponOnShop weaponOnShop = WeaponShopManagerItem.Instance.GetSelectWeapon();
-        //if (!WeaponShopManagerItem.Instance.IsUnlockItem(WeaponType.HAMMER))
-        //{
-        //    WeaponShopManagerItem.Instance.BuyItem(WeaponType.HAMMER);
-        //    WeaponShopManagerItem.Instance.SelectWeapon(WeaponType.HAMMER);
-        //}
-        //Weapon = weaponOnShop.prefabWeapon.GetComponent<Weapon>();
-        //EquipWeapon(weaponOnShop);
-        //InitWeaponOnHand();
-        //BulletPrefab = weaponOnShop.prefabBullet;
+        ChangeWeapon(WeaponType.HAMMER);
+        EquipWeapon(Weapon);
     }
     public void GainCoin(int coin)
     {
@@ -41,10 +31,10 @@ public class Player : Character, ICombatant
         canvasPopup.position = newPos;
         canvasPopup.LookAt(newPos + cameraForward, Vector3.up);
     }
-    //public void EquipWeapon(WeaponOnShop weapon)
-    //{
-    //    ApplyWeaponBonuses(weapon.bonusSpeed, weapon.bonusRange);
-    //}
+    public void EquipWeapon(Weapon weapon)
+    {
+        ApplyWeaponBonuses(weapon.bonusSpeed, weapon.bonusRange);
+    }
     public void ApplyWeaponBonuses(float bonusSpeed, float bonusRange)
     {
         this.Speed = BaseSpeed;

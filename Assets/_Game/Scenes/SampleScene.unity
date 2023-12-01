@@ -5586,6 +5586,7 @@ MonoBehaviour:
   baseScale: {x: 1, y: 1, z: 1}
   maxScale: 2
   scaleIncrement: 0.1
+  weaponDataSO: {fileID: 11400000, guid: 34b351d3227797b44a958a6b11129d10, type: 2}
   floatingLevelTextPrefab: {fileID: 8004888681745737096, guid: 1216b4a7ea34abd4e9a6c91bbe943699, type: 3}
   canvasPopup: {fileID: 1970996851}
 --- !u!1001 &445529402
@@ -5810,7 +5811,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &600819940
 Transform:
   m_ObjectHideFlags: 0
@@ -12049,7 +12050,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1664224345
 MonoBehaviour:
   m_ObjectHideFlags: 0

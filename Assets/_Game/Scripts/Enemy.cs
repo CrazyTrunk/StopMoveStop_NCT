@@ -9,9 +9,7 @@ public class Enemy : Character
     public override void Awake()
     {
         base.Awake();
-        //Weapon = WeaponShopManagerItem.Instance.GetSelectWeapon(WeaponType.HAMMER).prefabWeapon.GetComponent<Weapon>();
-        InitWeaponOnHand();
-        //BulletPrefab = WeaponShopManagerItem.Instance.GetSelectWeapon(WeaponType.HAMMER).prefabBullet;
+        ChangeWeapon(WeaponType.HAMMER);
     }
     public void Move(Vector3 direction)
     {

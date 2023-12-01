@@ -54,6 +54,8 @@ public class Character : MonoBehaviour, ICombatant
     private bool isAttacking;
     private bool isDead;
 
+    [SerializeField] private WeaponData weaponDataSO;
+
 
     public Animator Animator { get => animator; set => animator = value; }
     public bool IsMoving { get => isMoving; set => isMoving = value; }
@@ -79,7 +81,6 @@ public class Character : MonoBehaviour, ICombatant
         originalColliderCenter = capsuleColliderCharacter.center;
         ResetState();
     }
-    //WeaponData weaponDataSO;
     //public void ChangeWeapon(WeaponType weaponType)
     //{
     //    if (weapon != null) { Destroy*(weapon.gameObject) }
@@ -96,13 +97,14 @@ public class Character : MonoBehaviour, ICombatant
             Animator.SetTrigger(CurrentAnim);
         }
     }
-    public void InitWeaponOnHand()
+    public void ChangeWeapon(WeaponType weaponType)
     {
         if (weaponPrefab != null)
         {
             Destroy(weaponPrefab);
         }
-        weaponPrefab = Instantiate(weapon, spawnWeaponPoint).gameObject;
+        weaponPrefab = Instantiate(weaponDataSO.GetWeaponByType(weaponType).gameObject, spawnWeaponPoint);
+        weapon = weaponPrefab.GetComponent<Weapon>();
     }
 
     public void LookAtTarget(Transform target)
@@ -112,15 +114,15 @@ public class Character : MonoBehaviour, ICombatant
     #region Weapon - Bullet
     public void ThrowWeapon()
     {
-        weaponPrefab.GetComponent<Weapon>().ThrowWeapon(spawnBulletPoint, this, OnHitVictim);
+        weapon.ThrowWeapon(spawnBulletPoint, this, OnHitVictim);
     }
     public void HideWeaponOnHand()
     {
-        weaponPrefab.GetComponent<Weapon>().HideWeapon();
+        weapon.HideWeapon();
     }
     public void ShowWeaponOnHand()
     {
-        weaponPrefab.GetComponent<Weapon>().ShowWeapon();
+        weapon.ShowWeapon();
     }
     #endregion
     #region Circle UnderFeet (interface)
@@ -167,7 +169,7 @@ public class Character : MonoBehaviour, ICombatant
         ScaleModel(level);
         if (this is Player player)
         {
-            player.GainCoin(level);
+            //player.GainCoin(level);
             if (level != 0 && level >= previousLevel + 10 && level < MaxLevel)
             {
                 Camera.main.GetComponent<CameraFollow>().UpdateCameraHeight();

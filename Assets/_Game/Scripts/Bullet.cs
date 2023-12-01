@@ -6,7 +6,7 @@ using UnityEngine;
 using UnityEngine.SocialPlatforms;
 using UnityEngine.UI;
 
-[RequireComponent(typeof(Rigidbody), typeof(BoxCollider))]
+[RequireComponent(typeof(Rigidbody))]
 
 public class Bullet : MonoBehaviour
 {
@@ -23,6 +23,8 @@ public class Bullet : MonoBehaviour
         this.onHit = onHit;
         this.range = attacker.Range;
         transform.localScale *= attacker.ScaleMultiple;
+        gameObject.AddComponent<BoxCollider>().isTrigger = true;
+
     }
 
     public void Shoot()
@@ -44,7 +46,7 @@ public class Bullet : MonoBehaviour
         if (other.CompareTag(Tag.CHARACTER))
         {
             Character victim = other.GetComponent<Character>();
-            if(victim is not Player && !victim.IsDead)
+            if(victim is not Player && !victim.IsDead && victim != shooter)
             {
                 onHit?.Invoke(shooter, victim);
             }

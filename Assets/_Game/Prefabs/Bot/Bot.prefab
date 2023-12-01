@@ -1749,6 +1749,7 @@ MonoBehaviour:
   baseScale: {x: 1, y: 1, z: 1}
   maxScale: 2
   scaleIncrement: 0.1
+  weaponDataSO: {fileID: 11400000, guid: 34b351d3227797b44a958a6b11129d10, type: 2}
   controller: {fileID: 2041422886903663996}
 --- !u!114 &2041422886903663996
 MonoBehaviour:
