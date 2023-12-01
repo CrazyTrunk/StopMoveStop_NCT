@@ -16,7 +16,7 @@ public class LevelManager : Singleton<LevelManager>
     public Vector2 spawnAreaMax;
     private HashSet<Vector3> usedPositions = new HashSet<Vector3>();
 
-    private void Awake()
+    private void Start()
     {
 
         for (int i = 0; i < maxBotsAtOnce; i++)

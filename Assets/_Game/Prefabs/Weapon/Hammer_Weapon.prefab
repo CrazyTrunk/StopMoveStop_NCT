@@ -90,4 +90,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d7df10942c42bf446880a8d94d7cfb33, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  weaponName: Hammer
+  bonusSpeed: 0
+  bonusRange: 0
+  type: 0
+  cost: 0
   render: {fileID: 4881818127048444906}

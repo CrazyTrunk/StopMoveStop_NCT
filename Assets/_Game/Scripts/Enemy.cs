@@ -6,11 +6,12 @@ using UnityEngine.TextCore.Text;
 public class Enemy : Character
 {
     [SerializeField] private EnemyController controller;
-    private void Start()
+    public override void Awake()
     {
-        Weapon = WeaponShopManagerItem.Instance.GetSelectWeapon(WeaponType.HAMMER).prefabWeapon.GetComponent<Weapon>();
+        base.Awake();
+        //Weapon = WeaponShopManagerItem.Instance.GetSelectWeapon(WeaponType.HAMMER).prefabWeapon.GetComponent<Weapon>();
         InitWeaponOnHand();
-        BulletPrefab = WeaponShopManagerItem.Instance.GetSelectWeapon(WeaponType.HAMMER).prefabBullet;
+        //BulletPrefab = WeaponShopManagerItem.Instance.GetSelectWeapon(WeaponType.HAMMER).prefabBullet;
     }
     public void Move(Vector3 direction)
     {

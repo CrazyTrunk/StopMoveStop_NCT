@@ -9,7 +9,7 @@ public class WeaponShopManagerItem : Singleton<WeaponShopManagerItem>
     [SerializeField] private Player player;
 
     private GameObject currentWeaponPrefabInstance;
-    private WeaponOnShop currentWeaponOnShop;
+    private Weapon currentWeaponOnShop;
     private int currentDataIndex = 0;
     public void BuyItem(WeaponType weaponType)
     {
@@ -18,14 +18,15 @@ public class WeaponShopManagerItem : Singleton<WeaponShopManagerItem>
     public void SelectWeapon(WeaponType weaponType)
     {
         weaponData.SelectWeapon(weaponType);
-        player.Weapon = GetSelectWeapon().prefabWeapon.GetComponent<Weapon>();
-        player.InitWeaponOnHand();
+        //player.Weapon = GetSelectWeapon().prefabWeapon.GetComponent<Weapon>();
+        //player.InitWeaponOnHand();
+        //player.ApplyWeaponBonuses(currentWeaponOnShop.bonusSpeed, currentWeaponOnShop.bonusRange);
     }
-    public WeaponOnShop GetSelectWeapon()
+    public Weapon GetSelectWeapon()
     {
        return weaponData.GetSelectedWeapon();
     }
-    public WeaponOnShop GetSelectWeapon(WeaponType weaponType)
+    public Weapon GetSelectWeapon(WeaponType weaponType)
     {
         return weaponData.GetWeaponByType(weaponType);
     }
@@ -39,7 +40,7 @@ public class WeaponShopManagerItem : Singleton<WeaponShopManagerItem>
         currentWeaponOnShop = weaponData.listWeapon[currentDataIndex];
         SpawnWeaponPrefab(currentWeaponOnShop);
     }
-    public WeaponOnShop GetCurrentWeaponOnShop()
+    public Weapon GetCurrentWeaponOnShop()
     {
         return currentWeaponOnShop;
     }
@@ -69,10 +70,10 @@ public class WeaponShopManagerItem : Singleton<WeaponShopManagerItem>
             Destroy(currentWeaponPrefabInstance);
         }
     }
-    private void SpawnWeaponPrefab(WeaponOnShop weapon)
+    private void SpawnWeaponPrefab(Weapon weapon)
     {
         DestroyCurrentPrefab();
-        currentWeaponPrefabInstance = Instantiate(weapon.prefabWeapon, parentSpawn.transform);
+        //currentWeaponPrefabInstance = Instantiate(weapon.prefabWeapon, parentSpawn.transform);
         currentWeaponPrefabInstance.transform.LookAt(parentSpawn.transform);
     }
 }

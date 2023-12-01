@@ -2,10 +2,15 @@
 using System;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
-
+[System.Serializable]
 public class Weapon : MonoBehaviour
 {
+    public string weaponName;
     private Bullet bullet;
+    public float bonusSpeed;
+    public float bonusRange;
+    public WeaponType type;
+    public int cost;
     [SerializeField]private MeshRenderer render;
     public void HideWeapon()
     {

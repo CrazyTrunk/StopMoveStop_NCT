@@ -24,9 +24,11 @@ public class Character : MonoBehaviour, ICombatant
     [SerializeField] private DetectedCircle detectedCircle;
     [SerializeField] private RadicalTrigger radicalTrigger;
     [SerializeField] private CharacterSphere characterSphere;
-    protected CapsuleCollider capsuleColliderCharacter;
+    [SerializeField] private CapsuleCollider capsuleColliderCharacter;
     public const float RangeIncreasePerTenLevels = 2f;
     private float baseRange = 5f;
+    private float baseSpeed = 5f;
+
     private float maxRangeIncrese = 10f;
 
     [Header("UI Canvas Info and noti")]
@@ -67,18 +69,25 @@ public class Character : MonoBehaviour, ICombatant
     public float Range { get => range; set => range = value; }
     public float ScaleMultiple { get => scaleMultiple; set => scaleMultiple = value; }
     public Transform CharacterModel { get => characterModel; set => characterModel = value; }
+    public float BaseSpeed { get => baseSpeed; set => baseSpeed = value; }
+    public float BaseRange { get => baseRange; set => baseRange = value; }
 
     public event Action<ICombatant> OnCombatantKilled;
 
-
-    private void Awake()
+    public virtual void Awake()
     {
         Animator.speed = animSpeed;
-        capsuleColliderCharacter = GetComponent<CapsuleCollider>();
         originalColliderSize = new Vector3(capsuleColliderCharacter.radius, capsuleColliderCharacter.height, capsuleColliderCharacter.radius);
         originalColliderCenter = capsuleColliderCharacter.center;
         ResetState();
     }
+    //WeaponData weaponDataSO;
+    //public void ChangeWeapon(WeaponType weaponType)
+    //{
+    //    if (weapon != null) { Destroy*(weapon.gameObject) }
+    //    weapon - Instantiate(weaponDataSO.GetSelectedWeapon());
+    //}
+
     public void ChangeAnim(string animName)
     {
         if (!string.IsNullOrEmpty(animName) && CurrentAnim != animName)
@@ -158,15 +167,20 @@ public class Character : MonoBehaviour, ICombatant
         int level = CalculateLevel(enemyLevel);
         float currentRange = CalculateRange();
         ScaleModel(level);
-        if (level != 0 && level >= previousLevel + 10)
+        if (this is Player player)
         {
-            Camera.main.GetComponent<CameraFollow>().UpdateCameraHeight();
-            previousLevel = level;
+            player.GainCoin(level);
+            if (level != 0 && level >= previousLevel + 10 && level < MaxLevel)
+            {
+                Camera.main.GetComponent<CameraFollow>().UpdateCameraHeight();
+                previousLevel = level;
+            }
         }
         AdjustCollider();
         characterSphere.UpdateTriggerSize(currentRange);
         levelDisplayInfo.UpdateUILevelPlayer(this.level);
     }
+
     private int CalculateLevel(int enemyLevel)
     {
         int levelIncrease = Mathf.Max(1, Mathf.Min(enemyLevel - level, MaxLevelIncreseGap));
@@ -181,7 +195,7 @@ public class Character : MonoBehaviour, ICombatant
     private float CalculateRange()
     {
         float increment = (level / 10) * RangeIncreasePerTenLevels;
-        Range = Mathf.Min(baseRange + increment, maxRangeIncrese);
+        Range = Mathf.Min(BaseRange + increment, maxRangeIncrese);
         return Range;
     }
     private void ScaleModel(int levelReceive)
@@ -227,4 +241,5 @@ public class Character : MonoBehaviour, ICombatant
         LevelManager.Instance.BotKilled(this);
     }
     #endregion
+
 }

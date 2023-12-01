@@ -10,7 +10,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 100000, guid: 37a28123e5e39f44fbff5daa106af161, type: 3}
       propertyPath: m_Name
-      value: candy_4
+      value: Candy4_Weapon
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 37a28123e5e39f44fbff5daa106af161, type: 3}
       propertyPath: m_LocalPosition.x
@@ -55,5 +55,36 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 100000, guid: 37a28123e5e39f44fbff5daa106af161, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: -4087686207232965608}
   m_SourcePrefab: {fileID: 100100000, guid: 37a28123e5e39f44fbff5daa106af161, type: 3}
+--- !u!1 &8311697077354397379 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 100000, guid: 37a28123e5e39f44fbff5daa106af161, type: 3}
+  m_PrefabInstance: {fileID: 8311697077354494051}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &-4087686207232965608
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8311697077354397379}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d7df10942c42bf446880a8d94d7cfb33, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  weaponName: Candy4
+  bonusSpeed: 5
+  bonusRange: 5
+  type: 4
+  cost: 50
+  render: {fileID: 8311697077356650499}
+--- !u!23 &8311697077356650499 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 2300000, guid: 37a28123e5e39f44fbff5daa106af161, type: 3}
+  m_PrefabInstance: {fileID: 8311697077354494051}
+  m_PrefabAsset: {fileID: 0}

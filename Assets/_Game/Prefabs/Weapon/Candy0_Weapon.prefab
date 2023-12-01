@@ -82,4 +82,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d7df10942c42bf446880a8d94d7cfb33, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  weaponName: Candy0
+  bonusSpeed: 5
+  bonusRange: 5
+  type: 1
+  cost: 50
   render: {fileID: 1534889056755332643}

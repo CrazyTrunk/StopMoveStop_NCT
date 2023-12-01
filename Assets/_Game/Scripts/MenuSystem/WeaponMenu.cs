@@ -18,7 +18,7 @@ public class WeaponMenu : Menu<WeaponMenu>
     //PlayerData
     private float coin = 99999;
 
-    private WeaponOnShop currentWeapon;
+    private Weapon currentWeapon;
     private void Start()
     {
         coinText.text = coin.ToString();

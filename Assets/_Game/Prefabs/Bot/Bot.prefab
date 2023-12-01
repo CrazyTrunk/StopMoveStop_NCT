@@ -1742,6 +1742,7 @@ MonoBehaviour:
   detectedCircle: {fileID: 9129917577514363121}
   radicalTrigger: {fileID: 4248651964168576709}
   characterSphere: {fileID: 5755871892658538801}
+  capsuleColliderCharacter: {fileID: 5050918453655139715}
   levelDisplayInfo: {fileID: 5985223093016099182}
   characterModel: {fileID: 4058133212734950908}
   level: 0
