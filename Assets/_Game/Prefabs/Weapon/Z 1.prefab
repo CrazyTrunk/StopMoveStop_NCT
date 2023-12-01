@@ -78,7 +78,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   weaponName: Z
-  bullet: {fileID: 7038324899389393793, guid: 1eab8d44f0be4eb45a82eba35cff378f, type: 3}
+  bulletPrefab: {fileID: 3300388463517521636, guid: 1eab8d44f0be4eb45a82eba35cff378f, type: 3}
   bonusSpeed: 25
   bonusRange: 25
   type: 11

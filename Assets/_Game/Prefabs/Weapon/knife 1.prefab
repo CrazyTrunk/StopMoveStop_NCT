@@ -83,7 +83,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   weaponName: Knife
-  bullet: {fileID: 2496892485939414381, guid: a24f5d4461663fd43b751f01aaaf86ac, type: 3}
+  bulletPrefab: {fileID: 9044379844719831979, guid: a24f5d4461663fd43b751f01aaaf86ac, type: 3}
   bonusSpeed: 10
   bonusRange: 10
   type: 8

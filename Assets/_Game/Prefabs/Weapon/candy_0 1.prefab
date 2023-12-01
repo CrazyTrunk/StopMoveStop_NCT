@@ -83,7 +83,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   weaponName: Candy0
-  bullet: {fileID: -7268143465137364177, guid: f9acac3b2a4352a4a80804508d0e01f2, type: 3}
+  bulletPrefab: {fileID: 3044977714729058449, guid: f9acac3b2a4352a4a80804508d0e01f2, type: 3}
   bonusSpeed: 5
   bonusRange: 5
   type: 1

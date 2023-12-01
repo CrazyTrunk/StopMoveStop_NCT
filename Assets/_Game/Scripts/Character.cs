@@ -16,7 +16,6 @@ public class Character : MonoBehaviour, ICombatant
 
     private Weapon weapon;
     private GameObject weaponPrefab;
-    private GameObject bulletPrefab;
     [SerializeField] private float speed;
     [SerializeField] private float range;
 
@@ -64,7 +63,6 @@ public class Character : MonoBehaviour, ICombatant
     public float AnimSpeed { get => animSpeed; set => animSpeed = value; }
     public float AnimPlayTime { get => animPlayTime; set => animPlayTime = value; }
     public Weapon Weapon { get => weapon; set => weapon = value; }
-    public GameObject BulletPrefab { get => bulletPrefab; set => bulletPrefab = value; }
     public bool IsDead { get => isDead; set => isDead = value; }
     public float Range { get => range; set => range = value; }
     public float ScaleMultiple { get => scaleMultiple; set => scaleMultiple = value; }
@@ -114,7 +112,7 @@ public class Character : MonoBehaviour, ICombatant
     #region Weapon - Bullet
     public void ThrowWeapon()
     {
-        weaponPrefab.GetComponent<Weapon>().ThrowWeapon(BulletPrefab, spawnBulletPoint, this, OnHitVictim);
+        weaponPrefab.GetComponent<Weapon>().ThrowWeapon(spawnBulletPoint, this, OnHitVictim);
     }
     public void HideWeaponOnHand()
     {

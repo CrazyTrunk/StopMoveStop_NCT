@@ -83,7 +83,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   weaponName: Uzi
-  bullet: {fileID: 1014486971159804609, guid: c319ad1bfe976b34d89715bc6b077885, type: 3}
+  bulletPrefab: {fileID: 1219417698592225927, guid: c319ad1bfe976b34d89715bc6b077885, type: 3}
   bonusSpeed: 20
   bonusRange: 20
   type: 9

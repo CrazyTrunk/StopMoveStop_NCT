@@ -83,7 +83,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   weaponName: Boomerang
-  bullet: {fileID: 3806055243607800168, guid: cecf7866d31f8ba48bf6055c182bc070, type: 3}
+  bulletPrefab: {fileID: 3833731073488465525, guid: cecf7866d31f8ba48bf6055c182bc070, type: 3}
   bonusSpeed: 8
   bonusRange: 8
   type: 7

@@ -83,7 +83,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   weaponName: Hammer
-  bullet: {fileID: 4748249567553695293, guid: c74d4e13e8c47d04fb0d105fd039dad3, type: 3}
+  bulletPrefab: {fileID: 6367785518166116615, guid: c74d4e13e8c47d04fb0d105fd039dad3, type: 3}
   bonusSpeed: 0
   bonusRange: 0
   type: 0

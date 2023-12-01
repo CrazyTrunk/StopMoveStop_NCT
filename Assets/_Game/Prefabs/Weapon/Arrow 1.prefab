@@ -78,7 +78,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   weaponName: Arrow
-  bullet: {fileID: -5508255127131376893, guid: 545bbfea662a4da4280ef10d2409159d, type: 3}
+  bulletPrefab: {fileID: 889726120031421676, guid: 545bbfea662a4da4280ef10d2409159d, type: 3}
   bonusSpeed: 15
   bonusRange: 15
   type: 10

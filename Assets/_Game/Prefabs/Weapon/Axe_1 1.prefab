@@ -83,7 +83,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   weaponName: Axe1
-  bullet: {fileID: -98158642094446718, guid: 6b602569cddb6ec439b2754c96c31455, type: 3}
+  bulletPrefab: {fileID: 6219825523424796214, guid: 6b602569cddb6ec439b2754c96c31455, type: 3}
   bonusSpeed: 5
   bonusRange: 5
   type: 6
