@@ -13,87 +13,15 @@ MonoBehaviour:
   m_Name: WeaponData
   m_EditorClassIdentifier: 
   listWeapon:
-  - name: Hammer
-    type: 0
-    cost: 0
-    prefabWeapon: {fileID: 4881818127050708266, guid: fd9e5f8dd43ba3e4ba8313a20733f3b2, type: 3}
-    prefabBullet: {fileID: 7433476790954169535, guid: 42ff17afa6327c746917eebc4c5b99b6, type: 3}
-    bonusSpeed: 0
-    bonusRange: 0
-  - name: Candy0
-    type: 1
-    cost: 50
-    prefabWeapon: {fileID: 1534889056757590243, guid: 9b8cd451bfbad8a49a32e8e669ca7359, type: 3}
-    prefabBullet: {fileID: 1168385441038374467, guid: 4808d25a7500b964182aa0d665f04d05, type: 3}
-    bonusSpeed: 5
-    bonusRange: 5
-  - name: Candy1
-    type: 2
-    cost: 50
-    prefabWeapon: {fileID: 1413746230509323485, guid: 64b18d93a60b11d4189a6676671816f6, type: 3}
-    prefabBullet: {fileID: 8631628412622764291, guid: 81e872d5f0c48b642a865a9dd8d3b407, type: 3}
-    bonusSpeed: 5
-    bonusRange: 5
-  - name: Candy2
-    type: 3
-    cost: 50
-    prefabWeapon: {fileID: 3752521038055331852, guid: b0ccdcc3b4cc3254d8d8cec91db44f10, type: 3}
-    prefabBullet: {fileID: 3800815211281247080, guid: 0771f36cd4485804f9811bd61eea487e, type: 3}
-    bonusSpeed: 5
-    bonusRange: 5
-  - name: Candy4
-    type: 4
-    cost: 50
-    prefabWeapon: {fileID: 8311697077354397379, guid: cd3849cfdd4956146b17a920e722bd6b, type: 3}
-    prefabBullet: {fileID: 1084788348389889368, guid: 417f63df8c1541043a728992cad1491e, type: 3}
-    bonusSpeed: 5
-    bonusRange: 5
-  - name: Axe0
-    type: 5
-    cost: 100
-    prefabWeapon: {fileID: 1831998577731115149, guid: c59f1e2a431cbab4d9d1891bac1ea17a, type: 3}
-    prefabBullet: {fileID: 2072688308252825015, guid: 399e8733968d82044ad578cdac575c0d, type: 3}
-    bonusSpeed: 10
-    bonusRange: 10
-  - name: Axe1
-    type: 6
-    cost: 100
-    prefabWeapon: {fileID: 4772423101634731140, guid: ccd7ccbdd9aa1d34e9be16035f75fb8a, type: 3}
-    prefabBullet: {fileID: 5918420718801552532, guid: a2c837815a315f1429ba4b6f3036a993, type: 3}
-    bonusSpeed: 10
-    bonusRange: 10
-  - name: Boomerang
-    type: 7
-    cost: 500
-    prefabWeapon: {fileID: 3133672147035577924, guid: a295bd9c0c01f534d9b8830896ed5850, type: 3}
-    prefabBullet: {fileID: 4864940527067438338, guid: 796a50896db445543a5b220043502d15, type: 3}
-    bonusSpeed: 20
-    bonusRange: 20
-  - name: Knife
-    type: 8
-    cost: 700
-    prefabWeapon: {fileID: 386066801108122967, guid: 824b72a6482010143bf7a144f939c7fb, type: 3}
-    prefabBullet: {fileID: 6366882743948746508, guid: fab9cbb1228374d4f8e39bcd76569145, type: 3}
-    bonusSpeed: 25
-    bonusRange: 25
-  - name: Uzi
-    type: 9
-    cost: 900
-    prefabWeapon: {fileID: 8511492791947328680, guid: c18ac486af12a684db5ab126d801977d, type: 3}
-    prefabBullet: {fileID: 9075223876120311654, guid: a9b1b67caa2482246a2807b5c6ea2037, type: 3}
-    bonusSpeed: 30
-    bonusRange: 30
-  - name: Arrow
-    type: 10
-    cost: 1000
-    prefabWeapon: {fileID: 7378361629873705591, guid: 51fcce6ec96002d4182da64bdb63c223, type: 3}
-    prefabBullet: {fileID: 8416567487257454702, guid: 174ca05d69ae21a43b5c701be741996f, type: 3}
-    bonusSpeed: 40
-    bonusRange: 40
-  - name: Z
-    type: 11
-    cost: 2000
-    prefabWeapon: {fileID: 8674573291065039411, guid: 912bb56b6f465074b9ee701da153ba11, type: 3}
-    prefabBullet: {fileID: 1394646772700840838, guid: 17ef7ad9d0c2e16489e152451660a770, type: 3}
-    bonusSpeed: 50
-    bonusRange: 50
+  - {fileID: 5707918956658057942, guid: 167797db8e28f7d4bb2247f5c684b553, type: 3}
+  - {fileID: 1229838324778137097, guid: 0be8450136c78174a9b18aac2ff6aa6a, type: 3}
+  - {fileID: 9074469043565572381, guid: 992c72db5c2d6174cb945dc72e4d4ab4, type: 3}
+  - {fileID: -3953652893598132773, guid: a2bc82e2e40fb164e99d481e0feea378, type: 3}
+  - {fileID: 1827033881255201985, guid: dac6af03cc0e63a44ab5a090ac9249ca, type: 3}
+  - {fileID: -5435625146424681702, guid: e8f17f29bbc898f499da798f4f4e2f7b, type: 3}
+  - {fileID: 7035314122022162227, guid: 61593db0209c8474bbc13664c7b73884, type: 3}
+  - {fileID: -7424485544086256620, guid: 0fcb4bbdfa7c37741a3fb5834904fb52, type: 3}
+  - {fileID: 8835584984704818059, guid: f08d2a91bc929ad44baf8a15bfa567ba, type: 3}
+  - {fileID: -5465468515465704936, guid: 2223be503de7e1541b590910adcb2b41, type: 3}
+  - {fileID: 3808530554933325641, guid: b9133ae5d6447964eb9a862378190beb, type: 3}
+  - {fileID: -5268908356971033388, guid: b54721c19c7192d46b741a141fe8e4f5, type: 3}

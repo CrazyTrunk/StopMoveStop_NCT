@@ -1,0 +1,91 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &9044379844719930635
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 100000, guid: ecd6cb62ed8350e498f9e25d15d9caa3, type: 3}
+      propertyPath: m_Name
+      value: knife 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: ecd6cb62ed8350e498f9e25d15d9caa3, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: ecd6cb62ed8350e498f9e25d15d9caa3, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: ecd6cb62ed8350e498f9e25d15d9caa3, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: ecd6cb62ed8350e498f9e25d15d9caa3, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: ecd6cb62ed8350e498f9e25d15d9caa3, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0.00000008146034
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: ecd6cb62ed8350e498f9e25d15d9caa3, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: ecd6cb62ed8350e498f9e25d15d9caa3, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: ecd6cb62ed8350e498f9e25d15d9caa3, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: ecd6cb62ed8350e498f9e25d15d9caa3, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: ecd6cb62ed8350e498f9e25d15d9caa3, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 100000, guid: ecd6cb62ed8350e498f9e25d15d9caa3, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 8835584984704818059}
+  m_SourcePrefab: {fileID: 100100000, guid: ecd6cb62ed8350e498f9e25d15d9caa3, type: 3}
+--- !u!23 &9044379844717639019 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 2300000, guid: ecd6cb62ed8350e498f9e25d15d9caa3, type: 3}
+  m_PrefabInstance: {fileID: 9044379844719930635}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &9044379844719831979 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 100000, guid: ecd6cb62ed8350e498f9e25d15d9caa3, type: 3}
+  m_PrefabInstance: {fileID: 9044379844719930635}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &8835584984704818059
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9044379844719831979}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d7df10942c42bf446880a8d94d7cfb33, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  weaponName: Knife
+  bullet: {fileID: 2496892485939414381, guid: a24f5d4461663fd43b751f01aaaf86ac, type: 3}
+  bonusSpeed: 10
+  bonusRange: 10
+  type: 8
+  cost: 800
+  render: {fileID: 9044379844717639019}

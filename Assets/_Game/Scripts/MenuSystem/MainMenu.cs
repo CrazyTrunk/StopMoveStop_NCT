@@ -17,7 +17,6 @@ public class MainMenu : Menu<MainMenu>
     {
         Hide();
         WeaponMenu.Show();
-        WeaponShopManagerItem.Instance.LoadFistItemInList();
     }
     public void OnMenuLevelSelected()
     {

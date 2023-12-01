@@ -1,4 +1,5 @@
-﻿using TMPro;
+﻿using System;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -14,70 +15,46 @@ public class WeaponMenu : Menu<WeaponMenu>
 
     [SerializeField] private TextMeshProUGUI coinText;
     [SerializeField] private TextMeshProUGUI selectText;
-
+    [SerializeField] private WeaponData weaponData;
     //PlayerData
     private float coin = 99999;
 
-    private Weapon currentWeapon;
+    private GameObject currentWeaponPrefab;
     private void Start()
     {
         coinText.text = coin.ToString();
-        SetCostData();
+        LoadWeaponFromType(WeaponType.HAMMER);
     }
+
+    private void LoadWeaponFromType(WeaponType weaponType)
+    {
+        if (currentWeaponPrefab != null)
+        {
+            Destroy(currentWeaponPrefab);
+        }
+        currentWeaponPrefab = weaponData.GetWeaponByType(weaponType).gameObject;
+        Instantiate(currentWeaponPrefab);
+    }
+
     public void OnXmarkClick()
     {
         Hide();
         MainMenu.Show();
-        WeaponShopManagerItem.Instance.DestroyCurrentPrefab();
     }
 
     public void OnNextButtonClicked()
     {
-        WeaponShopManagerItem.Instance.NextItemInList();
-        SetCostData();
     }
     public void OnSelectButtonClicked()
     {
-        WeaponShopManagerItem.Instance.SelectWeapon(currentWeapon.type);
-        SetCostData();
     }
     public void OnPrevButtonClicked()
     {
-        WeaponShopManagerItem.Instance.PrevItemInList();
-        SetCostData();
     }
-    public void SetCostData()
-    {
-        currentWeapon = WeaponShopManagerItem.Instance.GetCurrentWeaponOnShop();
-        costText.text = currentWeapon.cost.ToString();
-        if (WeaponShopManagerItem.Instance.IsUnlockItem(currentWeapon.type))
-        {
-            buyButton.gameObject.SetActive(false);
-            selectButton.gameObject.SetActive(true);
-            adsButton.gameObject.SetActive(false);
-            CheckingIfEquip();
-        }
-        else
-        {
-            buyButton.gameObject.SetActive(true);
-            selectButton.gameObject.SetActive(false);
-            adsButton.gameObject.SetActive(true);
-            //buyButton.interactable = false;
-        }
-    }
-    public void CheckingIfEquip()
-    {
-        selectText.text = currentWeapon.type == WeaponShopManagerItem.Instance.GetSelectWeapon().type ? "Equipped" : "Select";
-    }
+
     public void OnBuyButtonClick()
     {
-        if (coin >= currentWeapon.cost)
-        {
-            coin -= currentWeapon.cost;
-            coinText.text = coin.ToString();
-            WeaponShopManagerItem.Instance.BuyItem(currentWeapon.type);
-            SetCostData();
-        }
+        
     }
     public static void Show()
     {

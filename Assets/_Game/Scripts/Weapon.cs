@@ -6,7 +6,7 @@ using UnityEngine;
 public class Weapon : MonoBehaviour
 {
     public string weaponName;
-    private Bullet bullet;
+    [SerializeField]private Bullet bullet;
     public float bonusSpeed;
     public float bonusRange;
     public WeaponType type;

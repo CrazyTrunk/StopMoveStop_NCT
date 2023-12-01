@@ -4,11 +4,14 @@ using System.Collections.Generic;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.SocialPlatforms;
+using UnityEngine.UI;
+
+[RequireComponent(typeof(Rigidbody), typeof(BoxCollider))]
 
 public class Bullet : MonoBehaviour
 {
-    public float attackSpeed = 2f;
-    public float range;
+    private float attackSpeed = 2f;
+    private float range;
     private Vector3 startPosition;
     [SerializeField]private Rigidbody rb;
     protected Action<Character, Character> onHit;
