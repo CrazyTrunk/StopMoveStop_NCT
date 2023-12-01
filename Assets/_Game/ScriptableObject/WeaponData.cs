@@ -7,14 +7,14 @@ public class WeaponData : ScriptableObject
 {
     public List<Weapon> listWeapon;
     private const string Prefix = "Weapon_";
-    private const string SelectedWeapon = "SelectedWeapon";
+    private const string EquiqWeapon = "EquipWeapon";
     public static void SelectWeapon(WeaponType weaponType)
     {
-        PlayerPrefs.SetInt(SelectedWeapon, (int)weaponType);
+        PlayerPrefs.SetInt(EquiqWeapon, (int)weaponType);
     }
-    public Weapon GetSelectedWeapon()
+    public Weapon CurrentEquiqWeapon()
     {
-        int skinIndex = PlayerPrefs.GetInt(SelectedWeapon, 0);
+        int skinIndex = PlayerPrefs.GetInt(EquiqWeapon, 0);
         if (skinIndex >= 0 && skinIndex < listWeapon.Count)
         {
             return listWeapon[skinIndex];

@@ -11,7 +11,7 @@ public class Player : Character, ICombatant
     public override void Awake()
     {
         base.Awake();
-        playerData = PlayerData.ReadFromJson(playerDataTxt) ?? new PlayerData();
+        //playerData = PlayerData.ReadFromJson(playerDataTxt) ?? new PlayerData();
 
         //playerData = PlayerData.ReadFromJson(playerDataTxt) ?? new PlayerData();
         //WeaponOnShop weaponOnShop = WeaponShopManagerItem.Instance.GetSelectWeapon();
