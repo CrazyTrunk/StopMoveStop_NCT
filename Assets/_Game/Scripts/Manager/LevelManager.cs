@@ -63,7 +63,7 @@ public class LevelManager : Singleton<LevelManager>
     {
         botsKilled++;
         currentBots--;
-        usedPositions.Remove(character.GetTransform().position);
+        usedPositions.Remove(character.transform.position);
         botPool.Despawn(character.gameObject);
 
         if (currentBots < maxBotsAtOnce && (totalBotsToKill - botsKilled) > 0)

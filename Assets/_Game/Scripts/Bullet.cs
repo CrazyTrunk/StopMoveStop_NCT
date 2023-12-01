@@ -7,8 +7,8 @@ using UnityEngine.SocialPlatforms;
 
 public class Bullet : MonoBehaviour
 {
-    public float speed = 5f;
-    public float range = 5f;
+    public float attackSpeed = 2f;
+    public float range;
     private Vector3 startPosition;
     [SerializeField]private Rigidbody rb;
     protected Action<Character, Character> onHit;
@@ -18,12 +18,14 @@ public class Bullet : MonoBehaviour
     {
         this.shooter = attacker;
         this.onHit = onHit;
+        this.range = attacker.Range;
+        transform.localScale *= attacker.ScaleMultiple;
     }
 
     public void Shoot()
     {
         startPosition = transform.position;
-        rb.velocity = transform.forward * range;
+        rb.velocity = transform.forward * range * attackSpeed;
         transform.localRotation = Quaternion.identity;
     }
     void Update()

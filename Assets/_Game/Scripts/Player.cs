@@ -23,7 +23,9 @@ public class Player : Character, ICombatant
     }
     private void LateUpdate()
     {
-        canvasPopup.LookAt(canvasPopup.position +
-            Camera.main.transform.rotation * Vector3.forward, Vector3.up);
+        Vector3 cameraForward = Camera.main.transform.forward;
+        Vector3 newPos = CharacterModel.transform.position + Vector3.up * 6f;
+        canvasPopup.position = newPos;
+        canvasPopup.LookAt(newPos + cameraForward, Vector3.up);
     }
 }

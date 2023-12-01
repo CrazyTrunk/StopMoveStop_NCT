@@ -18,9 +18,9 @@ public class CameraFollow : MonoBehaviour
         offset = transform.position - target.position;
         originalPos = offset;
     }
-    private void LateUpdate()
+    private void Update()
     {
-        if (!isSwitching) // Kiểm tra để không ghi đè vị trí camera khi đang chuyển đổi
+        if (!isSwitching)
         {
             Vector3 targetPosition = target.position + offset;
             transform.position = Vector3.SmoothDamp(transform.position, targetPosition, ref _currentVelocity, smoothTime);
@@ -53,5 +53,9 @@ public class CameraFollow : MonoBehaviour
         offset = newPosition;
         isSwitching = false;
     }
-
+    public void UpdateCameraHeight()
+    {
+        offset = new Vector3(offset.x, offset.y + 2,offset.z);
+        transform.Rotate(transform.rotation.x + 2, 0, 0, Space.Self);
+    }
 }

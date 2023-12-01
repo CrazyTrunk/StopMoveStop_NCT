@@ -11,7 +11,6 @@ public class Character : MonoBehaviour, ICombatant
     protected string CurrentAnim;
 
     [Header("Combat")]
-    private GameObject weaponThrowPrefab;
     [SerializeField] private Transform spawnBulletPoint;
     [SerializeField] private Transform spawnWeaponPoint;
 
@@ -37,11 +36,13 @@ public class Character : MonoBehaviour, ICombatant
     [Header("Basic CharacterInfo")]
     [SerializeField] private Transform characterModel;
     public int level = 0;
+    private int previousLevel = 0;
     public const int MaxLevelIncreseGap = 3;
     public const int MaxLevel = 55;
-    public Vector3 baseScale = new Vector3(1, 1, 1);
+    public Vector3 baseScale = new Vector3(1f, 1f, 1f);
     public float maxScale = 2f;
     public float scaleIncrement = 0.1f;
+    private float scaleMultiple = 1f;
     private Vector3 originalColliderSize;
     private Vector3 originalColliderCenter;
 
@@ -58,12 +59,14 @@ public class Character : MonoBehaviour, ICombatant
     public float Speed { get => speed; set => speed = value; }
     public bool HasEnemyInSight { get => hasEnemyInSight; set => hasEnemyInSight = value; }
     public bool IsAttacking { get => isAttacking; set => isAttacking = value; }
-    public bool IsDead { get => isDead; set => isDead = value; }
     public float AnimSpeed { get => animSpeed; set => animSpeed = value; }
     public float AnimPlayTime { get => animPlayTime; set => animPlayTime = value; }
     public Weapon Weapon { get => weapon; set => weapon = value; }
     public GameObject BulletPrefab { get => bulletPrefab; set => bulletPrefab = value; }
-
+    public bool IsDead { get => isDead; set => isDead = value; }
+    public float Range { get => range; set => range = value; }
+    public float ScaleMultiple { get => scaleMultiple; set => scaleMultiple = value; }
+    public Transform CharacterModel { get => characterModel; set => characterModel = value; }
 
     public event Action<ICombatant> OnCombatantKilled;
 
@@ -88,7 +91,7 @@ public class Character : MonoBehaviour, ICombatant
     }
     public void InitWeaponOnHand()
     {
-        if(weaponPrefab != null)
+        if (weaponPrefab != null)
         {
             Destroy(weaponPrefab);
         }
@@ -155,6 +158,11 @@ public class Character : MonoBehaviour, ICombatant
         int level = CalculateLevel(enemyLevel);
         float currentRange = CalculateRange();
         ScaleModel(level);
+        if (level != 0 && level >= previousLevel + 10)
+        {
+            Camera.main.GetComponent<CameraFollow>().UpdateCameraHeight();
+            previousLevel = level;
+        }
         AdjustCollider();
         characterSphere.UpdateTriggerSize(currentRange);
         levelDisplayInfo.UpdateUILevelPlayer(this.level);
@@ -173,18 +181,18 @@ public class Character : MonoBehaviour, ICombatant
     private float CalculateRange()
     {
         float increment = (level / 10) * RangeIncreasePerTenLevels;
-        return range = Mathf.Min(baseRange + increment, maxRangeIncrese);
-
+        Range = Mathf.Min(baseRange + increment, maxRangeIncrese);
+        return Range;
     }
-    private void ScaleModel(int level)
+    private void ScaleModel(int levelReceive)
     {
-        float scaleMultiplier = 1 + (level / (float)MaxLevel * (maxScale - 1));
-        characterModel.localScale = baseScale * scaleMultiplier;
+        ScaleMultiple = 1 + (levelReceive / (float)MaxLevel * (maxScale - 1));
+        CharacterModel.localScale = baseScale * ScaleMultiple;
     }
     private void AdjustCollider()
     {
-        float scale = characterModel.localScale.y;
-
+        float scale = CharacterModel.localScale.y;
+        //chat GPT
         // Điều chỉnh collider dựa trên tỉ lệ scale
         capsuleColliderCharacter.radius = originalColliderSize.x * scale;
         capsuleColliderCharacter.height = originalColliderSize.y * scale;
