@@ -80,6 +80,7 @@ public class WeaponMenu : Menu<WeaponMenu>
         WeaponData.SelectWeapon(currentWeaponPrefab.GetComponent<Weapon>().type);
         currentWeaponEquip = weaponData.CurrentEquipWeapon();
         DisplayButtons();
+        GlobalEvents.WeaponSelected(currentWeaponPrefab.GetComponent<Weapon>().type);
     }
     public void OnPrevButtonClicked()
     {

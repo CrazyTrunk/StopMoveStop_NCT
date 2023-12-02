@@ -27,7 +27,7 @@ public class Character : MonoBehaviour, ICombatant
     public const float RangeIncreasePerTenLevels = 2f;
     private float baseRange = 5f;
     private float baseSpeed = 5f;
-
+    [SerializeField] private float maxSpeed = 7f;
     private float maxRangeIncrese = 10f;
 
     [Header("UI Canvas Info and noti")]
@@ -71,6 +71,8 @@ public class Character : MonoBehaviour, ICombatant
     public Transform CharacterModel { get => characterModel; set => characterModel = value; }
     public float BaseSpeed { get => baseSpeed; set => baseSpeed = value; }
     public float BaseRange { get => baseRange; set => baseRange = value; }
+    public CharacterSphere CharacterSphere { get => characterSphere; set => characterSphere = value; }
+    public WeaponData WeaponDataSO { get => weaponDataSO; set => weaponDataSO = value; }
 
     public event Action<ICombatant> OnCombatantKilled;
 
@@ -80,8 +82,12 @@ public class Character : MonoBehaviour, ICombatant
         originalColliderSize = new Vector3(capsuleColliderCharacter.radius, capsuleColliderCharacter.height, capsuleColliderCharacter.radius);
         originalColliderCenter = capsuleColliderCharacter.center;
         ResetState();
-        ChangeWeapon(WeaponType.HAMMER);
-        EquipWeapon(Weapon);
+        if(this is not Player)
+        {
+            ChangeWeapon(WeaponType.HAMMER);
+            EquipWeapon(Weapon);
+            CharacterSphere.UpdateTriggerSize(this.range);
+        }
     }
     public void EquipWeapon(Weapon weapon)
     {
@@ -95,12 +101,6 @@ public class Character : MonoBehaviour, ICombatant
         this.Speed += bonusSpeed / 10;
         this.Range += bonusRange / 10;
     }
-    //public void ChangeWeapon(WeaponType weaponType)
-    //{
-    //    if (weapon != null) { Destroy*(weapon.gameObject) }
-    //    weapon - Instantiate(weaponDataSO.GetSelectedWeapon());
-    //}
-
     public void ChangeAnim(string animName)
     {
         if (!string.IsNullOrEmpty(animName) && CurrentAnim != animName)
@@ -117,7 +117,7 @@ public class Character : MonoBehaviour, ICombatant
         {
             Destroy(weaponPrefab);
         }
-        weaponPrefab = Instantiate(weaponDataSO.GetWeaponByType(weaponType).gameObject, spawnWeaponPoint);
+        weaponPrefab = Instantiate(WeaponDataSO.GetWeaponByType(weaponType).gameObject, spawnWeaponPoint);
         weapon = weaponPrefab.GetComponent<Weapon>();
     }
 
@@ -173,8 +173,9 @@ public class Character : MonoBehaviour, ICombatant
         float currentRange = CalculateRange();
         ScaleModel(level);
         AdjustCollider();
-        characterSphere.UpdateTriggerSize(currentRange);
+        CharacterSphere.UpdateTriggerSize(currentRange);
         levelDisplayInfo.UpdateUILevelPlayer(this.level);
+        Speed = Mathf.Min(Speed + (level * 0.1f), maxSpeed);
     }
     public void LevelUp(int enemyLevel)
     {
@@ -191,8 +192,9 @@ public class Character : MonoBehaviour, ICombatant
             }
         }
         AdjustCollider();
-        characterSphere.UpdateTriggerSize(currentRange);
+        CharacterSphere.UpdateTriggerSize(currentRange);
         levelDisplayInfo.UpdateUILevelPlayer(this.level);
+        Speed = Mathf.Min(Speed + 0.1f, maxSpeed);
     }
 
     private int CalculateLevel(int enemyLevel)
@@ -209,7 +211,7 @@ public class Character : MonoBehaviour, ICombatant
     private float CalculateRange()
     {
         float increment = (level / 10) * RangeIncreasePerTenLevels;
-        Range = Mathf.Min(BaseRange + increment, maxRangeIncrese);
+        Range = Mathf.Min(Range + increment, maxRangeIncrese);
         return Range;
     }
     private void ScaleModel(int levelReceive)

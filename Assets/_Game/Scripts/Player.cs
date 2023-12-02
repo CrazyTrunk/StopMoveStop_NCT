@@ -1,3 +1,4 @@
+using System;
 using TMPro;
 using UnityEngine;
 
@@ -12,11 +13,25 @@ public class Player : Character, ICombatant
     {
         base.Awake();
         playerData = PlayerData.ReadFromJson(playerDataTxt) ?? new PlayerData();
-        playerData.OnInitData();
+        ChangeWeapon(WeaponDataSO.CurrentEquipWeapon().type);
+        EquipWeapon(Weapon);
+        CharacterSphere.UpdateTriggerSize(this.Range);
     }
-    public void GainCoin(int coin)
+    private void OnEnable()
     {
-        playerData.coin += coin;
+        GlobalEvents.OnWeaponSelected += HandleWeaponSelection;
+    }
+
+    private void HandleWeaponSelection(WeaponType type)
+    {
+        ChangeWeapon(type);
+        EquipWeapon(Weapon);
+        CharacterSphere.UpdateTriggerSize(this.Range);
+    }
+
+    private void OnDisable()
+    {
+        GlobalEvents.OnWeaponSelected -= HandleWeaponSelection;
     }
     public void ShowFloatingText(int level)
     {
