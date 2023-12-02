@@ -12,38 +12,47 @@ public class WeaponMenu : Menu<WeaponMenu>
     [SerializeField] private Button selectButton;
 
     [SerializeField] private TextMeshProUGUI costText;
+    [SerializeField] private TextMeshProUGUI nameWeapon;
+    [SerializeField] private TextMeshProUGUI status;
 
     [SerializeField] private TextMeshProUGUI coinText;
+    [SerializeField] private TextMeshProUGUI textBonus;
     [SerializeField] private TextMeshProUGUI selectText;
     [SerializeField] private WeaponData weaponData;
+    private Weapon currentWeaponEquip;
     private Transform spawnPoint;
     //PlayerData
     private float coin = 99999;
     private int currentWeaponIndex = 0;
     private GameObject currentWeaponPrefab;
-    private void Start()
+    public void OnInit()
     {
-        BuyWeapon();
-        coinText.text = coin.ToString();
+        currentWeaponEquip = weaponData.CurrentEquipWeapon();
         spawnPoint = GameObject.Find("SpawnPointModel").transform;
-        LoadWeapon(currentWeaponIndex);
+        coinText.text = coin.ToString();
     }
-
     private void DisplayButtons()
     {
-        Debug.Log($"{currentWeaponPrefab.GetComponent<Weapon>().type} buy {WeaponData.IsUnlocked(currentWeaponPrefab.GetComponent<Weapon>().type)}");
         if (WeaponData.IsUnlocked(currentWeaponPrefab.GetComponent<Weapon>().type))
         {
+            status.text = "";
             buyButton.gameObject.SetActive(false);
-            adsButton.gameObject.SetActive(false);  
+            adsButton.gameObject.SetActive(false);
             selectButton.gameObject.SetActive(true);
+            IsCurrentWeaponSelect();
         }
         else
         {
             buyButton.gameObject.SetActive(true);
             adsButton.gameObject.SetActive(true);
             selectButton.gameObject.SetActive(false);
+            status.text = "Lock";
         }
+    }
+
+    private void IsCurrentWeaponSelect()
+    {
+        selectText.text = currentWeaponEquip.type == currentWeaponPrefab.GetComponent<Weapon>().type ? "Equipped" : "Select";
     }
     #region Buttons
     public void OnXmarkClick()
@@ -64,6 +73,13 @@ public class WeaponMenu : Menu<WeaponMenu>
     }
     public void OnSelectButtonClicked()
     {
+        if (currentWeaponEquip.type == currentWeaponPrefab.GetComponent<Weapon>().type)
+        {
+            return;
+        }
+        WeaponData.SelectWeapon(currentWeaponPrefab.GetComponent<Weapon>().type);
+        currentWeaponEquip = weaponData.CurrentEquipWeapon();
+        DisplayButtons();
     }
     public void OnPrevButtonClicked()
     {
@@ -76,7 +92,8 @@ public class WeaponMenu : Menu<WeaponMenu>
 
     public void OnBuyButtonClick()
     {
-
+        BuyWeapon(currentWeaponPrefab.GetComponent<Weapon>().type);
+        DisplayButtons();
     }
     public static void Show()
     {
@@ -103,12 +120,15 @@ public class WeaponMenu : Menu<WeaponMenu>
             DestroyCurrentWeaponOnScene();
             currentWeaponPrefab = weaponData.listWeapon[index].gameObject;
             currentWeaponPrefab = Instantiate(currentWeaponPrefab, spawnPoint);
+            nameWeapon.text = weaponData.listWeapon[index].weaponName;
+            textBonus.text = $"+ {weaponData.listWeapon[index].bonusRange} Range\n + {weaponData.listWeapon[index].bonusSpeed} Speed";
+            costText.text = weaponData.listWeapon[index].cost.ToString();
             DisplayButtons();
         }
     }
-    private void BuyWeapon()
+    private void BuyWeapon(WeaponType weaponType)
     {
-        WeaponData.UnlockWeapon(WeaponType.HAMMER);
+        WeaponData.UnlockWeapon(weaponType);
     }
     #endregion
 }

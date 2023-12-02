@@ -17,6 +17,7 @@ public class MainMenu : Menu<MainMenu>
     {
         Hide();
         WeaponMenu.Show();
+        WeaponMenu.Instance.OnInit();
         WeaponMenu.Instance.LoadWeapon((int)WeaponType.HAMMER);
     }
     public void OnMenuLevelSelected()

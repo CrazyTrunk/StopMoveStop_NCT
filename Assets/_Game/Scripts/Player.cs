@@ -11,9 +11,8 @@ public class Player : Character, ICombatant
     public override void Awake()
     {
         base.Awake();
-        //playerData = PlayerData.ReadFromJson(playerDataTxt) ?? new PlayerData();
-        ChangeWeapon(WeaponType.HAMMER);
-        EquipWeapon(Weapon);
+        playerData = PlayerData.ReadFromJson(playerDataTxt) ?? new PlayerData();
+        playerData.OnInitData();
     }
     public void GainCoin(int coin)
     {
@@ -31,18 +30,8 @@ public class Player : Character, ICombatant
         canvasPopup.position = newPos;
         canvasPopup.LookAt(newPos + cameraForward, Vector3.up);
     }
-    public void EquipWeapon(Weapon weapon)
-    {
-        ApplyWeaponBonuses(weapon.bonusSpeed, weapon.bonusRange);
-    }
-    public void ApplyWeaponBonuses(float bonusSpeed, float bonusRange)
-    {
-        this.Speed = BaseSpeed;
-        this.Range = BaseRange;
 
-        this.Speed += bonusSpeed / 10;
-        this.Range += bonusRange / 10;
-    }
+
     public string SerializeToJson()
     {
         PlayerData data = new PlayerData

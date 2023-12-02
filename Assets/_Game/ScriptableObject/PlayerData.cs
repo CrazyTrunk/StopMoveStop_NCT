@@ -16,6 +16,12 @@ public class PlayerData
     {
         
     }
+    public void OnInitData()
+    {
+        coin = 0;
+        WeaponData.UnlockWeapon(WeaponType.HAMMER);
+        WeaponData.SelectWeapon(WeaponType.HAMMER);
+    }
     public string ToJson()
     {
         return JsonUtility.ToJson(this);

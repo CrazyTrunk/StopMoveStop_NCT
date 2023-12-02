@@ -80,6 +80,20 @@ public class Character : MonoBehaviour, ICombatant
         originalColliderSize = new Vector3(capsuleColliderCharacter.radius, capsuleColliderCharacter.height, capsuleColliderCharacter.radius);
         originalColliderCenter = capsuleColliderCharacter.center;
         ResetState();
+        ChangeWeapon(WeaponType.HAMMER);
+        EquipWeapon(Weapon);
+    }
+    public void EquipWeapon(Weapon weapon)
+    {
+        ApplyWeaponBonuses(weapon.bonusSpeed, weapon.bonusRange);
+    }
+    public void ApplyWeaponBonuses(float bonusSpeed, float bonusRange)
+    {
+        this.Speed = BaseSpeed;
+        this.Range = BaseRange;
+
+        this.Speed += bonusSpeed / 10;
+        this.Range += bonusRange / 10;
     }
     //public void ChangeWeapon(WeaponType weaponType)
     //{

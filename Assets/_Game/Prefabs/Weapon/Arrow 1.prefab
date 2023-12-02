@@ -82,7 +82,7 @@ MonoBehaviour:
   bonusSpeed: 15
   bonusRange: 15
   type: 10
-  cost: 0
+  cost: 1200
   render: {fileID: 1469342523629383728}
 --- !u!23 &1469342523629383728 stripped
 MeshRenderer:
