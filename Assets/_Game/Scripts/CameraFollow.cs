@@ -13,8 +13,9 @@ public class CameraFollow : MonoBehaviour
     private Vector3 originalPos;
     private Vector3 _currentVelocity = Vector3.zero;
     private bool isSwitching = false;
-    private void Awake()
+    public void OnInit(Transform target)
     {
+        this.target = target;
         offset = transform.position - target.position;
         originalPos = offset;
     }

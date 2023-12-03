@@ -6,7 +6,11 @@ public class PlayerController : MonoBehaviour
 {
     [SerializeField] private Player player;
     [SerializeField] private Rigidbody rb;
-    [SerializeField] private Joystick joystick;
+    private Joystick joystick;
+    public void InitJoyStick(Joystick joystick)
+    {
+        this.joystick = joystick;
+    }
     private void Update()
     {
         if (GameManager.Instance.IsState(GameState.Playing))

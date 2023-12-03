@@ -254,7 +254,7 @@ public class Character : MonoBehaviour, ICombatant
 
         // Ẩn nhân vật (hoặc làm nhân vật không hoạt động) khi nó chết
         yield return new WaitForSeconds(1f);
-        LevelManager.Instance.BotKilled(this);
+        //LevelManager.Instance.BotKilled(this);
     }
     #endregion
 

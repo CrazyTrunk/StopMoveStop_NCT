@@ -8,7 +8,6 @@ public class Player : Character, ICombatant
     [SerializeField] private Transform canvasPopup;
     PlayerData playerData;
     private const string playerDataTxt = "playerData.txt";
-
     public override void Awake()
     {
         base.Awake();
