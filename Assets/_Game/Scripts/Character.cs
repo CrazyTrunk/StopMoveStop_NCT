@@ -169,6 +169,7 @@ public class Character : MonoBehaviour, ICombatant
         hasEnemyInSight = false;
         capsuleColliderCharacter.enabled = true;
         radicalTrigger?.OnInit();
+        Undetect();
     }
     #region Level Init and other calculate related
     public void InitLevelBot(int level)

@@ -779,7 +779,7 @@ MonoBehaviour:
   - {fileID: 7988616404881892013, guid: 4698a516db2c27b4ba2f7156961bddae, type: 3}
   joystick: {fileID: 445529404}
   playerPrefab: {fileID: 1800077677860429314, guid: 94a2814b2676be340a7fda8c9767c2bb, type: 3}
-  maxBotsAtOnce: 1
+  maxBotsAtOnce: 3
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
@@ -1756,8 +1756,8 @@ MonoBehaviour:
   prefab: {fileID: 5047329666932212505, guid: 77666643464a82840b06975bd1a51c47, type: 3}
   notification: 3
   strategy: 0
-  preload: 1
-  capacity: 1
+  preload: 3
+  capacity: 3
   recycle: 0
   persist: 0
   stamp: 0
