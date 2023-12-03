@@ -8,10 +8,10 @@ using UnityEngine;
 [System.Serializable]
 public class PlayerData
 {
-    public int coin = 0;
-    public int levelMap = 1;
-    public bool isSoundOn = false;
-    public bool isAdsRemove = false;
+    public int coin;
+    public int levelMap;
+    public bool isSoundOn;
+    public bool isAdsRemove;
     public PlayerData()
     {
         
@@ -19,8 +19,14 @@ public class PlayerData
     public void OnInitData()
     {
         coin = 0;
-        WeaponData.UnlockWeapon(WeaponType.HAMMER);
-        WeaponData.SelectWeapon(WeaponType.HAMMER);
+        levelMap = 0;
+        isSoundOn = false;
+        isAdsRemove = false;
+        if (!WeaponData.IsUnlocked(WeaponType.HAMMER))
+        {
+            WeaponData.UnlockWeapon(WeaponType.HAMMER);
+            WeaponData.SelectWeapon(WeaponType.HAMMER);
+        }
     }
     public string ToJson()
     {
@@ -30,7 +36,7 @@ public class PlayerData
     {
         if (!File.Exists(filePath))
         {
-            Debug.Log("File not found: " + filePath);
+            //Debug.Log("File not found: " + filePath);
             return null;
         }
 
@@ -40,9 +46,9 @@ public class PlayerData
 
             return JsonUtility.FromJson<PlayerData>(jsonString);
         }
-        catch (Exception e)
+        catch (Exception)
         {
-            Debug.Log("Failed to read from JSON file: " + e.Message);
+            //Debug.Log("Failed to read from JSON file: " + e.Message);
             return null;
         }
     }

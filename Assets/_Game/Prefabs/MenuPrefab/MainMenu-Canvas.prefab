@@ -1091,6 +1091,7 @@ MonoBehaviour:
   DestroyWhenClosed: 0
   DisableMenusUnderneath: 1
   Cancelable: 1
+  coin: {fileID: 1246159174293624054}
 --- !u!1 &2712928900817721392
 GameObject:
   m_ObjectHideFlags: 0

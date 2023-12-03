@@ -7,14 +7,16 @@ public class Player : Character, ICombatant
     [SerializeField] private GameObject floatingLevelTextPrefab;
     [SerializeField] private Transform canvasPopup;
     PlayerData playerData;
-    private const string playerDataTxt = "playerData.txt";
     public override void Awake()
     {
         base.Awake();
-        playerData = PlayerData.ReadFromJson(playerDataTxt) ?? new PlayerData();
         ChangeWeapon(WeaponDataSO.CurrentEquipWeapon().type);
         EquipWeapon(Weapon);
         CharacterSphere.UpdateTriggerSize(this.Range);
+    }
+    public void LoadData(PlayerData playerData)
+    {
+        this.playerData = playerData;
     }
     private void OnEnable()
     {
