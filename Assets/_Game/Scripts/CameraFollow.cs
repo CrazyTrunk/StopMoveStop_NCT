@@ -27,8 +27,9 @@ public class CameraFollow : MonoBehaviour
     }
     public void ResetCameraToOriginalPosition()
     {
-        transform.position = originalPos;
-        transform.rotation = originalRotation;
+        //transform.position = originalPos;
+        //transform.rotation = originalRotation;
+        transform.SetPositionAndRotation(originalPos, originalRotation);
         offset = transform.position - target.position;
         // Reset lại _currentVelocity để không ảnh hưởng đến việc di chuyển mượt mà của camera
         _currentVelocity = Vector3.zero;
@@ -61,15 +62,15 @@ public class CameraFollow : MonoBehaviour
         while (time < duration)
         {
             // Sử dụng Lerp thay vì SmoothDamp để tránh vấn đề với _currentVelocity
-            transform.position = Vector3.Lerp(startPosition, newPosition, time / duration);
-            transform.rotation = Quaternion.Lerp(startRotation, newRotation, time / duration);
-
+            //transform.position = Vector3.Lerp(startPosition, newPosition, time / duration);
+            //transform.rotation = Quaternion.Lerp(startRotation, newRotation, time / duration);
+            transform.SetPositionAndRotation(Vector3.Lerp(startPosition, newPosition, time / duration), Quaternion.Lerp(startRotation, newRotation, time / duration));
             time += Time.deltaTime;
             yield return null;
         }
-
-        transform.position = newPosition; // Đặt rõ ràng để tránh bất kỳ sai số nào
-        transform.rotation = newRotation;
+        //transform.position = newPosition; // Đặt rõ ràng để tránh bất kỳ sai số nào
+        //transform.rotation = newRotation;
+        transform.SetPositionAndRotation(newPosition, newRotation);
         offset = newPosition;
         isSwitching = false;
     }

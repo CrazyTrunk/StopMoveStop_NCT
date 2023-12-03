@@ -19,17 +19,28 @@ public class WeaponMenu : Menu<WeaponMenu>
     [SerializeField] private TextMeshProUGUI textBonus;
     [SerializeField] private TextMeshProUGUI selectText;
     [SerializeField] private WeaponData weaponData;
+
+    PlayerData playerData;
+
+
     private Weapon currentWeaponEquip;
+    private Weapon currentWeaponOnView;
+
     private Transform spawnPoint;
     //PlayerData
-    private float coin = 99999;
     private int currentWeaponIndex = 0;
     private GameObject currentWeaponPrefab;
     public void OnInit()
     {
         currentWeaponEquip = weaponData.CurrentEquipWeapon();
         spawnPoint = GameObject.Find("SpawnPointModel").transform;
-        coinText.text = coin.ToString();
+        playerData = PlayerData.ReadFromJson(FilePathGame.CHARACTER_PATH);
+        if (playerData == null)
+        {
+            playerData = new PlayerData();
+            playerData.OnInitData();
+        }
+        coinText.text = playerData.coin.ToString();
     }
     private void DisplayButtons()
     {
@@ -52,13 +63,14 @@ public class WeaponMenu : Menu<WeaponMenu>
 
     private void IsCurrentWeaponSelect()
     {
-        selectText.text = currentWeaponEquip.type == currentWeaponPrefab.GetComponent<Weapon>().type ? "Equipped" : "Select";
+        selectText.text = currentWeaponEquip.type == currentWeaponOnView.type ? "Equipped" : "Select";
     }
     #region Buttons
     public void OnXmarkClick()
     {
         Hide();
         MainMenu.Show();
+        MainMenu.Instance.OnInit();
         DestroyCurrentWeaponOnScene();
         currentWeaponIndex = 0;
     }
@@ -73,14 +85,14 @@ public class WeaponMenu : Menu<WeaponMenu>
     }
     public void OnSelectButtonClicked()
     {
-        if (currentWeaponEquip.type == currentWeaponPrefab.GetComponent<Weapon>().type)
+        if (currentWeaponEquip.type == currentWeaponOnView.type)
         {
             return;
         }
-        WeaponData.SelectWeapon(currentWeaponPrefab.GetComponent<Weapon>().type);
+        WeaponData.SelectWeapon(currentWeaponOnView.type);
         currentWeaponEquip = weaponData.CurrentEquipWeapon();
         DisplayButtons();
-        GlobalEvents.WeaponSelected(currentWeaponPrefab.GetComponent<Weapon>().type);
+        GlobalEvents.WeaponSelected(currentWeaponOnView.type);
     }
     public void OnPrevButtonClicked()
     {
@@ -93,8 +105,14 @@ public class WeaponMenu : Menu<WeaponMenu>
 
     public void OnBuyButtonClick()
     {
-        BuyWeapon(currentWeaponPrefab.GetComponent<Weapon>().type);
-        DisplayButtons();
+        if(playerData.coin >= currentWeaponOnView.cost)
+        {
+            playerData.coin -= currentWeaponOnView.cost;
+            BuyWeapon(currentWeaponOnView.type);
+            coinText.text = playerData.coin.ToString();
+            PlayerData.SaveToJson(playerData,FilePathGame.CHARACTER_PATH);
+            DisplayButtons();
+        }
     }
     public static void Show()
     {
@@ -119,8 +137,8 @@ public class WeaponMenu : Menu<WeaponMenu>
         if (index >= 0 && index < weaponData.listWeapon.Count)
         {
             DestroyCurrentWeaponOnScene();
-            currentWeaponPrefab = weaponData.listWeapon[index].gameObject;
-            currentWeaponPrefab = Instantiate(currentWeaponPrefab, spawnPoint);
+            currentWeaponPrefab = Instantiate(weaponData.listWeapon[index].gameObject, spawnPoint);
+            currentWeaponOnView = currentWeaponPrefab.GetComponent<Weapon>();
             nameWeapon.text = weaponData.listWeapon[index].weaponName;
             textBonus.text = $"+ {weaponData.listWeapon[index].bonusRange} Range\n + {weaponData.listWeapon[index].bonusSpeed} Speed";
             costText.text = weaponData.listWeapon[index].cost.ToString();

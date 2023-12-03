@@ -7,16 +7,21 @@ public class LoseMenu : Menu<LoseMenu>
 {
     [SerializeField] TextMeshProUGUI rankText;
     [SerializeField] TextMeshProUGUI killedByText;
-    public void OnInit(string rank, string killer)
+    [SerializeField] TextMeshProUGUI coinGained;
+
+    public void OnInit(string rank, string killer, int coinGain)
     {
         rankText.text = rank;
         killedByText.text = killer;
+        coinGained.text = coinGain.ToString();
     }
     public void OnContinueClick()
     {
         Hide();
         MainMenu.Show();
+        MainMenu.Instance.OnInit();
         LevelManager.Instance.OnInit();
+        GameManager.Instance.ChangeState(GameState.MainMenu);
     }
     public static void Show()
     {

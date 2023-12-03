@@ -9,16 +9,16 @@ public class CharacterInfo : MonoBehaviour
     [SerializeField] private float yOffset = 3.0f;
     private void Awake()
     {
-        MainMenu.Instance.OnPlayButtonPressed += SetActiveTrue;
         gameObject.SetActive(false);
+    }
+    private void OnEnable()
+    {
+        GlobalEvents.OnPlayClick += SetActiveTrue;
     }
 
     private void OnDestroy()
     {
-        if (MainMenu.Instance != null)
-        {
-            MainMenu.Instance.OnPlayButtonPressed -= SetActiveTrue;
-        }
+        GlobalEvents.OnPlayClick -= SetActiveTrue;
     }
     private void SetActiveTrue()
     {

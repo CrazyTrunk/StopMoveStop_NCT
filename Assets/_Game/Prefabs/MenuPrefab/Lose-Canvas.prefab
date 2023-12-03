@@ -1455,6 +1455,7 @@ MonoBehaviour:
   Cancelable: 1
   rankText: {fileID: 7494157066084560331}
   killedByText: {fileID: 3002517566140952345}
+  coinGained: {fileID: 7846304867122049270}
 --- !u!1 &7023050354637292870
 GameObject:
   m_ObjectHideFlags: 0

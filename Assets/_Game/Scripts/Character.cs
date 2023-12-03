@@ -28,7 +28,7 @@ public class Character : MonoBehaviour, ICombatant
     private float baseRange = 5f;
     private float baseSpeed = 5f;
     [SerializeField] private float maxSpeed = 7f;
-    private float maxRangeIncrese = 10f;
+    private readonly float maxRangeIncrese = 10f;
 
     [Header("UI Canvas Info and noti")]
     [SerializeField] private LevelDisplay levelDisplayInfo;
@@ -40,7 +40,7 @@ public class Character : MonoBehaviour, ICombatant
     private int previousLevel = 0;
     public const int MaxLevelIncreseGap = 3;
     public const int MaxLevel = 55;
-    public Vector3 baseScale = new Vector3(1f, 1f, 1f);
+    public Vector3 baseScale = new(1f, 1f, 1f);
     public float maxScale = 2f;
     public float scaleIncrement = 0.1f;
     private float scaleMultiple = 1f;
@@ -146,12 +146,14 @@ public class Character : MonoBehaviour, ICombatant
     #region Circle UnderFeet (interface)
     public void Detect()
     {
-        detectedCircle?.Show();
+        if (detectedCircle != null)
+            detectedCircle.Show();
     }
 
     public void Undetect()
     {
-        detectedCircle?.Hide();
+        if (detectedCircle != null)
+            detectedCircle.Hide();
     }
     public Transform GetTransform()
     {
@@ -168,7 +170,7 @@ public class Character : MonoBehaviour, ICombatant
         isAttacking = false;
         hasEnemyInSight = false;
         capsuleColliderCharacter.enabled = true;
-        radicalTrigger?.OnInit();
+        radicalTrigger.OnInit();
         Undetect();
     }
     #region Level Init and other calculate related
@@ -189,7 +191,6 @@ public class Character : MonoBehaviour, ICombatant
         ScaleModel(level);
         if (this is Player player)
         {
-            //player.GainCoin(level);
             if (level != 0 && level >= previousLevel + 10 && level < MaxLevel)
             {
                 Camera.main.GetComponent<CameraFollow>().UpdateCameraHeight();
@@ -208,6 +209,7 @@ public class Character : MonoBehaviour, ICombatant
         level += levelIncrease;
         if (this is Player player)
         {
+            player.GainCoin(levelIncrease);
             player.ShowFloatingText(levelIncrease);
         }
         level = Mathf.Clamp(level, 0, MaxLevel);
@@ -241,11 +243,12 @@ public class Character : MonoBehaviour, ICombatant
     protected virtual void OnHitVictim(Character attacker, Character victim)
     {
         victim.PlayDead();
-        if(victim is Player)
+        if (victim is Player player)
         {
             LoseMenu.Show();
-            LoseMenu.Instance.OnInit("100", attacker.name);
+            LoseMenu.Instance.OnInit("100", attacker.name,player.CoinGained);
             GameManager.Instance.ChangeState(GameState.GameOver);
+            player.SaveGame();
         }
         attacker.LevelUp(victim.level);
     }

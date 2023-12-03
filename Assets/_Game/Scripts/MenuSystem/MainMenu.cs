@@ -5,12 +5,14 @@ using UnityEngine;
 public class MainMenu : Menu<MainMenu>
 {
     [SerializeField] private TextMeshProUGUI coin;
-    public event Action OnPlayButtonPressed;
     PlayerData playerData;
-    private const string playerDataTxt = "playerData.txt";
     private void Start()
     {
-        playerData = PlayerData.ReadFromJson(playerDataTxt);
+        OnInit();
+    }
+    public void OnInit()
+    {
+        playerData = PlayerData.ReadFromJson(FilePathGame.CHARACTER_PATH);
         if (playerData == null)
         {
             playerData = new PlayerData();
@@ -24,7 +26,7 @@ public class MainMenu : Menu<MainMenu>
         GameManager.Instance.ChangeState(GameState.Playing);
         CameraFollow camera = Camera.main.GetComponent<CameraFollow>();
         camera.SwitchCameraViewToPlayer();
-        OnPlayButtonPressed?.Invoke();
+        GlobalEvents.OnPlayClicked();
     }
     public void OnShopMenuClick()
     {

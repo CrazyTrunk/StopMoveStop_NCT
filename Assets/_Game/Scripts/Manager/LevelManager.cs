@@ -5,14 +5,13 @@ using UnityEngine;
 
 public class LevelManager : Singleton<LevelManager>
 {
-    [SerializeField] public LeanGameObjectPool botPool;
+    [SerializeField] private LeanGameObjectPool botPool;
     [SerializeField] private List<GameObject> levels;
     [SerializeField] private Joystick joystick;
     [SerializeField] private GameObject playerPrefab;
     private PlayerData playerData;
     [SerializeField] private int maxBotsAtOnce;
 
-    private const string playerDataTxt = "playerData.txt";
     private GameObject currentLevelPrefab;
     private Level currentLevelData;
 
@@ -24,7 +23,7 @@ public class LevelManager : Singleton<LevelManager>
     private int currentBots = 0;
     private int botsKilled = 0;
 
-    private HashSet<Vector3> usedPositions = new HashSet<Vector3>();
+    private HashSet<Vector3> usedPositions = new();
 
     private void Start()
     {
@@ -32,7 +31,7 @@ public class LevelManager : Singleton<LevelManager>
     }
     public void OnInit()
     {
-        playerData = PlayerData.ReadFromJson(playerDataTxt);
+        playerData = PlayerData.ReadFromJson(FilePathGame.CHARACTER_PATH);
         if (playerData == null)
         {
             playerData = new PlayerData();

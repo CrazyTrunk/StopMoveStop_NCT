@@ -6,7 +6,11 @@ public class Player : Character, ICombatant
 {
     [SerializeField] private GameObject floatingLevelTextPrefab;
     [SerializeField] private Transform canvasPopup;
+    private int coinGained;
     PlayerData playerData;
+
+    public int CoinGained { get => coinGained; set => coinGained = value; }
+
     public override void Awake()
     {
         base.Awake();
@@ -21,19 +25,40 @@ public class Player : Character, ICombatant
     private void OnEnable()
     {
         GlobalEvents.OnWeaponSelected += HandleWeaponSelection;
+        GlobalEvents.OnPlayClick += LoadPlayerData;
     }
 
+    private void LoadPlayerData()
+    {
+        playerData = PlayerData.ReadFromJson(FilePathGame.CHARACTER_PATH);
+        if (playerData == null)
+        {
+            playerData = new PlayerData();
+            playerData.OnInitData();
+        }
+    }
+
+    private void OnDisable()
+    {
+        GlobalEvents.OnWeaponSelected -= HandleWeaponSelection;
+        GlobalEvents.OnPlayClick -= LoadPlayerData;
+    }
     private void HandleWeaponSelection(WeaponType type)
     {
         ChangeWeapon(type);
         EquipWeapon(Weapon);
         CharacterSphere.UpdateTriggerSize(this.Range);
     }
-
-    private void OnDisable()
+    public void GainCoin(int coins)
     {
-        GlobalEvents.OnWeaponSelected -= HandleWeaponSelection;
+        CoinGained += coins;
+        playerData.coin += coins;
     }
+    public void SaveGame()
+    {
+        PlayerData.SaveToJson(playerData, FilePathGame.CHARACTER_PATH);
+    }
+
     public void ShowFloatingText(int level)
     {
         var floatText = Instantiate(floatingLevelTextPrefab, canvasPopup.position, Quaternion.identity, canvasPopup);
@@ -45,15 +70,5 @@ public class Player : Character, ICombatant
         Vector3 newPos = CharacterModel.transform.position + Vector3.up * 6f;
         canvasPopup.position = newPos;
         canvasPopup.LookAt(newPos + cameraForward, Vector3.up);
-    }
-
-
-    public string SerializeToJson()
-    {
-        PlayerData data = new PlayerData
-        {
-        };
-
-        return JsonUtility.ToJson(data);
     }
 }
