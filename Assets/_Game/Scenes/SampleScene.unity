@@ -171,6 +171,8 @@ MonoBehaviour:
   menuPrefabs:
   - {fileID: 7263085301050365845, guid: 4b067b687e3d72448aa0abbb40a164ff, type: 3}
   - {fileID: 2184480732670014181, guid: d92491ff81772514b82dfedff79e2ec9, type: 3}
+  - {fileID: 7540969558517397709, guid: 4873a63825587174aa7985dae6fd75bb, type: 3}
+  - {fileID: 8698863697584415016, guid: 0ab578391ee82b84aa9807ac7ea192fc, type: 3}
   canvasMenu: {fileID: 911435588}
 --- !u!1 &105624651
 GameObject:
@@ -777,7 +779,7 @@ MonoBehaviour:
   - {fileID: 7988616404881892013, guid: 4698a516db2c27b4ba2f7156961bddae, type: 3}
   joystick: {fileID: 445529404}
   playerPrefab: {fileID: 1800077677860429314, guid: 94a2814b2676be340a7fda8c9767c2bb, type: 3}
-  maxBotsAtOnce: 2
+  maxBotsAtOnce: 1
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
@@ -1562,7 +1564,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 0, y: -21.599976}
+  m_AnchoredPosition: {x: 0, y: -21.600098}
   m_SizeDelta: {x: 300, y: 100}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &1577403961
@@ -1754,8 +1756,8 @@ MonoBehaviour:
   prefab: {fileID: 5047329666932212505, guid: 77666643464a82840b06975bd1a51c47, type: 3}
   notification: 3
   strategy: 0
-  preload: 2
-  capacity: 2
+  preload: 1
+  capacity: 1
   recycle: 0
   persist: 0
   stamp: 0

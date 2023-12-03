@@ -1,5 +1,6 @@
 ﻿using Lean.Pool;
 using System.Collections.Generic;
+using UnityEditor.Tilemaps;
 using UnityEngine;
 
 public class LevelManager : Singleton<LevelManager>
@@ -27,6 +28,10 @@ public class LevelManager : Singleton<LevelManager>
 
     private void Start()
     {
+        OnInit();
+    }
+    public void OnInit()
+    {
         playerData = PlayerData.ReadFromJson(playerDataTxt);
         if (playerData == null)
         {
@@ -34,12 +39,18 @@ public class LevelManager : Singleton<LevelManager>
             playerData.OnInitData();
         }
         LoadCurrentLevel(currentLevel);
+        ClearAllBots();
         for (int i = 0; i < maxBotsAtOnce; i++)
         {
             SpawnBots(currentPlayerData.level);
         }
     }
-
+    public void ClearAllBots()
+    {
+        botPool.DespawnAll();
+        currentBots = 0; 
+        usedPositions.Clear();
+    }
     private void LoadCurrentLevel(int currentLevel)
     {
         if (currentLevelPrefab != null)
@@ -108,6 +119,7 @@ public class LevelManager : Singleton<LevelManager>
         currentPlayerPrefab = Instantiate(playerPrefab);
         currentPlayerData = currentPlayerPrefab.GetComponent<Player>();
         currentPlayerData.LoadData(playerData);
+        currentPlayerData.OnInit();
         PlayerController playerController = currentPlayerPrefab.GetComponent<PlayerController>();
         playerController.InitJoyStick(joystick);
         CameraFollow camera = Camera.main.GetComponent<CameraFollow>();

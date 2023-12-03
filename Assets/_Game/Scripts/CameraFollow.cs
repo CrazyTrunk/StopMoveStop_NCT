@@ -11,13 +11,32 @@ public class CameraFollow : MonoBehaviour
     [SerializeField] private Vector3 newCameraPos;
     [SerializeField] private Quaternion newRotationPos;
     private Vector3 originalPos;
+    private Quaternion originalRotation;
+
     private Vector3 _currentVelocity = Vector3.zero;
     private bool isSwitching = false;
+    private void Awake()
+    {
+        originalPos = transform.position;
+        originalRotation = transform.rotation;
+    }
     public void OnInit(Transform target)
     {
         this.target = target;
+        ResetCameraToOriginalPosition();
+    }
+    public void ResetCameraToOriginalPosition()
+    {
+        transform.position = originalPos;
+        transform.rotation = originalRotation;
         offset = transform.position - target.position;
-        originalPos = offset;
+        // Reset lại _currentVelocity để không ảnh hưởng đến việc di chuyển mượt mà của camera
+        _currentVelocity = Vector3.zero;
+        if (isSwitching)
+        {
+            StopAllCoroutines();
+            isSwitching = false;
+        }
     }
     private void Update()
     {

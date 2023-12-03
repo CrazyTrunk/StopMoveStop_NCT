@@ -78,11 +78,15 @@ public class Character : MonoBehaviour, ICombatant
 
     public virtual void Awake()
     {
+        OnInit();
+    }
+    public void OnInit()
+    {
         Animator.speed = animSpeed;
         originalColliderSize = new Vector3(capsuleColliderCharacter.radius, capsuleColliderCharacter.height, capsuleColliderCharacter.radius);
         originalColliderCenter = capsuleColliderCharacter.center;
         ResetState();
-        if(this is not Player)
+        if (this is not Player)
         {
             ChangeWeapon(WeaponType.HAMMER);
             EquipWeapon(Weapon);
@@ -236,8 +240,13 @@ public class Character : MonoBehaviour, ICombatant
     protected virtual void OnHitVictim(Character attacker, Character victim)
     {
         victim.PlayDead();
+        if(victim is Player)
+        {
+            LoseMenu.Show();
+            LoseMenu.Instance.OnInit("100", attacker.name);
+            GameManager.Instance.ChangeState(GameState.GameOver);
+        }
         attacker.LevelUp(victim.level);
-
     }
 
     private void PlayDead()

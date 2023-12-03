@@ -14,16 +14,26 @@ public class CharacterSphere : MonoBehaviour
             UpdateCharacterParticalRange(newRange);
         }
     }
-    private void Awake()
-    {
-        MainMenu.Instance.OnPlayButtonPressed += SetActiveTrue;
-        gameObject.SetActive(false);
-    }
-
-    private void SetActiveTrue()
-    {
-        gameObject.SetActive(true);
-    }
+    //private void Awake()
+    //{
+    //    gameObject.SetActive(false);
+    //}
+    //private void OnEnable()
+    //{
+    //    MainMenu.Instance.OnPlayButtonPressed += SetActiveTrue;
+    //}
+    //private void OnDisable()
+    //{
+    //    MainMenu.Instance.OnPlayButtonPressed -= SetActiveTrue;
+    //}
+    //private void SetActiveTrue()
+    //{
+    //    gameObject.SetActive(true);
+    //}
+    //private void SetActiveFalse()
+    //{
+    //    gameObject.SetActive(false);
+    //}
     private void UpdateCharacterParticalRange(float newRange)
     {
         var sh = particalEffectOne.shape;
