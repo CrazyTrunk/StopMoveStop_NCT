@@ -44,7 +44,10 @@ public class PlayerController : MonoBehaviour
     {
         if (player.IsMoving)
         {
-            transform.rotation = Quaternion.LookRotation(rb.velocity);
+            if (rb.velocity.magnitude > 0.01f)
+            {
+                transform.rotation = Quaternion.LookRotation(rb.velocity);
+            }
         }
     }
 }
