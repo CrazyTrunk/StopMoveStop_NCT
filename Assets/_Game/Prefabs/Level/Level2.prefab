@@ -173,7 +173,7 @@ GameObject:
   - component: {fileID: 4421629303138322025}
   - component: {fileID: 1915368793014135948}
   m_Layer: 3
-  m_Name: Level1
+  m_Name: Level2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -285,7 +285,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 640f82b1ac69ab2478c8e8d62eb162ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  totalBotsToKill: 5
+  totalBotsToKill: 6
   spawnAreaMin: {x: -18, y: -18}
   spawnAreaMax: {x: 18, y: 18}
 --- !u!1 &9119005481672759082

@@ -6,6 +6,10 @@ public class MainMenu : Menu<MainMenu>
 {
     [SerializeField] private TextMeshProUGUI coin;
     PlayerData playerData;
+    private void Start()
+    {
+        OnInit();
+    }
     public void OnInit()
     {
         GameManager.Instance.ChangeState(GameState.MainMenu);
@@ -24,7 +28,7 @@ public class MainMenu : Menu<MainMenu>
         CameraFollow camera = Camera.main.GetComponent<CameraFollow>();
         camera.SwitchCameraViewToPlayer();
         IngameMenu.Show();
-        IngameMenu.Instance.OnInit(LevelManager.Instance.Alive);
+        IngameMenu.Instance.OnInit(LevelManager.Instance.TotalBotsToKill);
     }
     public void OnShopMenuClick()
     {

@@ -1,1 +1,1 @@
-{"coin":54,"levelMap":1,"isSoundOn":false,"isAdsRemove":false}
+{"coin":59,"levelMap":1,"isSoundOn":false,"isAdsRemove":false}

@@ -9,9 +9,9 @@ public class LoseMenu : Menu<LoseMenu>
     [SerializeField] TextMeshProUGUI killedByText;
     [SerializeField] TextMeshProUGUI coinGained;
 
-    public void OnInit(string rank, string killer, int coinGain)
+    public void OnInit(int rank, string killer, int coinGain)
     {
-        rankText.text = rank;
+        rankText.text = $"#{rank}" ;
         killedByText.text = killer;
         coinGained.text = coinGain.ToString();
     }

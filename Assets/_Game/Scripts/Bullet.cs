@@ -50,6 +50,7 @@ public class Bullet : MonoBehaviour
             {
                 onHit?.Invoke(shooter, victim);
             }
+            Destroy(gameObject);
         }
     }
 }

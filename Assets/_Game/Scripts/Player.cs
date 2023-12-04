@@ -7,27 +7,26 @@ public class Player : Character, ICombatant
     [SerializeField] private GameObject floatingLevelTextPrefab;
     [SerializeField] private Transform canvasPopup;
     private int coinGained;
-    PlayerData playerData;
+    private PlayerData playerData;
 
     public int CoinGained { get => coinGained; set => coinGained = value; }
+    public PlayerData PlayerData { get => playerData; set => playerData = value; }
 
-    public override void Awake()
-    {
-        base.Awake();
-        ChangeWeapon(WeaponDataSO.CurrentEquipWeapon().type);
-        EquipWeapon(Weapon);
-        CharacterSphere.UpdateTriggerSize(this.Range);
-    }
     public void LoadData(PlayerData playerData)
     {
-        this.playerData = playerData;
+        this.PlayerData = playerData;
     }
     private void OnEnable()
     {
         GlobalEvents.OnWeaponSelected += HandleWeaponSelection;
-        GlobalEvents.OnPlayClick += LoadPlayerData;
+        GameManager.Instance.OnStateChanged += HandleStateChange;
     }
-
+    private void OnDisable()
+    {
+        GlobalEvents.OnWeaponSelected -= HandleWeaponSelection;
+        if(GameManager.Instance != null)
+        GameManager.Instance.OnStateChanged -= HandleStateChange;
+    }
     private void LoadPlayerData()
     {
         playerData = PlayerData.ReadFromJson(FilePathGame.CHARACTER_PATH);
@@ -37,11 +36,12 @@ public class Player : Character, ICombatant
             playerData.OnInitData();
         }
     }
-
-    private void OnDisable()
+    private void HandleStateChange(GameState state)
     {
-        GlobalEvents.OnWeaponSelected -= HandleWeaponSelection;
-        GlobalEvents.OnPlayClick -= LoadPlayerData;
+        if (GameManager.Instance.IsState(GameState.Playing))
+        {
+            LoadPlayerData();
+        }
     }
     private void HandleWeaponSelection(WeaponType type)
     {
@@ -52,11 +52,11 @@ public class Player : Character, ICombatant
     public void GainCoin(int coins)
     {
         CoinGained += coins;
-        playerData.coin += coins;
+        PlayerData.coin += coins;
     }
     public void SaveGame()
     {
-        PlayerData.SaveToJson(playerData, FilePathGame.CHARACTER_PATH);
+        PlayerData.SaveToJson(PlayerData, FilePathGame.CHARACTER_PATH);
     }
 
     public void ShowFloatingText(int level)

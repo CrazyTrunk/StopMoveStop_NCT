@@ -22,6 +22,7 @@ public class Character : MonoBehaviour, ICombatant
     [Header("Sphere Detection")]
     [SerializeField] private DetectedCircle detectedCircle;
     [SerializeField] private RadicalTrigger radicalTrigger;
+    [SerializeField] private CharacterInfo characterInfo;
     [SerializeField] private CharacterSphere characterSphere;
     [SerializeField] private CapsuleCollider capsuleColliderCharacter;
     public const float RangeIncreasePerTenLevels = 2f;
@@ -46,7 +47,6 @@ public class Character : MonoBehaviour, ICombatant
     private float scaleMultiple = 1f;
     private Vector3 originalColliderSize;
     private Vector3 originalColliderCenter;
-
 
     [Header("Boolean")]
     private bool isMoving;
@@ -75,24 +75,40 @@ public class Character : MonoBehaviour, ICombatant
     public WeaponData WeaponDataSO { get => weaponDataSO; set => weaponDataSO = value; }
 
     public event Action<ICombatant> OnCombatantKilled;
-
-    public virtual void Awake()
-    {
-        OnInit();
-    }
     public void OnInit()
     {
         Animator.speed = animSpeed;
         originalColliderSize = new Vector3(capsuleColliderCharacter.radius, capsuleColliderCharacter.height, capsuleColliderCharacter.radius);
         originalColliderCenter = capsuleColliderCharacter.center;
         ResetState();
-        if (this is not Player)
+        if (this is Enemy enemy)
         {
             ChangeWeapon(WeaponType.HAMMER);
-            EquipWeapon(Weapon);
-            CharacterSphere.UpdateTriggerSize(this.range);
+        }
+        else if (this is Player player)
+        {
+            ChangeWeapon(WeaponDataSO.CurrentEquipWeapon().type);
+        }
+        EquipWeapon(Weapon);
+        CharacterSphere.UpdateTriggerSize(this.range);
+    }
+    private void OnEnable()
+    {
+        GameManager.Instance.OnStateChanged -= HandleStateChange;
+        GameManager.Instance.OnStateChanged += HandleStateChange;
+    }
+    private void HandleStateChange(GameState state)
+    {
+        if (GameManager.Instance.IsState(GameState.Playing))
+        {
+            characterInfo.gameObject.SetActive(true);
+        }
+        else
+        {
+            characterInfo.gameObject.SetActive(false);
         }
     }
+
     public void EquipWeapon(Weapon weapon)
     {
         ApplyWeaponBonuses(weapon.bonusSpeed, weapon.bonusRange);
@@ -246,7 +262,7 @@ public class Character : MonoBehaviour, ICombatant
         if (victim is Player player)
         {
             LoseMenu.Show();
-            LoseMenu.Instance.OnInit("100", attacker.name,player.CoinGained);
+            LoseMenu.Instance.OnInit(LevelManager.Instance.TotalBotsToKill, attacker.name, player.CoinGained);
             GameManager.Instance.ChangeState(GameState.GameOver);
             player.SaveGame();
         }

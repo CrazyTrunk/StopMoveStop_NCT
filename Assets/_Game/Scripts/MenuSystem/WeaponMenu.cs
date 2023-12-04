@@ -19,6 +19,7 @@ public class WeaponMenu : Menu<WeaponMenu>
     [SerializeField] private TextMeshProUGUI textBonus;
     [SerializeField] private TextMeshProUGUI selectText;
     [SerializeField] private WeaponData weaponData;
+    [SerializeField] private Transform spawnPoint;
 
     PlayerData playerData;
 
@@ -26,14 +27,12 @@ public class WeaponMenu : Menu<WeaponMenu>
     private Weapon currentWeaponEquip;
     private Weapon currentWeaponOnView;
 
-    private Transform spawnPoint;
     //PlayerData
     private int currentWeaponIndex = 0;
     private GameObject currentWeaponPrefab;
     public void OnInit()
     {
         currentWeaponEquip = weaponData.CurrentEquipWeapon();
-        spawnPoint = GameObject.Find("SpawnPointModel").transform;
         playerData = PlayerData.ReadFromJson(FilePathGame.CHARACTER_PATH);
         if (playerData == null)
         {

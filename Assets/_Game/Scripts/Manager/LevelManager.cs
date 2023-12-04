@@ -11,21 +11,17 @@ public class LevelManager : Singleton<LevelManager>
     [SerializeField] private GameObject playerPrefab;
     private PlayerData playerData;
     [SerializeField] private int maxBotsAtOnce;
-
     private GameObject currentLevelPrefab;
     private Level currentLevelData;
 
     private GameObject currentPlayerPrefab;
     private Player currentPlayerData;
 
-    private int alive;
-
-    private int currentBots = 0;
-    private int botsKilled = 0;
-
     private HashSet<Vector3> usedPositions = new();
+    private int totalBotsToKill;
+    private int botsSpawned;
 
-    public int Alive { get => alive; set => alive = value; }
+    public int TotalBotsToKill { get => totalBotsToKill; set => totalBotsToKill = value; }
 
     private void Start()
     {
@@ -33,6 +29,7 @@ public class LevelManager : Singleton<LevelManager>
     }
     public void OnInit()
     {
+        botsSpawned = 0;
         playerData = PlayerData.ReadFromJson(FilePathGame.CHARACTER_PATH);
         if (playerData == null)
         {
@@ -45,13 +42,12 @@ public class LevelManager : Singleton<LevelManager>
         ClearAllBots();
         for (int i = 0; i < maxBotsAtOnce; i++)
         {
-            SpawnBots(currentPlayerData.level);
+            SpawnBot(currentPlayerData.level);
         }
     }
     public void ClearAllBots()
     {
         botPool.DespawnAll();
-        currentBots = 0; 
         usedPositions.Clear();
     }
     private void LoadCurrentLevel(int currentLevel)
@@ -62,7 +58,7 @@ public class LevelManager : Singleton<LevelManager>
         }
         currentLevelPrefab = Instantiate(levels[currentLevel - 1]);
         currentLevelData = currentLevelPrefab.GetComponent<Level>();
-        Alive = currentLevelData.TotalBotsToKill;
+        TotalBotsToKill = currentLevelData.TotalBotsToKill;
         LoadPlayer();
     }
 
@@ -79,38 +75,47 @@ public class LevelManager : Singleton<LevelManager>
         if (potentialPosition != Vector3.zero)
         {
             usedPositions.Add(potentialPosition);
-
         }
         return potentialPosition;
     }
-    public void SpawnBots()
+    public void SpawnBot()
     {
-        Vector3 spawnPosition = GenerateSpawnPosition();
-        Enemy enemy = botPool.Spawn(spawnPosition, Quaternion.identity, botPool.transform).GetComponent<Enemy>();
-        enemy.OnInit();
-        enemy.InitLevelBot(currentPlayerData.level + Random.Range(3, 5 + 1));
-        // Set up the bot (e.g., adding it to a list, setting up callbacks, etc.)
-        currentBots++;
+        if (botsSpawned <= TotalBotsToKill)
+        {
+            Vector3 spawnPosition = GenerateSpawnPosition();
+            Enemy enemy = botPool.Spawn(spawnPosition, Quaternion.identity, botPool.transform).GetComponent<Enemy>();
+            enemy.OnInit();
+            enemy.InitLevelBot(currentPlayerData.level + Random.Range(3, 5 + 1));
+            botsSpawned++;
+            // Set up the bot (e.g., adding it to a list, setting up callbacks, etc.)
+        }
     }
-    public void SpawnBots(int level)
+    public void SpawnBot(int level)
     {
-        Vector3 spawnPosition = GenerateSpawnPosition();
-        Enemy enemy = botPool.Spawn(spawnPosition, Quaternion.identity, botPool.transform).GetComponent<Enemy>();
-        enemy.OnInit();
-        enemy.InitLevelBot(level);
+        if (botsSpawned < TotalBotsToKill)
+        {
+            Vector3 spawnPosition = GenerateSpawnPosition();
+            Enemy enemy = botPool.Spawn(spawnPosition, Quaternion.identity, botPool.transform).GetComponent<Enemy>();
+            enemy.OnInit();
+            enemy.InitLevelBot(level);
+            botsSpawned++;
+        }
         // Set up the bot (e.g., adding it to a list, setting up callbacks, etc.)
-        currentBots++;
     }
     public void BotKilled(Character character)
     {
-        botsKilled++;
-        currentBots--;
+        TotalBotsToKill--;
+        IngameMenu.Instance.OnInit(TotalBotsToKill);
         usedPositions.Remove(character.transform.position);
         botPool.Despawn(character.gameObject);
-        Alive--;
-        if (currentBots < maxBotsAtOnce && (currentLevelData.TotalBotsToKill - botsKilled) > 0)
+
+        if (TotalBotsToKill > 1)
         {
-            SpawnBots();
+            SpawnBot();
+        }
+        else if (TotalBotsToKill == 1)
+        {
+            WinMenu.Show();
         }
     }
     private void LoadPlayer()

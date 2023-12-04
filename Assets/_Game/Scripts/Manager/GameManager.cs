@@ -8,12 +8,6 @@ public class GameManager : Singleton<GameManager>
 {
     private GameState _gameState;
     public event Action<GameState> OnStateChanged;
-    public static bool IsDestroying { get; private set; }
-
-    private void OnDestroy()
-    {
-        IsDestroying = true;
-    }
     private void Awake()
     {
         ChangeState(GameState.MainMenu);

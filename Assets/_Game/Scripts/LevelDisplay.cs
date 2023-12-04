@@ -6,9 +6,10 @@ using UnityEngine;
 public class LevelDisplay : MonoBehaviour
 {
     [SerializeField] TextMeshProUGUI textMeshUI;
+
     [SerializeField] private Character character;
     // Start is called before the first frame update
-    void Awake()
+    void Start()
     {
         textMeshUI.text = character.level.ToString();
     }
