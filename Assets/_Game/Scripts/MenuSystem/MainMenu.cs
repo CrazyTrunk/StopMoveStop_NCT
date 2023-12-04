@@ -6,12 +6,9 @@ public class MainMenu : Menu<MainMenu>
 {
     [SerializeField] private TextMeshProUGUI coin;
     PlayerData playerData;
-    private void Start()
-    {
-        OnInit();
-    }
     public void OnInit()
     {
+        GameManager.Instance.ChangeState(GameState.MainMenu);
         playerData = PlayerData.ReadFromJson(FilePathGame.CHARACTER_PATH);
         if (playerData == null)
         {
@@ -28,7 +25,6 @@ public class MainMenu : Menu<MainMenu>
         camera.SwitchCameraViewToPlayer();
         IngameMenu.Show();
         IngameMenu.Instance.OnInit(LevelManager.Instance.Alive);
-        GlobalEvents.OnPlayClicked();
     }
     public void OnShopMenuClick()
     {

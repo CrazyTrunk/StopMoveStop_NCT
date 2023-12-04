@@ -40,6 +40,7 @@ public class LevelManager : Singleton<LevelManager>
             playerData.OnInitData();
         }
         LoadCurrentLevel(playerData.levelMap);
+        GameManager.Instance.ChangeState(GameState.MainMenu);
 
         ClearAllBots();
         for (int i = 0; i < maxBotsAtOnce; i++)

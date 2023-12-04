@@ -1642,7 +1642,6 @@ GameObject:
   - component: {fileID: 5929924585937042879}
   - component: {fileID: 3170740837600521104}
   - component: {fileID: 2041422886903663996}
-  - component: {fileID: -185975078280628}
   m_Layer: 0
   m_Name: Bot
   m_TagString: Character
@@ -1741,7 +1740,6 @@ MonoBehaviour:
   range: 5
   detectedCircle: {fileID: 9129917577514363121}
   radicalTrigger: {fileID: 4248651964168576709}
-  characterInfo: {fileID: 1076809308187537788}
   characterSphere: {fileID: 5755871892658538801}
   capsuleColliderCharacter: {fileID: 5050918453655139715}
   maxSpeed: 7
@@ -1767,21 +1765,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentBot: {fileID: 3170740837600521104}
   infoCanvasTransform: {fileID: 9088740839875765780}
---- !u!114 &-185975078280628
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5047329666932212505}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 213fad87794cc3e4fa7a25b772c32619, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  infoCanvasTransform: {fileID: 9088740839875765780}
-  characterModel: {fileID: 4058133212734950908}
-  yOffset: 3
 --- !u!1 &5202626692195656735
 GameObject:
   m_ObjectHideFlags: 0
@@ -1891,6 +1874,7 @@ GameObject:
   - component: {fileID: 4063766594914875121}
   - component: {fileID: 4669132388607761690}
   - component: {fileID: 1076809308187537788}
+  - component: {fileID: 8055950813414445478}
   m_Layer: 5
   m_Name: Canvas - Info
   m_TagString: Untagged
@@ -1997,6 +1981,19 @@ MonoBehaviour:
   infoCanvasTransform: {fileID: 9088740839875765780}
   characterModel: {fileID: 4058133212734950908}
   yOffset: 3
+  canvasGroup: {fileID: 8055950813414445478}
+--- !u!225 &8055950813414445478
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5393509201583475923}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &5439183057712047052
 GameObject:
   m_ObjectHideFlags: 0
