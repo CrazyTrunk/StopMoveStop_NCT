@@ -19,7 +19,7 @@ public class PlayerData
     public void OnInitData()
     {
         coin = 0;
-        levelMap = 0;
+        levelMap = 1;
         isSoundOn = false;
         isAdsRemove = false;
         if (!WeaponData.IsUnlocked(WeaponType.HAMMER))

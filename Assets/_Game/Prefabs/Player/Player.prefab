@@ -220,7 +220,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 6485558763397518965}
   rb: {fileID: 2527540083897310862}
-  joystick: {fileID: 0}
 --- !u!114 &6485558763397518965
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -242,6 +241,7 @@ MonoBehaviour:
   range: 5
   detectedCircle: {fileID: 0}
   radicalTrigger: {fileID: 6654430860616714916}
+  characterInfo: {fileID: 5055859691245426267}
   characterSphere: {fileID: 1602383627806784661}
   capsuleColliderCharacter: {fileID: 4007029889014482827}
   maxSpeed: 7

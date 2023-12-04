@@ -1,0 +1,1 @@
+{"coin":7,"levelMap":1,"isSoundOn":false,"isAdsRemove":false}

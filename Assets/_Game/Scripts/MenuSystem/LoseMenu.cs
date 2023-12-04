@@ -18,6 +18,7 @@ public class LoseMenu : Menu<LoseMenu>
     public void OnContinueClick()
     {
         Hide();
+        IngameMenu.Hide();  
         MainMenu.Show();
         MainMenu.Instance.OnInit();
         LevelManager.Instance.OnInit();

@@ -26,6 +26,8 @@ public class MainMenu : Menu<MainMenu>
         GameManager.Instance.ChangeState(GameState.Playing);
         CameraFollow camera = Camera.main.GetComponent<CameraFollow>();
         camera.SwitchCameraViewToPlayer();
+        IngameMenu.Show();
+        IngameMenu.Instance.OnInit(LevelManager.Instance.Alive);
         GlobalEvents.OnPlayClicked();
     }
     public void OnShopMenuClick()

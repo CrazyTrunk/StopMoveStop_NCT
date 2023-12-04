@@ -18,12 +18,14 @@ public class LevelManager : Singleton<LevelManager>
     private GameObject currentPlayerPrefab;
     private Player currentPlayerData;
 
-    private int currentLevel = 1;
+    private int alive;
 
     private int currentBots = 0;
     private int botsKilled = 0;
 
     private HashSet<Vector3> usedPositions = new();
+
+    public int Alive { get => alive; set => alive = value; }
 
     private void Start()
     {
@@ -37,7 +39,8 @@ public class LevelManager : Singleton<LevelManager>
             playerData = new PlayerData();
             playerData.OnInitData();
         }
-        LoadCurrentLevel(currentLevel);
+        LoadCurrentLevel(playerData.levelMap);
+
         ClearAllBots();
         for (int i = 0; i < maxBotsAtOnce; i++)
         {
@@ -58,7 +61,7 @@ public class LevelManager : Singleton<LevelManager>
         }
         currentLevelPrefab = Instantiate(levels[currentLevel - 1]);
         currentLevelData = currentLevelPrefab.GetComponent<Level>();
-
+        Alive = currentLevelData.TotalBotsToKill;
         LoadPlayer();
     }
 
@@ -83,7 +86,7 @@ public class LevelManager : Singleton<LevelManager>
     {
         Vector3 spawnPosition = GenerateSpawnPosition();
         Enemy enemy = botPool.Spawn(spawnPosition, Quaternion.identity, botPool.transform).GetComponent<Enemy>();
-        enemy.ResetState();
+        enemy.OnInit();
         enemy.InitLevelBot(currentPlayerData.level + Random.Range(3, 5 + 1));
         // Set up the bot (e.g., adding it to a list, setting up callbacks, etc.)
         currentBots++;
@@ -92,7 +95,7 @@ public class LevelManager : Singleton<LevelManager>
     {
         Vector3 spawnPosition = GenerateSpawnPosition();
         Enemy enemy = botPool.Spawn(spawnPosition, Quaternion.identity, botPool.transform).GetComponent<Enemy>();
-        enemy.ResetState();
+        enemy.OnInit();
         enemy.InitLevelBot(level);
         // Set up the bot (e.g., adding it to a list, setting up callbacks, etc.)
         currentBots++;
@@ -103,7 +106,7 @@ public class LevelManager : Singleton<LevelManager>
         currentBots--;
         usedPositions.Remove(character.transform.position);
         botPool.Despawn(character.gameObject);
-
+        Alive--;
         if (currentBots < maxBotsAtOnce && (currentLevelData.TotalBotsToKill - botsKilled) > 0)
         {
             SpawnBots();
