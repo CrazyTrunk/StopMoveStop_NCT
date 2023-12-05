@@ -1,1 +1,1 @@
-{"coin":59,"levelMap":1,"isSoundOn":false,"isAdsRemove":false}
+{"coin":5,"levelMap":0,"isSoundOn":false,"isAdsRemove":false,"equippedWeapon":{"instanceID":26352},"weapons":[{"instanceID":26350},{"instanceID":26352}]}

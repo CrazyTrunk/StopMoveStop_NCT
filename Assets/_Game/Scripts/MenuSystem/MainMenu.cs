@@ -13,12 +13,7 @@ public class MainMenu : Menu<MainMenu>
     public void OnInit()
     {
         GameManager.Instance.ChangeState(GameState.MainMenu);
-        playerData = PlayerData.ReadFromJson(FilePathGame.CHARACTER_PATH);
-        if (playerData == null)
-        {
-            playerData = new PlayerData();
-            playerData.OnInitData();
-        }
+        playerData = GameManager.Instance.GetPlayerData();
         coin.text = playerData.coin.ToString();
     }
     public void OnPlayButtonClick()

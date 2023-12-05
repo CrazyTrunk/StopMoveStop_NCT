@@ -170,7 +170,7 @@ MonoBehaviour:
   mainMenu: {fileID: 7263085301050365845, guid: 4b067b687e3d72448aa0abbb40a164ff, type: 3}
   menuPrefabs:
   - {fileID: 7263085301050365845, guid: 4b067b687e3d72448aa0abbb40a164ff, type: 3}
-  - {fileID: 2184480732670014181, guid: d92491ff81772514b82dfedff79e2ec9, type: 3}
+  - {fileID: 6376730976454746238, guid: d92491ff81772514b82dfedff79e2ec9, type: 3}
   - {fileID: 7540969558517397709, guid: 4873a63825587174aa7985dae6fd75bb, type: 3}
   - {fileID: 8698863697584415016, guid: 0ab578391ee82b84aa9807ac7ea192fc, type: 3}
   - {fileID: 6537579292795936361, guid: 9a78e60266973e14a92a133e595164dd, type: 3}
@@ -1242,6 +1242,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bcf44425365f99f4eb35d1937bed7a63, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  weaponData: {fileID: 11400000, guid: 34b351d3227797b44a958a6b11129d10, type: 2}
 --- !u!1 &1664224344
 GameObject:
   m_ObjectHideFlags: 0

@@ -9,7 +9,6 @@ public class LevelManager : Singleton<LevelManager>
     [SerializeField] private List<GameObject> levels;
     [SerializeField] private Joystick joystick;
     [SerializeField] private GameObject playerPrefab;
-    private PlayerData playerData;
     [SerializeField] private int maxBotsAtOnce;
     private GameObject currentLevelPrefab;
     private Level currentLevelData;
@@ -30,13 +29,9 @@ public class LevelManager : Singleton<LevelManager>
     public void OnInit()
     {
         botsSpawned = 0;
-        playerData = PlayerData.ReadFromJson(FilePathGame.CHARACTER_PATH);
-        if (playerData == null)
-        {
-            playerData = new PlayerData();
-            playerData.OnInitData();
-        }
-        LoadCurrentLevel(playerData.levelMap);
+        //LoadCurrentLevel(playerData.levelMap);
+        LoadCurrentLevel(1);
+
         GameManager.Instance.ChangeState(GameState.MainMenu);
 
         ClearAllBots();
@@ -126,7 +121,6 @@ public class LevelManager : Singleton<LevelManager>
         }
         currentPlayerPrefab = Instantiate(playerPrefab);
         currentPlayerData = currentPlayerPrefab.GetComponent<Player>();
-        currentPlayerData.LoadData(playerData);
         currentPlayerData.OnInit();
         PlayerController playerController = currentPlayerPrefab.GetComponent<PlayerController>();
         playerController.InitJoyStick(joystick);

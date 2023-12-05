@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -30,20 +31,19 @@ public class WeaponMenu : Menu<WeaponMenu>
     //PlayerData
     private int currentWeaponIndex = 0;
     private GameObject currentWeaponPrefab;
+
     public void OnInit()
     {
-        currentWeaponEquip = weaponData.CurrentEquipWeapon();
-        playerData = PlayerData.ReadFromJson(FilePathGame.CHARACTER_PATH);
-        if (playerData == null)
-        {
-            playerData = new PlayerData();
-            playerData.OnInitData();
-        }
+        playerData = GameManager.Instance.GetPlayerData();
+        currentWeaponEquip = playerData.equippedWeapon;
+        playerData = GameManager.Instance.GetPlayerData();
         coinText.text = playerData.coin.ToString();
     }
     private void DisplayButtons()
     {
-        if (WeaponData.IsUnlocked(currentWeaponPrefab.GetComponent<Weapon>().type))
+        bool weaponOwned = playerData.weapons.Any(w => w.type == currentWeaponOnView.type);
+
+        if (weaponOwned)
         {
             status.text = "";
             buyButton.gameObject.SetActive(false);
@@ -72,6 +72,7 @@ public class WeaponMenu : Menu<WeaponMenu>
         MainMenu.Instance.OnInit();
         DestroyCurrentWeaponOnScene();
         currentWeaponIndex = 0;
+        GameManager.Instance.SaveToJson(playerData, FilePathGame.CHARACTER_PATH);
     }
 
     public void OnNextButtonClicked()
@@ -84,12 +85,9 @@ public class WeaponMenu : Menu<WeaponMenu>
     }
     public void OnSelectButtonClicked()
     {
-        if (currentWeaponEquip.type == currentWeaponOnView.type)
-        {
-            return;
-        }
-        WeaponData.SelectWeapon(currentWeaponOnView.type);
-        currentWeaponEquip = weaponData.CurrentEquipWeapon();
+        playerData.equippedWeapon = weaponData.GetWeaponByType(currentWeaponOnView.type);
+        currentWeaponEquip = playerData.equippedWeapon;
+        GameManager.Instance.UpdatePlayerData(playerData);
         DisplayButtons();
         GlobalEvents.WeaponSelected(currentWeaponOnView.type);
     }
@@ -107,9 +105,9 @@ public class WeaponMenu : Menu<WeaponMenu>
         if(playerData.coin >= currentWeaponOnView.cost)
         {
             playerData.coin -= currentWeaponOnView.cost;
-            BuyWeapon(currentWeaponOnView.type);
+            BuyWeapon(weaponData.GetWeaponByType(currentWeaponOnView.type));
             coinText.text = playerData.coin.ToString();
-            PlayerData.SaveToJson(playerData,FilePathGame.CHARACTER_PATH);
+            GameManager.Instance.UpdatePlayerData(playerData);
             DisplayButtons();
         }
     }
@@ -144,9 +142,9 @@ public class WeaponMenu : Menu<WeaponMenu>
             DisplayButtons();
         }
     }
-    private void BuyWeapon(WeaponType weaponType)
+    private void BuyWeapon(Weapon weapon)
     {
-        WeaponData.UnlockWeapon(weaponType);
+        playerData.weapons.Add(weapon); 
     }
     #endregion
 }

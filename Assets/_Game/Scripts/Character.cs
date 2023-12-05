@@ -87,15 +87,14 @@ public class Character : MonoBehaviour, ICombatant
         }
         else if (this is Player player)
         {
-            ChangeWeapon(WeaponDataSO.CurrentEquipWeapon().type);
+            ChangeWeapon(GameManager.Instance.GetPlayerData().equippedWeapon);
         }
         EquipWeapon(Weapon);
         CharacterSphere.UpdateTriggerSize(this.range);
     }
     private void OnEnable()
     {
-        GameManager.Instance.OnStateChanged -= HandleStateChange;
-        GameManager.Instance.OnStateChanged += HandleStateChange;
+
     }
     private void HandleStateChange(GameState state)
     {
@@ -140,7 +139,15 @@ public class Character : MonoBehaviour, ICombatant
         weaponPrefab = Instantiate(WeaponDataSO.GetWeaponByType(weaponType).gameObject, spawnWeaponPoint);
         weapon = weaponPrefab.GetComponent<Weapon>();
     }
-
+    public void ChangeWeapon(Weapon currentWeapon)
+    {
+        if (weaponPrefab != null)
+        {
+            Destroy(weaponPrefab);
+        }
+        weaponPrefab = Instantiate(currentWeapon.gameObject, spawnWeaponPoint);
+        weapon = currentWeapon;
+    }
     public void LookAtTarget(Transform target)
     {
         transform.LookAt(target.position);
@@ -264,7 +271,9 @@ public class Character : MonoBehaviour, ICombatant
             LoseMenu.Show();
             LoseMenu.Instance.OnInit(LevelManager.Instance.TotalBotsToKill, attacker.name, player.CoinGained);
             GameManager.Instance.ChangeState(GameState.GameOver);
-            player.SaveGame();
+            GameManager.Instance.UpdatePlayerData(player.PlayerData);
+            GameManager.Instance.SaveToJson(player.PlayerData, FilePathGame.CHARACTER_PATH);
+
         }
         attacker.LevelUp(victim.level);
     }
