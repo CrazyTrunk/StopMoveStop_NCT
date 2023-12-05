@@ -8,13 +8,16 @@ public class Indicator : MonoBehaviour
 {
     private Transform target;
     private Camera mainCamera;
-    [SerializeField] private RectTransform indicatorCanvas;
+     private RectTransform indicatorCanvas;
     [SerializeField] private RectTransform selfRect;
     [SerializeField] private CanvasGroup canvasGroup;
     [SerializeField] private float offScreenThreshold = 50f;
+
+    public Transform Target { get => target; set => target = value; }
+
     private void Update()
     {
-        if(target != null)
+        if(Target != null)
         {
             if (TargetIsOffScreen())
             {
@@ -31,19 +34,20 @@ public class Indicator : MonoBehaviour
     {
         mainCamera = Camera.main;
     }
-    public void SetTarget(Transform newTarget)
+    public void SetTarget(Transform newTarget, RectTransform canvas)
     {
-        target = newTarget;
+        Target = newTarget;
+        indicatorCanvas = canvas;
     }
     private bool TargetIsOffScreen()
     {
-        Vector3 targetViewportPos = mainCamera.WorldToViewportPoint(target.position);
+        Vector3 targetViewportPos = mainCamera.WorldToViewportPoint(Target.position);
         return targetViewportPos.x < 0 || targetViewportPos.x > 1 || targetViewportPos.y < 0 || targetViewportPos.y > 1;
     }
     private void UpdateIndicatorPosition()
     {
         //khong gian man hinh
-        Vector3 targetScreenPos = mainCamera.WorldToScreenPoint(target.position);
+        Vector3 targetScreenPos = mainCamera.WorldToScreenPoint(Target.position);
 
         Vector2 localPoint;
         //chuyen tu khon gian man hinh sang khong gian canvas

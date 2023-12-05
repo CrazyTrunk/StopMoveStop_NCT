@@ -1,11 +1,17 @@
 ﻿using Lean.Pool;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEditor.Tilemaps;
 using UnityEngine;
 
 public class LevelManager : Singleton<LevelManager>
 {
     [SerializeField] private LeanGameObjectPool botPool;
+    [SerializeField] private LeanGameObjectPool indicatorPool;
+    [SerializeField] private Transform indicatorParent;
+    [SerializeField] private RectTransform indicatorCanvas;
+    private List<Indicator> activeIndicators = new List<Indicator>();
+
     [SerializeField] private List<GameObject> levels;
     [SerializeField] private Joystick joystick;
     [SerializeField] private GameObject playerPrefab;
@@ -43,6 +49,7 @@ public class LevelManager : Singleton<LevelManager>
     public void ClearAllBots()
     {
         botPool.DespawnAll();
+        indicatorPool.DespawnAll();
         usedPositions.Clear();
     }
     private void LoadCurrentLevel(int currentLevel)
@@ -92,8 +99,10 @@ public class LevelManager : Singleton<LevelManager>
             Enemy enemy = botPool.Spawn(spawnPosition, Quaternion.identity, botPool.transform).GetComponent<Enemy>();
             enemy.OnInit();
             enemy.InitLevelBot(currentPlayerData.level + Random.Range(3, 5 + 1));
+            Indicator indicator = indicatorPool.Spawn(Vector3.zero, Quaternion.identity, indicatorParent).GetComponent<Indicator>();
+            indicator.SetTarget(enemy.transform, indicatorCanvas);
             botsSpawned++;
-            // Set up the bot (e.g., adding it to a list, setting up callbacks, etc.)
+            activeIndicators.Add(indicator);
         }
     }
     public void SpawnBot(int level)
@@ -104,7 +113,10 @@ public class LevelManager : Singleton<LevelManager>
             Enemy enemy = botPool.Spawn(spawnPosition, Quaternion.identity, botPool.transform).GetComponent<Enemy>();
             enemy.OnInit();
             enemy.InitLevelBot(level);
+            Indicator indicator = indicatorPool.Spawn(spawnPosition, Quaternion.identity,indicatorParent).GetComponent<Indicator>();
+            indicator.SetTarget(enemy.transform, indicatorCanvas);
             botsSpawned++;
+            activeIndicators.Add(indicator);
         }
         // Set up the bot (e.g., adding it to a list, setting up callbacks, etc.)
     }
@@ -114,6 +126,12 @@ public class LevelManager : Singleton<LevelManager>
         IngameMenu.Instance.OnInit(TotalBotsToKill);
         usedPositions.Remove(character.transform.position);
         botPool.Despawn(character.gameObject);
+        var indicatorToDespawn = activeIndicators.FirstOrDefault(indicator => indicator.Target == character.transform);
+        if (indicatorToDespawn != null)
+        {
+            indicatorPool.Despawn(indicatorToDespawn.gameObject);
+            activeIndicators.Remove(indicatorToDespawn);
+        }
 
         if (TotalBotsToKill > 1)
         {

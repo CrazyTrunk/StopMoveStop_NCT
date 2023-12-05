@@ -1,0 +1,1 @@
+{"coin":0,"levelMap":1,"isSoundOn":false,"playerName":"You","isAdsRemove":false,"equippedWeapon":{"instanceID":26226},"weapons":[{"instanceID":26226}]}
