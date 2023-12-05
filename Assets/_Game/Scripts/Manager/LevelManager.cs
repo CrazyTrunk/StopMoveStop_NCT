@@ -59,14 +59,25 @@ public class LevelManager : Singleton<LevelManager>
 
     private Vector3 GenerateSpawnPosition()
     {
+        bool positionValid;
         Vector3 potentialPosition;
         do
         {
+            positionValid = true;
             float x = Random.Range(CurrentLevelData.SpawnAreaMin.x, CurrentLevelData.SpawnAreaMax.x);
             float z = Random.Range(CurrentLevelData.SpawnAreaMin.y, CurrentLevelData.SpawnAreaMax.y);
             potentialPosition = new Vector3(x, 0.08f, z); // '0' is the y-coordinate on the plane
+            Collider[] hitColliders = Physics.OverlapSphere(potentialPosition, 5f);
+            foreach (var hitCollider in hitColliders)
+            {
+                if (hitCollider.tag == Tag.CHARACTER || hitCollider.tag == Tag.OBSTACLE || usedPositions.Contains(potentialPosition))
+                {
+                    positionValid = false;
+                    break;
+                }
+            }
         }
-        while (usedPositions.Contains(potentialPosition));
+        while (!positionValid);
         if (potentialPosition != Vector3.zero)
         {
             usedPositions.Add(potentialPosition);
@@ -112,8 +123,8 @@ public class LevelManager : Singleton<LevelManager>
         {
             if (playerData.levelMap <= levels.Count)
             {
-                playerData.levelMap++;
                 playerData.UpdateHighestRankPerMap(playerData.levelMap, TotalBotsToKill);
+                playerData.levelMap++;
                 GameManager.Instance.UpdatePlayerData(playerData);
                 GameManager.Instance.SaveToJson(playerData, FilePathGame.CHARACTER_PATH);
             }

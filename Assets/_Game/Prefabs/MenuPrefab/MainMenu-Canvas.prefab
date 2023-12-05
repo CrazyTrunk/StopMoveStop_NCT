@@ -2297,7 +2297,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7be1e50c62d0fc44ea8549f1d690a0b1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  DestroyWhenClosed: 0
+  DestroyWhenClosed: 1
   DisableMenusUnderneath: 1
   Cancelable: 1
   coin: {fileID: 6242076513509909213}
