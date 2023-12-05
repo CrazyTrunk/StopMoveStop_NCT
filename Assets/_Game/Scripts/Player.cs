@@ -15,6 +15,17 @@ public class Player : Character, ICombatant
     {
         PlayerData = GameManager.Instance.GetPlayerData();
     }
+    void OnEnable()
+    {
+        GameManager.Instance.OnPlayerDataUpdated -= UpdateWeapon;
+        GameManager.Instance.OnPlayerDataUpdated += UpdateWeapon;
+    }
+
+    private void UpdateWeapon(PlayerData data)
+    {
+        ChangeWeapon(data.equippedWeapon);
+        EquipWeapon(Weapon);
+    }
     public void GainCoin(int coins)
     {
         CoinGained += coins;

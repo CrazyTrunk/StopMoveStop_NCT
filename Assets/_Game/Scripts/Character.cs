@@ -89,7 +89,7 @@ public class Character : MonoBehaviour, ICombatant
         {
             ChangeWeapon(GameManager.Instance.GetPlayerData().equippedWeapon);
         }
-        EquipWeapon(Weapon);
+        EquipWeapon(weapon);
         CharacterSphere.UpdateTriggerSize(this.range);
     }
     private void OnEnable()
