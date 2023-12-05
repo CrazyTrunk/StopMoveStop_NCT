@@ -4,6 +4,11 @@ public class Enemy : Character
 {
     [SerializeField] private EnemyController controller;
     private string[] botNames = { "Alpha", "Bravo", "Charlie", "Delta", "Echo", "Foxtrot", "Golf", "Hotel", "India", "Juliet"};
+    public override void OnInit()
+    {
+        base.OnInit();
+        controller.OnInit();
+    }
     public string GetRandomBotName()
     {
         int randomIndex = Random.Range(0, botNames.Length);

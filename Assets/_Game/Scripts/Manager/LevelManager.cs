@@ -15,7 +15,7 @@ public class LevelManager : Singleton<LevelManager>
 
     private GameObject currentPlayerPrefab;
     private Player currentPlayerData;
-
+    private PlayerData playerData;
     private HashSet<Vector3> usedPositions = new();
     private int totalBotsToKill;
     private int botsSpawned;
@@ -28,8 +28,9 @@ public class LevelManager : Singleton<LevelManager>
     }
     public void OnInit()
     {
+        playerData = GameManager.Instance.GetPlayerData();
         botsSpawned = 0;
-        LoadCurrentLevel(GameManager.Instance.GetPlayerData().levelMap);
+        LoadCurrentLevel(playerData.levelMap);
         GameManager.Instance.ChangeState(GameState.MainMenu);
 
         ClearAllBots();
@@ -108,6 +109,12 @@ public class LevelManager : Singleton<LevelManager>
         }
         else if (TotalBotsToKill == 1)
         {
+            if (playerData.levelMap <= levels.Count)
+            {
+                playerData.levelMap++;
+                GameManager.Instance.UpdatePlayerData(playerData);
+                GameManager.Instance.SaveToJson(playerData, FilePathGame.CHARACTER_PATH);
+            }
             WinMenu.Show();
         }
     }

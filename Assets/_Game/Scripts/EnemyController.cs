@@ -10,10 +10,14 @@ public class EnemyController : MonoBehaviour
     private float wallCheckDistance = 1f;
 
     public Enemy CurrentBot { get => currentBot; set => currentBot = value; }
-
-    public void Start()
+    public void OnInit()
     {
         SetState(new IdleState(this));
+
+    }
+    public void Start()
+    {
+        OnInit();
     }
     private void Update()
     {
@@ -21,7 +25,7 @@ public class EnemyController : MonoBehaviour
         {
             return;
         }
-        if (GameManager.Instance.IsState(GameState.Playing) || GameManager.Instance.IsState(GameState.GameOver))
+        if (GameManager.Instance.IsState(GameState.Playing))
         {
             currentState?.OnExecute();
         }

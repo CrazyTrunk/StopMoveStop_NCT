@@ -18,6 +18,7 @@ public class IdleState : IState
     public void OnEnter()
     {
         timeSinceLastChange = 0f;
+        timeSinceLastChangeWithEnemy = 0f;
         _enemy.ChangeAnim(Anim.IDLE);
     }
     public void OnExecute()
@@ -51,5 +52,6 @@ public class IdleState : IState
     public void OnExit()
     {
         timeSinceLastChange = 0f;
+        timeSinceLastChangeWithEnemy = 0f;  
     }
 }

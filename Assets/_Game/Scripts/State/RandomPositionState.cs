@@ -86,5 +86,6 @@ public class RandomPositionState : IState
         isRandomChangeDirection = false;
         isChangeDirection = false;
         timeSinceLastChange = 0f;
+        randomChangeTime = 0f;
     }
 }

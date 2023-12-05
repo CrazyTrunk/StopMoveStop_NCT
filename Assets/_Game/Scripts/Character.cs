@@ -75,7 +75,7 @@ public class Character : MonoBehaviour, ICombatant
     public WeaponData WeaponDataSO { get => weaponDataSO; set => weaponDataSO = value; }
 
     public event Action<ICombatant> OnCombatantKilled;
-    public void OnInit()
+    public virtual void OnInit()
     {
         Animator.speed = animSpeed;
         originalColliderSize = new Vector3(capsuleColliderCharacter.radius, capsuleColliderCharacter.height, capsuleColliderCharacter.radius);
