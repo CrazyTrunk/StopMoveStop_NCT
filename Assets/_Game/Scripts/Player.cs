@@ -14,6 +14,7 @@ public class Player : Character, ICombatant
     private void Start()
     {
         PlayerData = GameManager.Instance.GetPlayerData();
+        CharacterName = playerData.playerName;
     }
     void OnEnable()
     {

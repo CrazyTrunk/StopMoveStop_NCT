@@ -241,11 +241,10 @@ MonoBehaviour:
   range: 5
   detectedCircle: {fileID: 0}
   radicalTrigger: {fileID: 6654430860616714916}
-  characterInfo: {fileID: 5055859691245426267}
   characterSphere: {fileID: 1602383627806784661}
   capsuleColliderCharacter: {fileID: 4007029889014482827}
   maxSpeed: 7
-  levelDisplayInfo: {fileID: 459442364487028108}
+  characterInfo: {fileID: 5055859691245426267}
   characterModel: {fileID: 3815547417167672183}
   level: 0
   baseScale: {x: 1, y: 1, z: 1}
@@ -265,7 +264,6 @@ GameObject:
   - component: {fileID: 298516599829188885}
   - component: {fileID: 8570363331299661355}
   - component: {fileID: 7383822017411585571}
-  - component: {fileID: 459442364487028108}
   m_Layer: 5
   m_Name: Level
   m_TagString: Untagged
@@ -331,20 +329,6 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &459442364487028108
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2062610964933790301}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1fd12820fd73dd04184062104fbd3df4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  textMeshUI: {fileID: 2178779718951757159}
-  character: {fileID: 6485558763397518965}
 --- !u!1 &2242969621768567190
 GameObject:
   m_ObjectHideFlags: 0
@@ -5712,6 +5696,9 @@ MonoBehaviour:
   infoCanvasTransform: {fileID: 3452391139702267186}
   characterModel: {fileID: 3815547417167672183}
   yOffset: 3
+  levelUI: {fileID: 2178779718951757159}
+  nameUI: {fileID: 4151497186751455725}
+  character: {fileID: 6485558763397518965}
 --- !u!225 &2084912018611725343
 CanvasGroup:
   m_ObjectHideFlags: 0

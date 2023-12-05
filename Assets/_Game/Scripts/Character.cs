@@ -22,7 +22,6 @@ public class Character : MonoBehaviour, ICombatant
     [Header("Sphere Detection")]
     [SerializeField] private DetectedCircle detectedCircle;
     [SerializeField] private RadicalTrigger radicalTrigger;
-    [SerializeField] private CharacterInfo characterInfo;
     [SerializeField] private CharacterSphere characterSphere;
     [SerializeField] private CapsuleCollider capsuleColliderCharacter;
     public const float RangeIncreasePerTenLevels = 2f;
@@ -32,8 +31,8 @@ public class Character : MonoBehaviour, ICombatant
     private readonly float maxRangeIncrese = 10f;
 
     [Header("UI Canvas Info and noti")]
-    [SerializeField] private LevelDisplay levelDisplayInfo;
-
+    [SerializeField] private CharacterInfo characterInfo;
+    private string characterName;
 
     [Header("Basic CharacterInfo")]
     [SerializeField] private Transform characterModel;
@@ -73,8 +72,13 @@ public class Character : MonoBehaviour, ICombatant
     public float BaseRange { get => baseRange; set => baseRange = value; }
     public CharacterSphere CharacterSphere { get => characterSphere; set => characterSphere = value; }
     public WeaponData WeaponDataSO { get => weaponDataSO; set => weaponDataSO = value; }
+    public string CharacterName { get => characterName; set => characterName = value; }
 
     public event Action<ICombatant> OnCombatantKilled;
+    private void Awake()
+    {
+        OnInit();
+    }
     public virtual void OnInit()
     {
         Animator.speed = animSpeed;
@@ -84,30 +88,16 @@ public class Character : MonoBehaviour, ICombatant
         if (this is Enemy enemy)
         {
             ChangeWeapon(WeaponType.HAMMER);
+            characterName = enemy.GetRandomBotName();
         }
         else if (this is Player player)
         {
             ChangeWeapon(GameManager.Instance.GetPlayerData().equippedWeapon);
         }
+        characterInfo.UpdateUINamePlayer(characterName);
         EquipWeapon(weapon);
         CharacterSphere.UpdateTriggerSize(this.range);
     }
-    private void OnEnable()
-    {
-
-    }
-    private void HandleStateChange(GameState state)
-    {
-        if (GameManager.Instance.IsState(GameState.Playing))
-        {
-            characterInfo.gameObject.SetActive(true);
-        }
-        else
-        {
-            characterInfo.gameObject.SetActive(false);
-        }
-    }
-
     public void EquipWeapon(Weapon weapon)
     {
         ApplyWeaponBonuses(weapon.bonusSpeed, weapon.bonusRange);
@@ -206,7 +196,7 @@ public class Character : MonoBehaviour, ICombatant
         ScaleModel(level);
         AdjustCollider();
         CharacterSphere.UpdateTriggerSize(currentRange);
-        levelDisplayInfo.UpdateUILevelPlayer(this.level);
+        characterInfo.UpdateUILevelPlayer(this.level);
         Speed = Mathf.Min(Speed + (level * 0.1f), maxSpeed);
     }
     public void LevelUp(int enemyLevel)
@@ -224,7 +214,7 @@ public class Character : MonoBehaviour, ICombatant
         }
         AdjustCollider();
         CharacterSphere.UpdateTriggerSize(currentRange);
-        levelDisplayInfo.UpdateUILevelPlayer(this.level);
+        characterInfo.UpdateUILevelPlayer(this.level);
         Speed = Mathf.Min(Speed + 0.1f, maxSpeed);
     }
 
@@ -271,7 +261,7 @@ public class Character : MonoBehaviour, ICombatant
         if (victim is Player player)
         {
             LoseMenu.Show();
-            LoseMenu.Instance.OnInit(LevelManager.Instance.TotalBotsToKill, attacker.name, player.CoinGained);
+            LoseMenu.Instance.OnInit(LevelManager.Instance.TotalBotsToKill, attacker.characterName, player.CoinGained);
             GameManager.Instance.ChangeState(GameState.GameOver);
             GameManager.Instance.UpdatePlayerData(player.PlayerData);
             GameManager.Instance.SaveToJson(player.PlayerData, FilePathGame.CHARACTER_PATH);
