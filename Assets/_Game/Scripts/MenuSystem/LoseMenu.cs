@@ -11,7 +11,7 @@ public class LoseMenu : Menu<LoseMenu>
     [SerializeField] TextMeshProUGUI coinGained;
     private PlayerData playerData;
     [SerializeField] Image[] ZoneImages;
-    []
+
     private void Start()
     {
         playerData = GameManager.Instance.GetPlayerData();
