@@ -6,47 +6,60 @@ using UnityEngine.UIElements;
 
 public class Indicator : MonoBehaviour
 {
-    [SerializeField] private GameObject target;
-    [SerializeField] private Camera mainCamera;
-    [SerializeField] private GameObject indicator;
-    [SerializeField] private Canvas indicatorCanvas;
+    private Transform target;
+    private Camera mainCamera;
+    [SerializeField] private RectTransform indicatorCanvas;
+    [SerializeField] private RectTransform selfRect;
+    [SerializeField] private CanvasGroup canvasGroup;
     [SerializeField] private float offScreenThreshold = 50f;
     private void Update()
     {
-        if (TargetIsOffScreen())
+        if(target != null)
         {
-            UpdateIndicatorPosition();
-            indicator.SetActive(true);
+            if (TargetIsOffScreen())
+            {
+                UpdateIndicatorPosition();
+                canvasGroup.alpha = 1;
+            }
+            else
+            {
+                canvasGroup.alpha = 0;
+            }
         }
-        else
-        {
-            indicator.SetActive(false);
-        }
+    }
+    private void Start()
+    {
+        mainCamera = Camera.main;
+    }
+    public void SetTarget(Transform newTarget)
+    {
+        target = newTarget;
     }
     private bool TargetIsOffScreen()
     {
-        Vector3 targetViewportPos = mainCamera.WorldToViewportPoint(target.transform.position);
+        Vector3 targetViewportPos = mainCamera.WorldToViewportPoint(target.position);
         return targetViewportPos.x < 0 || targetViewportPos.x > 1 || targetViewportPos.y < 0 || targetViewportPos.y > 1;
     }
     private void UpdateIndicatorPosition()
     {
-        RectTransform indicatorRect = indicator.GetComponent<RectTransform>();
-        Vector3 targetScreenPos = mainCamera.WorldToScreenPoint(target.transform.position);
+        //khong gian man hinh
+        Vector3 targetScreenPos = mainCamera.WorldToScreenPoint(target.position);
 
         Vector2 localPoint;
-        RectTransformUtility.ScreenPointToLocalPointInRectangle((RectTransform)indicatorCanvas.transform, targetScreenPos, mainCamera, out localPoint);
+        //chuyen tu khon gian man hinh sang khong gian canvas
+        RectTransformUtility.ScreenPointToLocalPointInRectangle(indicatorCanvas, targetScreenPos, mainCamera, out localPoint);
 
-        Vector2 canvasSize = ((RectTransform)indicatorCanvas.transform).sizeDelta;
+        Vector2 canvasSize = indicatorCanvas.sizeDelta;
+        //trung tam la (0,0) xy
         localPoint.x = Mathf.Clamp(localPoint.x, -canvasSize.x / 2 + offScreenThreshold, canvasSize.x / 2 - offScreenThreshold);
         localPoint.y = Mathf.Clamp(localPoint.y, -canvasSize.y / 2 + offScreenThreshold, canvasSize.y / 2 - offScreenThreshold);
 
-        indicatorRect.localPosition = localPoint;
+        selfRect.localPosition = localPoint;
         RotateIndicatorTowardsTarget(localPoint);
     }
     private void RotateIndicatorTowardsTarget(Vector2 targetPosition)
     {
-        RectTransform indicatorRect = indicator.GetComponent<RectTransform>();
         float angle = Mathf.Atan2(targetPosition.y, targetPosition.x) * Mathf.Rad2Deg - 90;
-        indicatorRect.localRotation = Quaternion.Euler(0, 0, angle);
+        selfRect.localRotation = Quaternion.Euler(0, 0, angle);
     }
 }
