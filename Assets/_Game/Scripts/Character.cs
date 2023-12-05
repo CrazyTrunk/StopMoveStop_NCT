@@ -90,7 +90,7 @@ public class Character : MonoBehaviour, ICombatant
             ChangeWeapon(WeaponType.HAMMER);
             characterName = enemy.GetRandomBotName();
         }
-        else if (this is Player player)
+        else if (this is Player)
         {
             ChangeWeapon(GameManager.Instance.GetPlayerData().equippedWeapon);
         }
@@ -204,7 +204,7 @@ public class Character : MonoBehaviour, ICombatant
         int level = CalculateLevel(enemyLevel);
         float currentRange = CalculateRange();
         ScaleModel(level);
-        if (this is Player player)
+        if (this is Player)
         {
             if (level != 0 && level >= previousLevel + 10 && level < MaxLevel)
             {
@@ -263,9 +263,9 @@ public class Character : MonoBehaviour, ICombatant
             LoseMenu.Show();
             LoseMenu.Instance.OnInit(LevelManager.Instance.TotalBotsToKill, attacker.characterName, player.CoinGained);
             GameManager.Instance.ChangeState(GameState.GameOver);
+            player.PlayerData.UpdateHighestRankPerMap(player.PlayerData.levelMap, LevelManager.Instance.TotalBotsToKill);
             GameManager.Instance.UpdatePlayerData(player.PlayerData);
             GameManager.Instance.SaveToJson(player.PlayerData, FilePathGame.CHARACTER_PATH);
-            Debug.Log($"Weapon {weapon}");
         }
         attacker.LevelUp(victim.level);
     }

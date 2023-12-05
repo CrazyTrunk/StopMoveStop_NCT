@@ -27,6 +27,7 @@ public class GameManager : Singleton<GameManager>
             playerData.equippedWeapon = weaponData.listWeapon.First();
         }
         Cache.CachePlayerData(playerData);
+        LevelManager.Instance.OnInit();
     }
     public void ChangeState(GameState state)
     {

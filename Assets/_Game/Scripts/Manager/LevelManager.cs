@@ -21,11 +21,12 @@ public class LevelManager : Singleton<LevelManager>
     private int botsSpawned;
 
     public int TotalBotsToKill { get => totalBotsToKill; set => totalBotsToKill = value; }
+    public Level CurrentLevelData { get => currentLevelData; set => currentLevelData = value; }
 
-    private void Start()
-    {
-        OnInit();
-    }
+    //private void Awake()
+    //{
+    //    OnInit();
+    //}
     public void OnInit()
     {
         playerData = GameManager.Instance.GetPlayerData();
@@ -51,8 +52,8 @@ public class LevelManager : Singleton<LevelManager>
             Destroy(currentLevelPrefab);
         }
         currentLevelPrefab = Instantiate(levels[currentLevel - 1]);
-        currentLevelData = currentLevelPrefab.GetComponent<Level>();
-        TotalBotsToKill = currentLevelData.TotalBotsToKill;
+        CurrentLevelData = currentLevelPrefab.GetComponent<Level>();
+        TotalBotsToKill = CurrentLevelData.TotalBotsToKill;
         LoadPlayer();
     }
 
@@ -61,8 +62,8 @@ public class LevelManager : Singleton<LevelManager>
         Vector3 potentialPosition;
         do
         {
-            float x = Random.Range(currentLevelData.SpawnAreaMin.x, currentLevelData.SpawnAreaMax.x);
-            float z = Random.Range(currentLevelData.SpawnAreaMin.y, currentLevelData.SpawnAreaMax.y);
+            float x = Random.Range(CurrentLevelData.SpawnAreaMin.x, CurrentLevelData.SpawnAreaMax.x);
+            float z = Random.Range(CurrentLevelData.SpawnAreaMin.y, CurrentLevelData.SpawnAreaMax.y);
             potentialPosition = new Vector3(x, 0.08f, z); // '0' is the y-coordinate on the plane
         }
         while (usedPositions.Contains(potentialPosition));
@@ -112,6 +113,7 @@ public class LevelManager : Singleton<LevelManager>
             if (playerData.levelMap <= levels.Count)
             {
                 playerData.levelMap++;
+                playerData.UpdateHighestRankPerMap(playerData.levelMap, TotalBotsToKill);
                 GameManager.Instance.UpdatePlayerData(playerData);
                 GameManager.Instance.SaveToJson(playerData, FilePathGame.CHARACTER_PATH);
             }
