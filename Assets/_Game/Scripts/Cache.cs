@@ -8,15 +8,21 @@ using UnityEngine;
 
 public class Cache
 {
-    private static Dictionary<Collider, Weapon> weapons = new Dictionary<Collider, Weapon>();
+    private static PlayerData currentPlayerData;
 
-    public static Weapon GetWeapon(Collider collider)
+    public static void CachePlayerData(PlayerData data)
     {
-        if (!weapons.ContainsKey(collider))
-        {
-            weapons.Add(collider, collider.GetComponent<Weapon>());
-        }
-        return weapons[collider];
+        currentPlayerData = data;
+    }
+
+    public static PlayerData GetPlayerData()
+    {
+        return currentPlayerData;
+    }
+
+    public static void UpdatePlayerData(PlayerData updatedData)
+    {
+        currentPlayerData = updatedData;
     }
 
 }

@@ -107,7 +107,7 @@ public class RadicalTrigger : MonoBehaviour
 
     private void UpdateTarget()
     {
-        if (combatantQueue.Count > 0 && (CurrentTarget == null))
+        if (combatantQueue.Count > 0 && CurrentTarget == null)
         {
             //Set Enemy from queue
             GetTheFirstEnemyFromQueue();

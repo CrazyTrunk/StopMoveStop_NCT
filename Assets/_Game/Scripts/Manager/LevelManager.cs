@@ -29,9 +29,7 @@ public class LevelManager : Singleton<LevelManager>
     public void OnInit()
     {
         botsSpawned = 0;
-        //LoadCurrentLevel(playerData.levelMap);
-        LoadCurrentLevel(1);
-
+        LoadCurrentLevel(GameManager.Instance.GetPlayerData().levelMap);
         GameManager.Instance.ChangeState(GameState.MainMenu);
 
         ClearAllBots();

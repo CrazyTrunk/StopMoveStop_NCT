@@ -21,10 +21,9 @@ public class EnemyController : MonoBehaviour
         {
             return;
         }
-        if (GameManager.Instance.IsState(GameState.Playing))
+        if (GameManager.Instance.IsState(GameState.Playing) || GameManager.Instance.IsState(GameState.GameOver))
         {
             currentState?.OnExecute();
-
         }
     }
     private void LateUpdate()

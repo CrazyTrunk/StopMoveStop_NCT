@@ -26,6 +26,7 @@ public class GameManager : Singleton<GameManager>
             };
             playerData.equippedWeapon = weaponData.listWeapon.First();
         }
+        Cache.CachePlayerData(playerData);
     }
     public void ChangeState(GameState state)
     {
@@ -75,10 +76,11 @@ public class GameManager : Singleton<GameManager>
     {
         playerData = newData;
         OnPlayerDataUpdated?.Invoke(playerData);
+        Cache.UpdatePlayerData(playerData);
     }
     public PlayerData GetPlayerData()
     {
-      return playerData;
+      return Cache.GetPlayerData();
     }
 
 }

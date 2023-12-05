@@ -5,8 +5,8 @@ using System.Collections.Generic;
 public class PlayerData
 {
     public int coin;
-    public int levelMap;
-    public bool isSoundOn;
+    public int levelMap = 1;
+    public bool isSoundOn ;
     public bool isAdsRemove;
     public Weapon equippedWeapon;
     public List<Weapon> weapons;

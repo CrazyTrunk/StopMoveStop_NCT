@@ -17,14 +17,20 @@ public class Player : Character, ICombatant
     }
     void OnEnable()
     {
-        GameManager.Instance.OnPlayerDataUpdated -= UpdateWeapon;
         GameManager.Instance.OnPlayerDataUpdated += UpdateWeapon;
     }
-
+    private void OnDisable()
+    {
+        if (GameManager.Instance != null)
+        {
+            GameManager.Instance.OnPlayerDataUpdated -= UpdateWeapon;
+        }
+    }
     private void UpdateWeapon(PlayerData data)
     {
         ChangeWeapon(data.equippedWeapon);
         EquipWeapon(Weapon);
+        CharacterSphere.UpdateTriggerSize(Range);
     }
     public void GainCoin(int coins)
     {

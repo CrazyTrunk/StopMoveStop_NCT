@@ -137,6 +137,7 @@ public class Character : MonoBehaviour, ICombatant
             Destroy(weaponPrefab);
         }
         weaponPrefab = Instantiate(WeaponDataSO.GetWeaponByType(weaponType).gameObject, spawnWeaponPoint);
+        weaponPrefab.name = $"{this} weapon";
         weapon = weaponPrefab.GetComponent<Weapon>();
     }
     public void ChangeWeapon(Weapon currentWeapon)
@@ -146,7 +147,8 @@ public class Character : MonoBehaviour, ICombatant
             Destroy(weaponPrefab);
         }
         weaponPrefab = Instantiate(currentWeapon.gameObject, spawnWeaponPoint);
-        weapon = currentWeapon;
+        weaponPrefab.name = $"{this} weapon";
+        weapon = weaponPrefab.GetComponent<Weapon>();
     }
     public void LookAtTarget(Transform target)
     {
@@ -273,11 +275,10 @@ public class Character : MonoBehaviour, ICombatant
             GameManager.Instance.ChangeState(GameState.GameOver);
             GameManager.Instance.UpdatePlayerData(player.PlayerData);
             GameManager.Instance.SaveToJson(player.PlayerData, FilePathGame.CHARACTER_PATH);
-
+            Debug.Log($"Weapon {weapon}");
         }
         attacker.LevelUp(victim.level);
     }
-
     private void PlayDead()
     {
         isDead = true;
