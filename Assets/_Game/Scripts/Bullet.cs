@@ -10,10 +10,10 @@ using UnityEngine.UI;
 
 public class Bullet : MonoBehaviour
 {
-    private float attackSpeed = 2f;
-    private float range;
-    private Vector3 startPosition;
-    [SerializeField]private Rigidbody rb;
+    protected float attackSpeed = 2f;
+    protected float range;
+    protected Vector3 startPosition;
+    [SerializeField] protected Rigidbody rb;
     protected Action<Character, Character> onHit;
 
     public Character shooter { get; set; }

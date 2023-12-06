@@ -139,7 +139,7 @@ public class LevelManager : Singleton<LevelManager>
         }
         else if (TotalBotsToKill == 1)
         {
-            if (playerData.levelMap <= levels.Count)
+            if (playerData.levelMap < levels.Count)
             {
                 playerData.UpdateHighestRankPerMap(playerData.levelMap, TotalBotsToKill);
                 playerData.levelMap++;
