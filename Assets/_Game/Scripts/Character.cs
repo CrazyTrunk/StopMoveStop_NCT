@@ -14,7 +14,9 @@ public class Character : MonoBehaviour, ICombatant
     [SerializeField] private Transform spawnBulletPoint;
     [SerializeField] private Transform spawnWeaponPoint;
 
+    private WeaponData weaponData;
     private Weapon weapon;
+
     private GameObject weaponPrefab;
     [SerializeField] private float speed;
     [SerializeField] private float range;
@@ -53,7 +55,7 @@ public class Character : MonoBehaviour, ICombatant
     private bool isAttacking;
     private bool isDead;
 
-    [SerializeField] private WeaponData weaponDataSO;
+    [SerializeField] private WeaponManagerDataScripableObject weaponDataSO;
 
 
     public Animator Animator { get => animator; set => animator = value; }
@@ -63,7 +65,7 @@ public class Character : MonoBehaviour, ICombatant
     public bool IsAttacking { get => isAttacking; set => isAttacking = value; }
     public float AnimSpeed { get => animSpeed; set => animSpeed = value; }
     public float AnimPlayTime { get => animPlayTime; set => animPlayTime = value; }
-    public Weapon Weapon { get => weapon; set => weapon = value; }
+    public WeaponData WeaponData { get => weaponData; set => weaponData = value; }
     public bool IsDead { get => isDead; set => isDead = value; }
     public float Range { get => range; set => range = value; }
     public float ScaleMultiple { get => scaleMultiple; set => scaleMultiple = value; }
@@ -71,8 +73,9 @@ public class Character : MonoBehaviour, ICombatant
     public float BaseSpeed { get => baseSpeed; set => baseSpeed = value; }
     public float BaseRange { get => baseRange; set => baseRange = value; }
     public CharacterSphere CharacterSphere { get => characterSphere; set => characterSphere = value; }
-    public WeaponData WeaponDataSO { get => weaponDataSO; set => weaponDataSO = value; }
+    public WeaponManagerDataScripableObject WeaponDataSO { get => weaponDataSO; set => weaponDataSO = value; }
     public string CharacterName { get => characterName; set => characterName = value; }
+    public Weapon Weapon { get => weapon; set => weapon = value; }
 
     public event Action<ICombatant> OnCombatantKilled;
     private void Awake()
@@ -92,13 +95,13 @@ public class Character : MonoBehaviour, ICombatant
         }
         else if (this is Player)
         {
-            ChangeWeapon(GameManager.Instance.GetPlayerData().equippedWeapon);
+            ChangeWeapon(GameManager.Instance.GetPlayerData().equippedWeaponId);
         }
         characterInfo.UpdateUINamePlayer(characterName);
-        EquipWeapon(weapon);
+        EquipWeapon(weaponData);
         CharacterSphere.UpdateTriggerSize(this.range);
     }
-    public void EquipWeapon(Weapon weapon)
+    public void EquipWeapon(WeaponData weapon)
     {
         ApplyWeaponBonuses(weapon.bonusSpeed, weapon.bonusRange);
     }
@@ -126,18 +129,19 @@ public class Character : MonoBehaviour, ICombatant
         {
             Destroy(weaponPrefab);
         }
-        weaponPrefab = Instantiate(WeaponDataSO.GetWeaponByType(weaponType).gameObject, spawnWeaponPoint);
-        weaponPrefab.name = $"{this} weapon";
+        weaponPrefab = Instantiate(WeaponDataSO.GetWeaponByType(weaponType).weaponPrefab, spawnWeaponPoint);
+        weaponData = WeaponDataSO.GetWeaponByType(weaponType);
         weapon = weaponPrefab.GetComponent<Weapon>();
     }
-    public void ChangeWeapon(Weapon currentWeapon)
+    public void ChangeWeapon(int weaponId)
     {
+        WeaponData currentWeaponData = weaponDataSO.GetWeaponById(weaponId);
         if (weaponPrefab != null)
         {
             Destroy(weaponPrefab);
         }
-        weaponPrefab = Instantiate(currentWeapon.gameObject, spawnWeaponPoint);
-        weaponPrefab.name = $"{this} weapon";
+        weaponPrefab = Instantiate(currentWeaponData.weaponPrefab, spawnWeaponPoint);
+        weaponData = WeaponDataSO.GetWeaponByType(currentWeaponData.type);
         weapon = weaponPrefab.GetComponent<Weapon>();
     }
     public void LookAtTarget(Transform target)

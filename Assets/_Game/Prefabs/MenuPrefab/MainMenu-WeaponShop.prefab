@@ -2011,7 +2011,7 @@ MonoBehaviour:
   coinText: {fileID: 5888324710300004466}
   textBonus: {fileID: 3059640433475128068}
   selectText: {fileID: 8342760465841251213}
-  weaponData: {fileID: 11400000, guid: 34b351d3227797b44a958a6b11129d10, type: 2}
+  weaponDataSO: {fileID: 11400000, guid: 34b351d3227797b44a958a6b11129d10, type: 2}
   spawnPoint: {fileID: 5263170783312179585}
 --- !u!1 &8231722906199635942
 GameObject:

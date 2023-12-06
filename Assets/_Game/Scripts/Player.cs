@@ -29,8 +29,8 @@ public class Player : Character, ICombatant
     }
     private void UpdateWeapon(PlayerData data)
     {
-        ChangeWeapon(data.equippedWeapon);
-        EquipWeapon(Weapon);
+        ChangeWeapon(data.equippedWeaponId);
+        EquipWeapon(WeaponData);
         CharacterSphere.UpdateTriggerSize(Range);
     }
     public void GainCoin(int coins)

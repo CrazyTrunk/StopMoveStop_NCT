@@ -1,20 +1,16 @@
-﻿using System.Collections.Generic;
+﻿
+using System;
 using UnityEngine;
-using UnityEngine.UI;
 
-[CreateAssetMenu(fileName = "WeaponData", menuName = "Game Data/Weapons")]
-public class WeaponData : ScriptableObject
+[Serializable]
+public class WeaponData
 {
-    public List<Weapon> listWeapon;
-    public Weapon GetWeaponByType(WeaponType weaponType)
-    {
-        for (int i = 0; i < listWeapon.Count; i++)
-        {
-            if (listWeapon[i].type == weaponType)
-            {
-                return listWeapon[i];
-            }
-        }
-        return null;
-    }
+    public int id;
+    public string weaponName;
+    public float bonusSpeed;
+    public float bonusRange;
+    public WeaponType type;
+    public int cost;
+    public GameObject weaponPrefab;
 }
+

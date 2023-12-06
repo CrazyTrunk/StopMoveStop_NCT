@@ -11,20 +11,20 @@ public class GameManager : Singleton<GameManager>
     private GameState _gameState;
     public event Action<PlayerData> OnPlayerDataUpdated;
     private PlayerData playerData;
-    [SerializeField] private WeaponData weaponData;
+    [SerializeField] private WeaponManagerDataScripableObject weaponDataSO;
 
     private void Awake()
     {
         ChangeState(GameState.MainMenu);
         playerData = ReadFromJson(FilePathGame.CHARACTER_PATH);
-        if(playerData == null)
+        if (playerData == null)
         {
             playerData = new PlayerData();
-            playerData.weapons = new List<Weapon>
+            playerData.weapons = new List<int>
             {
-                weaponData.listWeapon.First()
+                weaponDataSO.listWeapon.First().id
             };
-            playerData.equippedWeapon = weaponData.listWeapon.First();
+            playerData.equippedWeaponId = weaponDataSO.listWeapon.First().id;
         }
         Cache.CachePlayerData(playerData);
         LevelManager.Instance.OnInit();

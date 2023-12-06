@@ -9,12 +9,13 @@ public class PlayerData
     public bool isSoundOn;
     public string playerName = "You";
     public bool isAdsRemove;
-    public Weapon equippedWeapon;
-    public List<Weapon> weapons;
+    public int equippedWeaponId;
+    public List<int> weapons;
     public Dictionary<int, int> rankPerMap;
     public PlayerData()
     {
         rankPerMap = new Dictionary<int, int>();
+
     }
 
     public void UpdateHighestRankPerMap(int level, int rank)

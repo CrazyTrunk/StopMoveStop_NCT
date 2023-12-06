@@ -13,15 +13,87 @@ MonoBehaviour:
   m_Name: WeaponData
   m_EditorClassIdentifier: 
   listWeapon:
-  - {fileID: 5707918956658057942, guid: 167797db8e28f7d4bb2247f5c684b553, type: 3}
-  - {fileID: 1229838324778137097, guid: 0be8450136c78174a9b18aac2ff6aa6a, type: 3}
-  - {fileID: 9074469043565572381, guid: 992c72db5c2d6174cb945dc72e4d4ab4, type: 3}
-  - {fileID: -3953652893598132773, guid: a2bc82e2e40fb164e99d481e0feea378, type: 3}
-  - {fileID: 1827033881255201985, guid: dac6af03cc0e63a44ab5a090ac9249ca, type: 3}
-  - {fileID: -5435625146424681702, guid: e8f17f29bbc898f499da798f4f4e2f7b, type: 3}
-  - {fileID: 7035314122022162227, guid: 61593db0209c8474bbc13664c7b73884, type: 3}
-  - {fileID: -7424485544086256620, guid: 0fcb4bbdfa7c37741a3fb5834904fb52, type: 3}
-  - {fileID: 8835584984704818059, guid: f08d2a91bc929ad44baf8a15bfa567ba, type: 3}
-  - {fileID: -5465468515465704936, guid: 2223be503de7e1541b590910adcb2b41, type: 3}
-  - {fileID: 3808530554933325641, guid: b9133ae5d6447964eb9a862378190beb, type: 3}
-  - {fileID: -5268908356971033388, guid: b54721c19c7192d46b741a141fe8e4f5, type: 3}
+  - id: 0
+    weaponName: Hammer
+    bonusSpeed: 0
+    bonusRange: 0
+    type: 0
+    cost: 0
+    weaponPrefab: {fileID: 6367785518166116615, guid: 167797db8e28f7d4bb2247f5c684b553, type: 3}
+  - id: 1
+    weaponName: Candy0
+    bonusSpeed: 5
+    bonusRange: 5
+    type: 1
+    cost: 50
+    weaponPrefab: {fileID: 3044977714729058449, guid: 0be8450136c78174a9b18aac2ff6aa6a, type: 3}
+  - id: 2
+    weaponName: Candy1
+    bonusSpeed: 5
+    bonusRange: 5
+    type: 2
+    cost: 50
+    weaponPrefab: {fileID: 2344064971432194115, guid: 992c72db5c2d6174cb945dc72e4d4ab4, type: 3}
+  - id: 3
+    weaponName: Candy2
+    bonusSpeed: 5
+    bonusRange: 5
+    type: 3
+    cost: 50
+    weaponPrefab: {fileID: 5501967624236292914, guid: a2bc82e2e40fb164e99d481e0feea378, type: 3}
+  - id: 4
+    weaponName: Candy4
+    bonusSpeed: 5
+    bonusRange: 5
+    type: 4
+    cost: 50
+    weaponPrefab: {fileID: 1150718077658800654, guid: dac6af03cc0e63a44ab5a090ac9249ca, type: 3}
+  - id: 5
+    weaponName: Axe0
+    bonusSpeed: 5
+    bonusRange: 5
+    type: 5
+    cost: 100
+    weaponPrefab: {fileID: 5418695592406347674, guid: e8f17f29bbc898f499da798f4f4e2f7b, type: 3}
+  - id: 6
+    weaponName: Axe1
+    bonusSpeed: 5
+    bonusRange: 5
+    type: 6
+    cost: 50
+    weaponPrefab: {fileID: 6219825523424796214, guid: 61593db0209c8474bbc13664c7b73884, type: 3}
+  - id: 7
+    weaponName: Boomerang
+    bonusSpeed: 10
+    bonusRange: 10
+    type: 7
+    cost: 500
+    weaponPrefab: {fileID: 3833731073488465525, guid: 0fcb4bbdfa7c37741a3fb5834904fb52, type: 3}
+  - id: 8
+    weaponName: Knife
+    bonusSpeed: 15
+    bonusRange: 15
+    type: 8
+    cost: 800
+    weaponPrefab: {fileID: 9044379844719831979, guid: f08d2a91bc929ad44baf8a15bfa567ba, type: 3}
+  - id: 9
+    weaponName: Uzi
+    bonusSpeed: 20
+    bonusRange: 20
+    type: 9
+    cost: 1000
+    weaponPrefab: {fileID: 1219417698592225927, guid: 2223be503de7e1541b590910adcb2b41, type: 3}
+  - id: 10
+    weaponName: Arrow
+    bonusSpeed: 20
+    bonusRange: 20
+    type: 10
+    cost: 1500
+    weaponPrefab: {fileID: 889726120031421676, guid: b9133ae5d6447964eb9a862378190beb, type: 3}
+  - id: 11
+    weaponName: Z
+    bonusSpeed: 25
+    bonusRange: 25
+    type: 11
+    cost: 2000
+    weaponPrefab: {fileID: 3300388463517521636, guid: b54721c19c7192d46b741a141fe8e4f5, type: 3}
