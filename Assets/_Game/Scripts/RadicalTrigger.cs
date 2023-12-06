@@ -125,7 +125,7 @@ public class RadicalTrigger : MonoBehaviour
     private void ThrowWeapon()
     {
         character.HideWeaponOnHand();
-        CheckingAnimationAttackDone("Attack");
+        CheckingAnimationAttackDone(AnimatorType.ATTACK);
     }
     private void WhenDoneThrowWeapon()
     {

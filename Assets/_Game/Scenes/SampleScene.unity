@@ -123,6 +123,51 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &45505433
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 45505434}
+  - component: {fileID: 45505435}
+  m_Layer: 0
+  m_Name: ColorManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &45505434
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 45505433}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.92699957, y: 1.4514408, z: -7.453949}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &45505435
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 45505433}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 63797253f95e75947bcae94435507793, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  colorDataSO: {fileID: 11400000, guid: fd0fd21635be924468e888a9921316b5, type: 2}
 --- !u!1 &65292884
 GameObject:
   m_ObjectHideFlags: 0
@@ -451,7 +496,7 @@ MonoBehaviour:
   - {fileID: 7988616404881892013, guid: 4698a516db2c27b4ba2f7156961bddae, type: 3}
   - {fileID: 7988616404881892013, guid: 1990712d651575548a838e925c42aac8, type: 3}
   joystick: {fileID: 445529404}
-  playerPrefab: {fileID: 1800077677860429314, guid: 94a2814b2676be340a7fda8c9767c2bb, type: 3}
+  playerPrefab: {fileID: 4377358900431438556, guid: 94a2814b2676be340a7fda8c9767c2bb, type: 3}
   maxBotsAtOnce: 3
 --- !u!1 &705507993
 GameObject:
@@ -1108,6 +1153,7 @@ SceneRoots:
   - {fileID: 705507995}
   - {fileID: 1659511962}
   - {fileID: 600819940}
+  - {fileID: 45505434}
   - {fileID: 65292885}
   - {fileID: 105624654}
   - {fileID: 911435589}

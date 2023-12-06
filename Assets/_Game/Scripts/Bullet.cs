@@ -17,7 +17,7 @@ public class Bullet : MonoBehaviour
     protected Action<Character, Character> onHit;
 
     public Character shooter { get; set; }
-    public virtual void OnInit(Character attacker, Action<Character, Character> onHit)
+    public void OnInit(Character attacker, Action<Character, Character> onHit)
     {
         this.shooter = attacker;
         this.onHit = onHit;
@@ -27,13 +27,13 @@ public class Bullet : MonoBehaviour
 
     }
 
-    public void Shoot()
+    public virtual void Shoot()
     {
         startPosition = transform.position;
         rb.velocity = transform.forward * range * attackSpeed;
         transform.localRotation = Quaternion.identity;
     }
-    void Update()
+    public virtual void Update()
     {
         transform.Rotate(new Vector3(0f, 0f, 360f) * Time.deltaTime);
         if (Vector3.Distance(startPosition, transform.position) > range)

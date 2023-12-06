@@ -28,6 +28,7 @@ public class GameManager : Singleton<GameManager>
         }
         Cache.CachePlayerData(playerData);
         LevelManager.Instance.OnInit();
+        ColorManager.Instance.OnInit();
     }
     public void ChangeState(GameState state)
     {

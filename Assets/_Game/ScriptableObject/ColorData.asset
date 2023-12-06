@@ -12,4 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1e80f79be8f55e94292fcc48c3e9fd14, type: 3}
   m_Name: ColorData
   m_EditorClassIdentifier: 
-  colors: []
+  colors:
+  - colorType: 0
+    color: {r: 1, g: 0, b: 0, a: 0}
+    material: {fileID: 2100000, guid: f07de1cea387e7a4eb5275b015044394, type: 2}
+  - colorType: 5
+    color: {r: 0, g: 0, b: 0, a: 0}
+    material: {fileID: 2100000, guid: 93bcdd4dce79a57479da3eed2e39c883, type: 2}
+  - colorType: 3
+    color: {r: 0, g: 0.11046505, b: 1, a: 0}
+    material: {fileID: 2100000, guid: 53e226e00bd724b4188a6fb392999dd8, type: 2}

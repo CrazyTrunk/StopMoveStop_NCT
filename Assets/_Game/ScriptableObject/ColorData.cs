@@ -8,7 +8,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "ColorData", menuName = "Game Data/ColorData")]
 public class ColorData : ScriptableObject
 {
-    public List<ColorGame> colors;
+    public List<ColorGame> listColor;
 }
 [Serializable]
 public class ColorGame
