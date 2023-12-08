@@ -1,0 +1,15 @@
+﻿using System;
+using System.Collections.Generic;
+using UnityEngine;
+
+[Serializable]
+public class ItemData
+{
+    public int id;
+    public ItemType itemType;
+    public float bonusSpeed;
+    public float bonusRange;
+    public int cost;
+    public GameObject itemPrefab;
+    public Material material;
+}
