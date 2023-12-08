@@ -1,7 +1,5 @@
-﻿using System;
-using TMPro;
+﻿using TMPro;
 using UnityEngine;
-using UnityEngine.Windows;
 
 public class MainMenu : Menu<MainMenu>
 {
@@ -47,8 +45,15 @@ public class MainMenu : Menu<MainMenu>
     {
         Hide();
         WeaponMenu.Show();
+        CameraFollow camera = Camera.main.GetComponent<CameraFollow>();
         WeaponMenu.Instance.OnInit();
         WeaponMenu.Instance.LoadWeapon((int)WeaponType.HAMMER);
+    }
+    public void OnSkinMenuClick()
+    {
+        Hide();
+        SkinMenu.Show();
+        SkinMenu.Instance.OnInit();
     }
     public void HandleInputEnd()
     {

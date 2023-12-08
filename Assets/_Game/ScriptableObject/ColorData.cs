@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "ColorData", menuName = "Game Data/ColorData")]
+[CreateAssetMenu(fileName = "ColorData")]
 public class ColorData : ScriptableObject
 {
     public List<ColorGame> listColor;

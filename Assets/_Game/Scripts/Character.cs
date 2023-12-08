@@ -29,7 +29,7 @@ public class Character : MonoBehaviour, ICombatant
     public const float RangeIncreasePerTenLevels = 2f;
     private float baseRange = 5f;
     private float baseSpeed = 5f;
-    [SerializeField] private float maxSpeed = 7f;
+    [SerializeField] private float maxSpeed = 8f;
     private readonly float maxRangeIncrese = 10f;
 
     [Header("UI Canvas Info and noti")]
