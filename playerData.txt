@@ -1,1 +1,1 @@
-{"coin":4727,"levelMap":2,"isSoundOn":false,"playerName":"You","isAdsRemove":false,"equippedWeaponId":8,"weapons":[0,7,8]}
+{"coin":4752,"levelMap":2,"isSoundOn":false,"playerName":"You","isAdsRemove":false,"equippedWeaponId":8,"weapons":[0,7,8]}

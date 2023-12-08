@@ -30,7 +30,7 @@ public class Bullet : MonoBehaviour
     public virtual void Shoot()
     {
         startPosition = transform.position;
-        rb.velocity = transform.forward * range * attackSpeed;
+        rb.velocity = attackSpeed * range * transform.forward;
         transform.localRotation = Quaternion.identity;
     }
     public virtual void Update()
@@ -49,8 +49,8 @@ public class Bullet : MonoBehaviour
             if(!victim.IsDead && victim != shooter)
             {
                 onHit?.Invoke(shooter, victim);
+                Destroy(gameObject);
             }
-            Destroy(gameObject);
         }
     }
 }
