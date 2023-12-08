@@ -11,37 +11,53 @@ public class PlayerData
     public bool isAdsRemove;
     public int equippedWeaponId;
     public List<int> weapons;
-    public Dictionary<int, int> rankPerMap;
+    public List<LevelData> levelDataList;
     public PlayerData()
     {
-        rankPerMap = new Dictionary<int, int>();
+        levelDataList = new List<LevelData>();
 
     }
 
     public void UpdateHighestRankPerMap(int level, int rank)
     {
-        if (rankPerMap.ContainsKey(level))
+        foreach (var data in levelDataList)
         {
-            if (rank < rankPerMap[level])
+            if (data.level == level)
             {
-                rankPerMap[level] = rank;
+                if (rank < data.highestRank)
+                {
+                    data.highestRank = rank;
+                    return;
+                }
+                else
+                {
+                    return;
+                }
             }
         }
-        else
-        {
-            rankPerMap.Add(level, rank);
-        }
+        levelDataList.Add(new LevelData(level, rank));
     }
     public int GetHighestScoreByLevel(int level)
     {
-        int score;
-        if (rankPerMap.TryGetValue(level, out score))
+        foreach (var data in levelDataList)
         {
-            return score;
+            if (data.level == level)
+            {
+                return data.highestRank;
+            }
         }
-        else
-        {
-            return 0;
-        }
+        return 0;
+    }
+}
+[System.Serializable]
+public class LevelData
+{
+    public int level;
+    public int highestRank;
+
+    public LevelData(int level, int highestRank)
+    {
+        this.level = level;
+        this.highestRank = highestRank;
     }
 }
