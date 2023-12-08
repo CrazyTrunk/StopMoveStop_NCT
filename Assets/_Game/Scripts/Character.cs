@@ -105,6 +105,10 @@ public class Character : MonoBehaviour, ICombatant
     {
         ApplyWeaponBonuses(weapon.bonusSpeed, weapon.bonusRange);
     }
+    public void ApplyItemBonus(ItemData item)
+    {
+        item.ApplyBonus(this);
+    }
     public void ApplyWeaponBonuses(float bonusSpeed, float bonusRange)
     {
         this.Speed = BaseSpeed;

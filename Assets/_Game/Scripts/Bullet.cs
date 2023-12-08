@@ -16,10 +16,10 @@ public class Bullet : MonoBehaviour
     [SerializeField] protected Rigidbody rb;
     protected Action<Character, Character> onHit;
 
-    public Character shooter { get; set; }
+    public Character Shooter { get; set; }
     public void OnInit(Character attacker, Action<Character, Character> onHit)
     {
-        this.shooter = attacker;
+        this.Shooter = attacker;
         this.onHit = onHit;
         this.range = attacker.Range;
         transform.localScale *= attacker.ScaleMultiple;
@@ -46,9 +46,9 @@ public class Bullet : MonoBehaviour
         if (other.CompareTag(Tag.CHARACTER))
         {
             Character victim = other.GetComponent<Character>();
-            if(!victim.IsDead && victim != shooter)
+            if(!victim.IsDead && victim != Shooter)
             {
-                onHit?.Invoke(shooter, victim);
+                onHit?.Invoke(Shooter, victim);
                 Destroy(gameObject);
             }
         }
