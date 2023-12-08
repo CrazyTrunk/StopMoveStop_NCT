@@ -1227,9 +1227,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: WeaponMenu, Assembly-CSharp
-        m_MethodName: OnXmarkClick
+      - m_Target: {fileID: -4890552238058244107}
+        m_TargetAssemblyTypeName: SkinMenu, Assembly-CSharp
+        m_MethodName: OnXMarkClick
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

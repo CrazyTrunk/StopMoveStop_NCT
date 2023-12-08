@@ -8,8 +8,10 @@ public class CameraFollow : MonoBehaviour
     Vector3 offset;
     [SerializeField] private float smoothTime = 0.25f;
     [SerializeField] private Transform target;
-    [SerializeField] private Vector3 newCameraPos;
-    [SerializeField] private Quaternion newRotationPos;
+    [SerializeField] private Vector3 mainCameraPos;
+    [SerializeField] private Quaternion mainRotationPos;
+    [SerializeField] private Vector3 shopCameraPos;
+    [SerializeField] private Quaternion shopRotationPos;
     private Vector3 originalPos;
     private Quaternion originalRotation;
 
@@ -49,8 +51,13 @@ public class CameraFollow : MonoBehaviour
     }
     public void SwitchCameraViewToPlayer()
     {
-        StartCoroutine(SwitchToNewCameraView(newCameraPos, newRotationPos, 1f)); // 2f là thời gian chuyển đổi
+        StartCoroutine(SwitchToNewCameraView(mainCameraPos, mainRotationPos, 1f)); // 2f là thời gian chuyển đổi
     }
+    public void SwitchCameraViewToSkinShop()
+    {
+        StartCoroutine(SwitchToNewCameraView(shopCameraPos, shopRotationPos, 0.1f)); // 2f là thời gian chuyển đổi
+    }
+
     IEnumerator SwitchToNewCameraView(Vector3 newPosition, Quaternion newRotation, float duration)
     {
         float time = 0;

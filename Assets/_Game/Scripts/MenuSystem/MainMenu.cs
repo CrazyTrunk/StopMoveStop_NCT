@@ -45,15 +45,17 @@ public class MainMenu : Menu<MainMenu>
     {
         Hide();
         WeaponMenu.Show();
-        CameraFollow camera = Camera.main.GetComponent<CameraFollow>();
         WeaponMenu.Instance.OnInit();
         WeaponMenu.Instance.LoadWeapon((int)WeaponType.HAMMER);
     }
     public void OnSkinMenuClick()
     {
         Hide();
+        CameraFollow camera = Camera.main.GetComponent<CameraFollow>();
+        camera.SwitchCameraViewToSkinShop();
         SkinMenu.Show();
         SkinMenu.Instance.OnInit();
+
     }
     public void HandleInputEnd()
     {
