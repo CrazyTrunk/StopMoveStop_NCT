@@ -15,5 +15,6 @@ MonoBehaviour:
   id: 11
   itemType: 2
   cost: 500
+  image: {fileID: 21300000, guid: 74f22cae5f11d6049b5ad45d2c791d6d, type: 3}
   rangeBonus: 5
   itemPrefab: {fileID: 852233063679537424, guid: 5645a2e8ffe57414e953454ef3037612, type: 3}

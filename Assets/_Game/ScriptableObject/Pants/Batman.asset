@@ -15,5 +15,6 @@ MonoBehaviour:
   id: 18
   itemType: 1
   cost: 500
+  image: {fileID: 21300000, guid: 47c8d5358d60d474388d6a7e89a221aa, type: 3}
   moveSpeedBonus: 8
   skin: {fileID: 21300000, guid: e6cdcdd7f2a0d8b4fb11ca94d0d7d775, type: 3}
