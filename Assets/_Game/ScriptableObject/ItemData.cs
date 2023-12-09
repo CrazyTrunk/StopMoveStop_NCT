@@ -3,14 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+[CreateAssetMenu(fileName = "ItemData", menuName = "ItemData/ItemData")]
 [Serializable]
-public class ItemData
+public class ItemData : ScriptableObject
 {
     public int id;
     public ItemType itemType;
     public int cost;
-    public GameObject itemPrefab;
-    public Sprite imageSkin;
     public virtual void ApplyBonus(Character character)
     {
     }

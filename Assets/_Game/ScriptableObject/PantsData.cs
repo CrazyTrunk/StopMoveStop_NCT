@@ -1,11 +1,12 @@
 ﻿using System;
 using UnityEngine;
+using UnityEngine.UI;
 
-[Serializable]
+[CreateAssetMenu(fileName = "ItemData", menuName = "ItemData/PantsData")]
 public class PantsData : ItemData
 {
     public float moveSpeedBonus;
-    public Material material;
+    public Sprite skin;
     public override void ApplyBonus(Character character)
     {
         character.Speed += moveSpeedBonus;

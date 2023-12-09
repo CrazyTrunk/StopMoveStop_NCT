@@ -32,6 +32,6 @@ public class CharacterEquipment : MonoBehaviour
 
     private void EquipToSocket(ItemData item, Transform socket)
     {
-        GameObject itemInstance = Instantiate(item.itemPrefab, socket.position, socket.rotation, socket);
+        //GameObject itemInstance = Instantiate(item.itemPrefab, socket.position, socket.rotation, socket);
     }
 }
