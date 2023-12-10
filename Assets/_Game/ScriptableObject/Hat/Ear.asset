@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 3
   itemType: 0
+  itemName: Bunny
   cost: 500
   image: {fileID: 21300000, guid: da18f161bc01907449ffa4e6f5b50614, type: 3}
   rangeBonus: 5

@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 19
   itemType: 1
+  itemName: Pokemon
   cost: 500
-  image: {fileID: 21300000, guid: f5d61e52e0c02c7499cc3e23eb8c7f3f, type: 3}
+  image: {fileID: 21300000, guid: ea8161e4ed231be438fe9e968bc8752c, type: 3}
   moveSpeedBonus: 8
-  skin: {fileID: 21300000, guid: e4d349a1e99479b42882cbf208c4e894, type: 3}

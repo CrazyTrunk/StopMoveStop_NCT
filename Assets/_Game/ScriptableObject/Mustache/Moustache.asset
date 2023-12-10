@@ -12,9 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0d40d97301ffa9546816e7a434f0a0ef, type: 3}
   m_Name: Moustache
   m_EditorClassIdentifier: 
-  id: 11
+  id: 1
   itemType: 2
+  itemName: Moustache
   cost: 500
-  image: {fileID: 21300000, guid: 74f22cae5f11d6049b5ad45d2c791d6d, type: 3}
+  image: {fileID: 21300000, guid: 689d52942dc71174fadb78bf5de269d0, type: 3}
   rangeBonus: 5
   itemPrefab: {fileID: 852233063679537424, guid: 5645a2e8ffe57414e953454ef3037612, type: 3}

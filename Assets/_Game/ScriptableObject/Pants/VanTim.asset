@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 17
   itemType: 1
+  itemName: VanTim
   cost: 500
-  image: {fileID: 21300000, guid: 26709d5737c6d6e4b90ed4b589a29b6b, type: 3}
+  image: {fileID: 21300000, guid: 343f00cc518f2c34090d54d64a12c62e, type: 3}
   moveSpeedBonus: 8
-  skin: {fileID: 21300000, guid: e4d349a1e99479b42882cbf208c4e894, type: 3}

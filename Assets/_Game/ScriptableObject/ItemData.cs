@@ -9,6 +9,7 @@ public class ItemData : ScriptableObject
 {
     public int id;
     public ItemType itemType;
+    public string itemName;
     public int cost;
     public Sprite image;
     public virtual void ApplyBonus(Character character)

@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 16
   itemType: 1
+  itemName: RainBow
   cost: 500
-  image: {fileID: 21300000, guid: 006435c12055ced4384c81603df71e0e, type: 3}
+  image: {fileID: 21300000, guid: 4d6b3cb74098a8640b03cd004d1dcdbb, type: 3}
   moveSpeedBonus: 8
-  skin: {fileID: 21300000, guid: e4d349a1e99479b42882cbf208c4e894, type: 3}
