@@ -10,7 +10,7 @@ public class ItemInfo : MonoBehaviour
     public ItemType type;
     public string itemName;
     public string itemDescription;
-    public string price;
+    public int price;
     public bool isUnlocked;
     public bool isFocus;
     public bool isSelected;
@@ -19,10 +19,10 @@ public class ItemInfo : MonoBehaviour
     public List<GameObject> borders;
     public GameObject lockObject;
     public GameObject equipObject;
-    protected Action<string, string, ItemInfo> onElementClick;
+    protected Action<int, string, ItemInfo> onElementClick;
     public ItemData currentItem;
 
-    public void OnInit(Action<string, string, ItemInfo> onElementClick)
+    public void OnInit(Action<int, string, ItemInfo> onElementClick)
     {
         this.onElementClick = onElementClick;
     }
@@ -34,25 +34,36 @@ public class ItemInfo : MonoBehaviour
                 border.SetActive(isFocus);
         }
     }
-    public void UpdateUI()
+    public void AddEventListenerToButton()
     {
-
         button.onClick.AddListener(HandleButtonEvent);
     }
     public void SetFocus(bool focus)
     {
         isFocus = focus;
         UpdateBorder();
+        SkinMenu.Instance.DisplayButtons();
+
     }
     public void SetLock(bool locked)
     {
         isUnlocked = locked;
         UpdateLock();
     }
+    public void SetEquip(bool equip)
+    {
+        isSelected = equip;
+        UpdateEquip();
+    }
+
+    private void UpdateEquip()
+    {
+        equipObject.SetActive(isSelected);
+    }
 
     private void UpdateLock()
     {
-        throw new NotImplementedException();
+        lockObject.SetActive(!isUnlocked);
     }
 
     public void HandleButtonEvent()

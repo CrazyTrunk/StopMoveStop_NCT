@@ -72,7 +72,6 @@ public class WeaponMenu : Menu<WeaponMenu>
         MainMenu.Instance.OnInit();
         DestroyCurrentWeaponOnScene();
         currentWeaponIndex = 0;
-        GameManager.Instance.SaveToJson(playerData, FilePathGame.CHARACTER_PATH);
     }
 
     public void OnNextButtonClicked()
@@ -90,6 +89,8 @@ public class WeaponMenu : Menu<WeaponMenu>
         GameManager.Instance.UpdatePlayerData(playerData);
         DisplayButtons();
         GlobalEvents.WeaponSelected(currentWeaponDataOnView.type);
+        GameManager.Instance.SaveToJson(playerData, FilePathGame.CHARACTER_PATH);
+
     }
     public void OnPrevButtonClicked()
     {
@@ -109,6 +110,7 @@ public class WeaponMenu : Menu<WeaponMenu>
             coinText.text = playerData.coin.ToString();
             GameManager.Instance.UpdatePlayerData(playerData);
             DisplayButtons();
+            GameManager.Instance.SaveToJson(playerData, FilePathGame.CHARACTER_PATH);
         }
     }
     public static void Show()

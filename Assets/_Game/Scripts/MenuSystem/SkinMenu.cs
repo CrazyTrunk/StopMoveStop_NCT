@@ -40,7 +40,7 @@ public class SkinMenu : Menu<SkinMenu>
         currentSelectedTab = selectedTab;
     }
 
-    private void DisplayButtons()
+    public void DisplayButtons()
     {
         bool weaponOwned = playerData.skins.Any(w => w == currentItemOnViewClick.id);
 
@@ -49,6 +49,7 @@ public class SkinMenu : Menu<SkinMenu>
             buyButton.gameObject.SetActive(false);
             adsButton.gameObject.SetActive(false);
             selectButton.gameObject.SetActive(true);
+            IsCurrentSkinSelect();
         }
         else
         {
@@ -57,7 +58,10 @@ public class SkinMenu : Menu<SkinMenu>
             selectButton.gameObject.SetActive(false);
         }
     }
-
+    public void IsCurrentSkinSelect()
+    {
+        selectText.text = playerData.equippedSkinId == currentItemOnViewClick.id ? "UnEquipped" : "Select";
+    }
     public void OnInit()
     {
         playerData = GameManager.Instance.GetPlayerData();
@@ -70,6 +74,48 @@ public class SkinMenu : Menu<SkinMenu>
         Hat.onClick.Invoke();
         coinText.text = playerData.coin.ToString();
         DisplayButtons();
+        buyButton.onClick.AddListener(HandleBuy);
+        selectButton.onClick.AddListener(OnSelectButtonClicked);
+
+    }
+
+    private void HandleBuy()
+    {
+        if (playerData.coin >= currentItemOnViewClick.price)
+        {
+            playerData.coin -= currentItemOnViewClick.price;
+            BuySkin(currentItemOnViewClick.id);
+            coinText.text = playerData.coin.ToString();
+            currentItemOnViewClick.isUnlocked = true;
+            currentItemOnViewClick.SetLock(currentItemOnViewClick.isUnlocked);
+            GameManager.Instance.UpdatePlayerData(playerData);
+            DisplayButtons();
+            GameManager.Instance.SaveToJson(playerData, FilePathGame.CHARACTER_PATH);
+        }
+    }
+
+    private void BuySkin(int id)
+    {
+        if (!playerData.skins.Any(w => w == id))
+        {
+            playerData.skins.Add(id);
+        }
+    }
+    public void OnSelectButtonClicked()
+    {
+        if (playerData.equippedSkinId == currentItemOnViewClick.id)
+        {
+            playerData.equippedSkinId = -1;
+            currentItemOnViewClick.isSelected = false;
+        }
+        else
+        {
+            playerData.equippedSkinId = currentItemOnViewClick.id;
+            currentItemOnViewClick.isSelected = true;
+        }
+        SetSelectItem(currentItemOnViewClick);
+        IsCurrentSkinSelect();
+        GameManager.Instance.SaveToJson(playerData, FilePathGame.CHARACTER_PATH);
     }
     private void InitItems()
     {
@@ -82,11 +128,15 @@ public class SkinMenu : Menu<SkinMenu>
             item.type = itemSO.listItem[i].itemType;
             item.itemName = itemSO.listItem[i].itemName;
             item.name = itemSO.listItem[i].itemName;
-            item.price = itemSO.listItem[i].cost.ToString();
+            item.price = itemSO.listItem[i].cost;
             item.currentItem = itemSO.listItem[i];
+            item.isUnlocked = playerData.skins.Contains(itemSO.listItem[i].id);
+            item.isSelected = playerData.equippedSkinId == itemSO.listItem[i].id;
             DisplayBonus(itemSO.listItem[i], item);
             item.OnInit(OnPriceUpdate);
-            item.UpdateUI();
+            item.SetLock(item.isUnlocked);
+            item.SetEquip(item.isSelected);
+            item.AddEventListenerToButton();
             itemHolders.Add(g);
         }
     }
@@ -105,9 +155,24 @@ public class SkinMenu : Menu<SkinMenu>
             }
         }
     }
-    public void OnPriceUpdate(string price, string des, ItemInfo itemInfo)
+    public void SetSelectItem(ItemInfo selectedItem)
     {
-        costText.text = price;
+        foreach (var itemHolder in itemHolders)
+        {
+            ItemInfo itemInfo = itemHolder.GetComponent<ItemInfo>();
+            if (itemInfo == selectedItem)
+            {
+                itemInfo.SetEquip(true);
+            }
+            else
+            {
+                itemInfo.SetEquip(false);
+            }
+        }
+    }
+    public void OnPriceUpdate(int price, string des, ItemInfo itemInfo)
+    {
+        costText.text = price.ToString();
         descriptionBonus.text = des;
         currentItemOnViewClick = itemInfo;
     }
@@ -146,8 +211,8 @@ public class SkinMenu : Menu<SkinMenu>
             }
         }
         //neu k own cái nào
-        GameObject firstItem =  itemHolders.FirstOrDefault(x => x.activeSelf);
-        if(firstItem != null)
+        GameObject firstItem = itemHolders.FirstOrDefault(x => x.GetComponent<ItemInfo>().id == playerData.equippedSkinId);
+        if (firstItem != null)
         {
             firstItem.GetComponent<Button>().onClick?.Invoke();
             DisplayButtons();
