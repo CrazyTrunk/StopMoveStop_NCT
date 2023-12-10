@@ -28,11 +28,6 @@ public class LevelManager : Singleton<LevelManager>
 
     public int TotalBotsToKill { get => totalBotsToKill; set => totalBotsToKill = value; }
     public Level CurrentLevelData { get => currentLevelData; set => currentLevelData = value; }
-
-    //private void Awake()
-    //{
-    //    OnInit();
-    //}
     public void OnInit()
     {
         playerData = GameManager.Instance.GetPlayerData();
@@ -161,5 +156,6 @@ public class LevelManager : Singleton<LevelManager>
         playerController.InitJoyStick(joystick);
         CameraFollow camera = Camera.main.GetComponent<CameraFollow>();
         camera.OnInit(currentPlayerPrefab.transform);
+        botsSpawned++;
     }
 }

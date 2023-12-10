@@ -1120,6 +1120,7 @@ MonoBehaviour:
   mustacheSocket: {fileID: 5740200876751968626}
   characterPants: {fileID: 2127596815170806453}
   shieldSocket: {fileID: 5202920481461593265}
+  character: {fileID: 1004837368520112705}
 --- !u!1 &2760640494481820396
 GameObject:
   m_ObjectHideFlags: 0

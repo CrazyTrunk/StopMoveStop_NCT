@@ -94,6 +94,7 @@ public class Character : MonoBehaviour, ICombatant
         if (this is Enemy enemy)
         {
             ChangeWeapon(WeaponType.HAMMER);
+            ChangeSkin(15);
             characterName = enemy.GetRandomBotName();
         }
         else if (this is Player)
@@ -114,8 +115,11 @@ public class Character : MonoBehaviour, ICombatant
     private void ChangeSkin(int skinId)
     {
         ItemData currentskinData = skinDataSO.GetSkinById(skinId);
-        itemData = currentskinData;
-        equipment.EquipOnView(itemData);
+        if(currentskinData != null)
+        {
+            itemData = currentskinData;
+            equipment.EquipOnView(itemData);
+        }
     }
     public void ChangeWeapon(WeaponType weaponType)
     {

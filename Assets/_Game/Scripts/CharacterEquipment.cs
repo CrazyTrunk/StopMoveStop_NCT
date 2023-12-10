@@ -7,15 +7,20 @@ using UnityEngine;
 
 public class CharacterEquipment : MonoBehaviour
 {
-    public Transform headSocket;
-    public Transform mustacheSocket;
-    public SkinnedMeshRenderer characterPants;
-    public Transform shieldSocket;
+    [SerializeField] private Transform headSocket;
+    [SerializeField] private Transform mustacheSocket;
+    [SerializeField] private SkinnedMeshRenderer characterPants;
+    [SerializeField] private Transform shieldSocket;
+    [SerializeField] private Character character;
     private GameObject currentItemOnView;
     void OnEnable()
     {
-        GlobalEvents.OnShopItemClick -= EquipOnView;
-        GlobalEvents.OnShopItemClick += EquipOnView;
+        if (character is Player)
+        {
+            GlobalEvents.OnShopItemClick -= EquipOnView;
+            GlobalEvents.OnShopItemClick += EquipOnView;
+        }
+
     }
     public void OnInit()
     {
@@ -31,6 +36,7 @@ public class CharacterEquipment : MonoBehaviour
     public void EquipOnView(ItemData item)
     {
         OnInit();
+        if (item == null) return;
         switch (item.itemType)
         {
             case ItemType.HAT:
@@ -46,7 +52,7 @@ public class CharacterEquipment : MonoBehaviour
                 }
                 break;
             case ItemType.SHIELD:
-                if (item is ShieldData shieldData )
+                if (item is ShieldData shieldData)
                 {
                     EquipToSocket(shieldSocket, shieldData.itemPrefab);
                 }
