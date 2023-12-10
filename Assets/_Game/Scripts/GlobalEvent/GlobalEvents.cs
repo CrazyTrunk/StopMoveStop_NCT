@@ -9,7 +9,7 @@ public static class GlobalEvents
     // Sự kiện cho việc chọn vũ khí
     public static event Action<WeaponType> OnWeaponSelected;
     public static event Action<ItemData> OnShopItemClick;
-
+    public static event Action OnXMarkSkinShopClicked;
     public static event Action OnPlayClick;
 
     // Phương thức để phát sự kiện chọn vũ khí
@@ -24,5 +24,9 @@ public static class GlobalEvents
     public static void OnPlayClicked()
     {
         OnPlayClick?.Invoke();
+    }
+    public static void OnXMarkSelect()
+    {
+        OnXMarkSkinShopClicked?.Invoke();
     }
 }

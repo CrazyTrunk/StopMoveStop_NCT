@@ -16,13 +16,25 @@ public class CharacterEquipment : MonoBehaviour
     {
         GlobalEvents.OnShopItemClick -= EquipOnView;
         GlobalEvents.OnShopItemClick += EquipOnView;
+        GlobalEvents.OnXMarkSkinShopClicked -= ShowHideSkin;
+        GlobalEvents.OnXMarkSkinShopClicked += ShowHideSkin;
     }
-    public void EquipOnView(ItemData item)
+    public void OnInit()
     {
         if (currentItemOnView != null)
         {
             Destroy(currentItemOnView);
         }
+        characterPants.enabled = false;
+    }
+    private void ShowHideSkin()
+    {
+        OnInit();
+    }
+
+    public void EquipOnView(ItemData item)
+    {
+        OnInit();
         switch (item.itemType)
         {
             case ItemType.HAT:
@@ -57,6 +69,7 @@ public class CharacterEquipment : MonoBehaviour
     }
     private void EquipPants(Material material)
     {
+        characterPants.enabled = true;
         characterPants.material = material;
     }
     private void EquipToSocket(Transform socket, GameObject prefab)

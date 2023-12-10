@@ -10,7 +10,7 @@ using UnityEngine.UI;
 public class SkinMenu : Menu<SkinMenu>
 {
     [SerializeField] private ItemManagerDataScripableObject itemSO;
-    [SerializeField] private Button Hat, Pants, Shield, Set, costButton, adsButton;
+    [SerializeField] private Button Hat, Pants, Shield, Set, buyButton, adsButton, selectButton;
     [SerializeField] private TextMeshProUGUI costText;
     [SerializeField] private TextMeshProUGUI descriptionBonus;
     [SerializeField] private TextMeshProUGUI adsText;
@@ -18,9 +18,14 @@ public class SkinMenu : Menu<SkinMenu>
     private List<GameObject> itemHolders = new List<GameObject>();
     [SerializeField] private GameObject itemHolder;
 
+    [SerializeField] private TextMeshProUGUI coinText;
+    [SerializeField] private TextMeshProUGUI selectText;
+    PlayerData playerData;
+
     private Button currentSelectedTab;
     [SerializeField] private Color defaultTabColor;
     [SerializeField] private Color selectedTabColor;
+    public ItemInfo currentItemOnViewClick;
     private void SetTabColor(Button tabButton, bool isSelected)
     {
         tabButton.GetComponent<Image>().color = isSelected ? selectedTabColor : defaultTabColor;
@@ -31,12 +36,31 @@ public class SkinMenu : Menu<SkinMenu>
         {
             SetTabColor(currentSelectedTab, false);
         }
-
         SetTabColor(selectedTab, true);
         currentSelectedTab = selectedTab;
     }
-    private void Start()
+
+    private void DisplayButtons()
     {
+        bool weaponOwned = playerData.skins.Any(w => w == currentItemOnViewClick.id);
+
+        if (weaponOwned)
+        {
+            buyButton.gameObject.SetActive(false);
+            adsButton.gameObject.SetActive(false);
+            selectButton.gameObject.SetActive(true);
+        }
+        else
+        {
+            buyButton.gameObject.SetActive(true);
+            adsButton.gameObject.SetActive(true);
+            selectButton.gameObject.SetActive(false);
+        }
+    }
+
+    public void OnInit()
+    {
+        playerData = GameManager.Instance.GetPlayerData();
         itemSO.listItem = itemSO.listItem.OrderBy(x => x.id).ToList();
         InitItems();
         Hat.onClick.AddListener(() => CategorizeItem(new List<ItemType> { ItemType.HAT, ItemType.MUSTACHE }, Hat));
@@ -44,9 +68,9 @@ public class SkinMenu : Menu<SkinMenu>
         Shield.onClick.AddListener(() => CategorizeItem(new List<ItemType> { ItemType.SHIELD }, Shield));
         Set.onClick.AddListener(() => CategorizeItem(new List<ItemType> { ItemType.SET }, Set));
         Hat.onClick.Invoke();
-
+        coinText.text = playerData.coin.ToString();
+        DisplayButtons();
     }
-
     private void InitItems()
     {
         for (int i = 0; i < itemSO.listItem.Count; i++)
@@ -54,6 +78,7 @@ public class SkinMenu : Menu<SkinMenu>
             GameObject g = Instantiate(itemHolder, parentHolder);
             ItemInfo item = g.GetComponent<ItemInfo>();
             item.image.sprite = itemSO.listItem[i].image;
+            item.id = itemSO.listItem[i].id;
             item.type = itemSO.listItem[i].itemType;
             item.itemName = itemSO.listItem[i].itemName;
             item.name = itemSO.listItem[i].itemName;
@@ -80,10 +105,11 @@ public class SkinMenu : Menu<SkinMenu>
             }
         }
     }
-    public void OnPriceUpdate(string price, string des)
+    public void OnPriceUpdate(string price, string des, ItemInfo itemInfo)
     {
         costText.text = price;
         descriptionBonus.text = des;
+        currentItemOnViewClick = itemInfo;
     }
     private void DisplayBonus(ItemData itemData, ItemInfo item)
     {
@@ -120,7 +146,19 @@ public class SkinMenu : Menu<SkinMenu>
             }
         }
         //neu k own cái nào
-        itemHolders.FirstOrDefault(x => x.activeSelf).GetComponent<Button>().onClick.Invoke();
+        GameObject firstItem =  itemHolders.FirstOrDefault(x => x.activeSelf);
+        if(firstItem != null)
+        {
+            firstItem.GetComponent<Button>().onClick?.Invoke();
+            DisplayButtons();
+        }
+        else
+        {
+            buyButton.gameObject.SetActive(false);
+            adsButton.gameObject.SetActive(false);
+            selectButton.gameObject.SetActive(false);
+            descriptionBonus.text = "";
+        }
 
     }
     public void OnXMarkClick()
@@ -130,10 +168,7 @@ public class SkinMenu : Menu<SkinMenu>
         MainMenu.Instance.OnInit();
         CameraFollow camera = Camera.main.GetComponent<CameraFollow>();
         camera.ResetCameraToOriginalPosition();
-    }
-    public void OnInit()
-    {
-
+        GlobalEvents.OnXMarkSelect();
     }
     public static void Show()
     {

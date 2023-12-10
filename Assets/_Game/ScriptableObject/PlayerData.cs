@@ -10,12 +10,14 @@ public class PlayerData
     public string playerName = "You";
     public bool isAdsRemove;
     public int equippedWeaponId;
+    public int equippedSkinId;
     public List<int> weapons;
+    public List<int> skins;
+
     public List<LevelData> levelDataList;
     public PlayerData()
     {
         levelDataList = new List<LevelData>();
-
     }
 
     public void UpdateHighestRankPerMap(int level, int rank)
