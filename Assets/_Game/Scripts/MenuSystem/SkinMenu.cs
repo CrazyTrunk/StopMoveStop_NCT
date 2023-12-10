@@ -19,7 +19,7 @@ public class SkinMenu : Menu<SkinMenu>
     [SerializeField] private GameObject itemHolder;
 
     private Button currentSelectedTab;
-    [SerializeField] private Color defaultTabColor; 
+    [SerializeField] private Color defaultTabColor;
     [SerializeField] private Color selectedTabColor;
     private void SetTabColor(Button tabButton, bool isSelected)
     {
@@ -44,6 +44,7 @@ public class SkinMenu : Menu<SkinMenu>
         Shield.onClick.AddListener(() => CategorizeItem(new List<ItemType> { ItemType.SHIELD }, Shield));
         Set.onClick.AddListener(() => CategorizeItem(new List<ItemType> { ItemType.SET }, Set));
         Hat.onClick.Invoke();
+
     }
 
     private void InitItems()
@@ -57,12 +58,12 @@ public class SkinMenu : Menu<SkinMenu>
             item.itemName = itemSO.listItem[i].itemName;
             item.name = itemSO.listItem[i].itemName;
             item.price = itemSO.listItem[i].cost.ToString();
+            item.currentItem = itemSO.listItem[i];
             DisplayBonus(itemSO.listItem[i], item);
             item.OnInit(OnPriceUpdate);
             item.UpdateUI();
             itemHolders.Add(g);
         }
-        //itemHolders[0].GetComponent<Button>().onClick.Invoke();
     }
     public void SetFocusOnItem(ItemInfo selectedItem)
     {
@@ -104,7 +105,7 @@ public class SkinMenu : Menu<SkinMenu>
         }
     }
 
-    public void CategorizeItem(List<ItemType> itemTypes , Button button)
+    public void CategorizeItem(List<ItemType> itemTypes, Button button)
     {
         SelectTab(button);
         for (int i = 0; i < itemHolders.Count; i++)
@@ -118,6 +119,8 @@ public class SkinMenu : Menu<SkinMenu>
                 itemHolders[i].SetActive(false);
             }
         }
+        //neu k own cái nào
+        itemHolders.FirstOrDefault(x => x.activeSelf).GetComponent<Button>().onClick.Invoke();
 
     }
     public void OnXMarkClick()

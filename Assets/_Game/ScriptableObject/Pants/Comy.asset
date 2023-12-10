@@ -18,3 +18,4 @@ MonoBehaviour:
   cost: 500
   image: {fileID: 21300000, guid: 2652851e5f7772041add8ebe7d548f2b, type: 3}
   moveSpeedBonus: 8
+  pantsMaterial: {fileID: 2100000, guid: 7e01aee2c17d4564284593780924280a, type: 2}

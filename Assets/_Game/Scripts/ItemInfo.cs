@@ -14,10 +14,11 @@ public class ItemInfo : MonoBehaviour
     public bool isFocus;
     public Image image;
     public Button button;
-    protected Action<string, string> onElementClick;
     public List<GameObject> borders;
     public GameObject lockObject;
     public GameObject equipObject;
+    protected Action<string, string> onElementClick;
+    public ItemData currentItem;
 
     public void OnInit(Action<string, string> onElementClick)
     {
@@ -44,6 +45,7 @@ public class ItemInfo : MonoBehaviour
     public void HandleButtonEvent()
     {
         onElementClick?.Invoke(price, itemDescription);
+        GlobalEvents.ShopItemClicked(currentItem);
         SkinMenu.Instance.SetFocusOnItem(this);
     }
 }

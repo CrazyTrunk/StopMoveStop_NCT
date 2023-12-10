@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class PantsData : ItemData
 {
     public float moveSpeedBonus;
+    public Material pantsMaterial;
     public override void ApplyBonus(Character character)
     {
         character.Speed += moveSpeedBonus;

@@ -9,19 +9,45 @@ public class CharacterEquipment : MonoBehaviour
 {
     public Transform headSocket;
     public Transform mustacheSocket;
-    public Transform pantsSocket;
+    public SkinnedMeshRenderer characterPants;
     public Transform shieldSocket;
-    public void Equip(ItemData item)
+    private GameObject currentItemOnView;
+    void OnEnable()
     {
+        GlobalEvents.OnShopItemClick -= EquipOnView;
+        GlobalEvents.OnShopItemClick += EquipOnView;
+    }
+    public void EquipOnView(ItemData item)
+    {
+        if (currentItemOnView != null)
+        {
+            Destroy(currentItemOnView);
+        }
         switch (item.itemType)
         {
             case ItemType.HAT:
+                if (item is HatData hatData)
+                {
+                    EquipToSocket(headSocket, hatData.itemPrefab);
+                }
                 break;
             case ItemType.PANTS:
+                if (item is PantsData pantsData)
+                {
+                    EquipPants(pantsData.pantsMaterial);
+                }
                 break;
             case ItemType.SHIELD:
+                if (item is ShieldData shieldData )
+                {
+                    EquipToSocket(shieldSocket, shieldData.itemPrefab);
+                }
                 break;
             case ItemType.MUSTACHE:
+                if (item is MoustacheData moustacheData)
+                {
+                    EquipToSocket(mustacheSocket, moustacheData.itemPrefab);
+                }
                 break;
             case ItemType.SET:
                 break;
@@ -29,9 +55,14 @@ public class CharacterEquipment : MonoBehaviour
                 break;
         }
     }
-
-    private void EquipToSocket(ItemData item, Transform socket)
+    private void EquipPants(Material material)
     {
-        //GameObject itemInstance = Instantiate(item.itemPrefab, socket.position, socket.rotation, socket);
+        characterPants.material = material;
+    }
+    private void EquipToSocket(Transform socket, GameObject prefab)
+    {
+        currentItemOnView = Instantiate(prefab, socket.position, Quaternion.identity, socket);
+        currentItemOnView.transform.localRotation = prefab.transform.localRotation;
+        currentItemOnView.transform.localPosition = prefab.transform.position;
     }
 }

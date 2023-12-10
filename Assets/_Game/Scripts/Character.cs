@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Character : MonoBehaviour, ICombatant
 {
+    [SerializeField] private CharacterEquipment equipment;
     [Header("Animation")]
     [SerializeField] private Animator animator;
     [SerializeField] private float animSpeed = 1.5f;
