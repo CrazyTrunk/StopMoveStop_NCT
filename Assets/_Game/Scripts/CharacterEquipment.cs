@@ -16,8 +16,6 @@ public class CharacterEquipment : MonoBehaviour
     {
         GlobalEvents.OnShopItemClick -= EquipOnView;
         GlobalEvents.OnShopItemClick += EquipOnView;
-        GlobalEvents.OnXMarkSkinShopClicked -= ShowHideSkin;
-        GlobalEvents.OnXMarkSkinShopClicked += ShowHideSkin;
     }
     public void OnInit()
     {
@@ -25,12 +23,10 @@ public class CharacterEquipment : MonoBehaviour
         {
             Destroy(currentItemOnView);
         }
+        characterPants.material = null;
         characterPants.enabled = false;
     }
-    private void ShowHideSkin()
-    {
-        OnInit();
-    }
+
 
     public void EquipOnView(ItemData item)
     {

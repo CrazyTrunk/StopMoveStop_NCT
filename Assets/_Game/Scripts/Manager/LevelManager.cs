@@ -157,7 +157,6 @@ public class LevelManager : Singleton<LevelManager>
         }
         currentPlayerPrefab = Instantiate(playerPrefab);
         currentPlayerData = currentPlayerPrefab.GetComponent<Player>();
-        currentPlayerData.OnInit();
         PlayerController playerController = currentPlayerPrefab.GetComponent<PlayerController>();
         playerController.InitJoyStick(joystick);
         CameraFollow camera = Camera.main.GetComponent<CameraFollow>();

@@ -7433,6 +7433,7 @@ MonoBehaviour:
   maxScale: 2
   scaleIncrement: 0.1
   weaponDataSO: {fileID: 11400000, guid: 34b351d3227797b44a958a6b11129d10, type: 2}
+  skinDataSO: {fileID: 11400000, guid: fc2cee851ef35be4083679a08b321f4d, type: 2}
   floatingLevelTextPrefab: {fileID: 8004888681745737096, guid: 1216b4a7ea34abd4e9a6c91bbe943699, type: 3}
   canvasPopup: {fileID: 4462783929826901892}
 --- !u!114 &1964586179549388356
@@ -7451,6 +7452,7 @@ MonoBehaviour:
   mustacheSocket: {fileID: 8618431001792121016}
   characterPants: {fileID: 6379451508909810675}
   shieldSocket: {fileID: 6336819752447956690}
+  character: {fileID: 7860227540887671219}
 --- !u!1 &7593418655097153863
 GameObject:
   m_ObjectHideFlags: 0

@@ -6,4 +6,15 @@ using UnityEngine.UI;
 public class ItemManagerDataScripableObject : ScriptableObject
 {
     public List<ItemData> listItem;
+    public ItemData GetSkinById(int skinId)
+    {
+        for (int i = 0; i < listItem.Count; i++)
+        {
+            if (listItem[i].id == skinId)
+            {
+                return listItem[i];
+            }
+        }
+        return null;
+    }
 }

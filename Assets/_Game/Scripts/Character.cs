@@ -17,6 +17,7 @@ public class Character : MonoBehaviour, ICombatant
 
     private WeaponData weaponData;
     private Weapon weapon;
+    private ItemData itemData;
 
     private GameObject weaponPrefab;
     [SerializeField] private float speed;
@@ -57,6 +58,7 @@ public class Character : MonoBehaviour, ICombatant
     private bool isDead;
 
     [SerializeField] private WeaponManagerDataScripableObject weaponDataSO;
+    [SerializeField] private ItemManagerDataScripableObject skinDataSO;
 
 
     public Animator Animator { get => animator; set => animator = value; }
@@ -97,10 +99,44 @@ public class Character : MonoBehaviour, ICombatant
         else if (this is Player)
         {
             ChangeWeapon(GameManager.Instance.GetPlayerData().equippedWeaponId);
+            ChangeSkin(GameManager.Instance.GetPlayerData().equippedSkinId);
         }
         characterInfo.UpdateUINamePlayer(characterName);
         EquipWeapon(weaponData);
         CharacterSphere.UpdateTriggerSize(this.range);
+    }
+    public void ChangeSkin()
+    {
+        ItemData currentskinData = skinDataSO.GetSkinById(GameManager.Instance.GetPlayerData().equippedSkinId);
+        itemData = currentskinData;
+        equipment.EquipOnView(itemData);
+    }
+    private void ChangeSkin(int skinId)
+    {
+        ItemData currentskinData = skinDataSO.GetSkinById(skinId);
+        itemData = currentskinData;
+        equipment.EquipOnView(itemData);
+    }
+    public void ChangeWeapon(WeaponType weaponType)
+    {
+        if (weaponPrefab != null)
+        {
+            Destroy(weaponPrefab);
+        }
+        weaponPrefab = Instantiate(WeaponDataSO.GetWeaponByType(weaponType).weaponPrefab, spawnWeaponPoint);
+        weaponData = WeaponDataSO.GetWeaponByType(weaponType);
+        weapon = weaponPrefab.GetComponent<Weapon>();
+    }
+    public void ChangeWeapon(int weaponId)
+    {
+        WeaponData currentWeaponData = weaponDataSO.GetWeaponById(weaponId);
+        if (weaponPrefab != null)
+        {
+            Destroy(weaponPrefab);
+        }
+        weaponPrefab = Instantiate(currentWeaponData.weaponPrefab, spawnWeaponPoint);
+        weaponData = WeaponDataSO.GetWeaponByType(currentWeaponData.type);
+        weapon = weaponPrefab.GetComponent<Weapon>();
     }
     public void EquipWeapon(WeaponData weapon)
     {
@@ -128,27 +164,8 @@ public class Character : MonoBehaviour, ICombatant
             Animator.SetTrigger(CurrentAnim);
         }
     }
-    public void ChangeWeapon(WeaponType weaponType)
-    {
-        if (weaponPrefab != null)
-        {
-            Destroy(weaponPrefab);
-        }
-        weaponPrefab = Instantiate(WeaponDataSO.GetWeaponByType(weaponType).weaponPrefab, spawnWeaponPoint);
-        weaponData = WeaponDataSO.GetWeaponByType(weaponType);
-        weapon = weaponPrefab.GetComponent<Weapon>();
-    }
-    public void ChangeWeapon(int weaponId)
-    {
-        WeaponData currentWeaponData = weaponDataSO.GetWeaponById(weaponId);
-        if (weaponPrefab != null)
-        {
-            Destroy(weaponPrefab);
-        }
-        weaponPrefab = Instantiate(currentWeaponData.weaponPrefab, spawnWeaponPoint);
-        weaponData = WeaponDataSO.GetWeaponByType(currentWeaponData.type);
-        weapon = weaponPrefab.GetComponent<Weapon>();
-    }
+   
+
     public void LookAtTarget(Transform target)
     {
         transform.LookAt(target.position);
