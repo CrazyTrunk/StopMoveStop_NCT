@@ -9,6 +9,6 @@ public class MoustacheData : ItemData
     public GameObject itemPrefab;
     public override void ApplyBonus(Character character)
     {
-        character.Range += rangeBonus;
+        character.Range += (rangeBonus / 10);
     }
 }

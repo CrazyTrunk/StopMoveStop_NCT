@@ -9,6 +9,6 @@ public class PantsData : ItemData
     public Material pantsMaterial;
     public override void ApplyBonus(Character character)
     {
-        character.Speed += moveSpeedBonus;
+        character.Speed += (moveSpeedBonus / 10);
     }
 }

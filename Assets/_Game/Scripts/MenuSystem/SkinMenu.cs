@@ -213,16 +213,16 @@ public class SkinMenu : Menu<SkinMenu>
         }
         //neu k own cái nào
         GameObject firstItem = itemHolders.FirstOrDefault(x => x.GetComponent<ItemInfo>().id == playerData.equippedSkinId);
-        GameObject firstItemActive = itemHolders.FirstOrDefault(x => x.activeSelf);
 
-        if (firstItem != null && firstItem.activeSelf)
+        if (firstItem == null || !firstItem.activeSelf)
+        {
+            firstItem = itemHolders.FirstOrDefault(x => x.activeSelf);
+        }
+
+        if (firstItem != null)
         {
             firstItem.GetComponent<Button>().onClick?.Invoke();
             DisplayButtons();
-        }
-        else if(firstItem != null && !firstItem.activeSelf && firstItemActive != null)
-        {
-            firstItemActive.GetComponent<Button>().onClick?.Invoke();
         }
         else
         {
@@ -231,7 +231,6 @@ public class SkinMenu : Menu<SkinMenu>
             selectButton.gameObject.SetActive(false);
             descriptionBonus.text = "";
         }
-
     }
     public void OnXMarkClick()
     {

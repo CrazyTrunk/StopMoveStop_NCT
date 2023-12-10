@@ -12,5 +12,10 @@ public class WeaponData
     public WeaponType type;
     public int cost;
     public GameObject weaponPrefab;
+    public void ApplyBonus(Character character)
+    {
+        character.Speed += (bonusSpeed / 10);
+        character.Range += (bonusRange / 10);
+    }
 }
 

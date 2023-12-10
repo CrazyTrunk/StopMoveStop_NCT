@@ -103,7 +103,7 @@ public class Character : MonoBehaviour, ICombatant
             ChangeSkin(GameManager.Instance.GetPlayerData().equippedSkinId);
         }
         characterInfo.UpdateUINamePlayer(characterName);
-        EquipWeapon(weaponData);
+        RecalculateBonuses();
         CharacterSphere.UpdateTriggerSize(this.range);
     }
     public void ChangeSkin()
@@ -111,6 +111,7 @@ public class Character : MonoBehaviour, ICombatant
         ItemData currentskinData = skinDataSO.GetSkinById(GameManager.Instance.GetPlayerData().equippedSkinId);
         itemData = currentskinData;
         equipment.EquipOnView(itemData);
+        RecalculateBonuses();
     }
     private void ChangeSkin(int skinId)
     {
@@ -142,21 +143,27 @@ public class Character : MonoBehaviour, ICombatant
         weaponData = WeaponDataSO.GetWeaponByType(currentWeaponData.type);
         weapon = weaponPrefab.GetComponent<Weapon>();
     }
+    public void RecalculateBonuses()
+    {
+        Speed = BaseSpeed;
+        Range = BaseRange;
+
+        EquipWeapon(weaponData);
+        ApplyItemBonus(itemData);
+
+        Speed = Mathf.Clamp(Speed, 0, maxSpeed);
+        Range = Mathf.Clamp(Range, 0, maxRangeIncrese);
+    }
+
+
     public void EquipWeapon(WeaponData weapon)
     {
-        ApplyWeaponBonuses(weapon.bonusSpeed, weapon.bonusRange);
+        weapon.ApplyBonus(this);
     }
     public void ApplyItemBonus(ItemData item)
     {
+        if (item == null) return;
         item.ApplyBonus(this);
-    }
-    public void ApplyWeaponBonuses(float bonusSpeed, float bonusRange)
-    {
-        this.Speed = BaseSpeed;
-        this.Range = BaseRange;
-
-        this.Speed += bonusSpeed / 10;
-        this.Range += bonusRange / 10;
     }
     public void ChangeAnim(string animName)
     {
