@@ -132,6 +132,7 @@ public class SkinMenu : Menu<SkinMenu>
             item.currentItem = itemSO.listItem[i];
             item.isUnlocked = playerData.skins.Contains(itemSO.listItem[i].id);
             item.isSelected = playerData.equippedSkinId == itemSO.listItem[i].id;
+
             DisplayBonus(itemSO.listItem[i], item);
             item.OnInit(OnPriceUpdate);
             item.SetLock(item.isUnlocked);
@@ -212,10 +213,16 @@ public class SkinMenu : Menu<SkinMenu>
         }
         //neu k own cái nào
         GameObject firstItem = itemHolders.FirstOrDefault(x => x.GetComponent<ItemInfo>().id == playerData.equippedSkinId);
-        if (firstItem != null)
+        GameObject firstItemActive = itemHolders.FirstOrDefault(x => x.activeSelf);
+
+        if (firstItem != null && firstItem.activeSelf)
         {
             firstItem.GetComponent<Button>().onClick?.Invoke();
             DisplayButtons();
+        }
+        else if(firstItem != null && !firstItem.activeSelf && firstItemActive != null)
+        {
+            firstItemActive.GetComponent<Button>().onClick?.Invoke();
         }
         else
         {

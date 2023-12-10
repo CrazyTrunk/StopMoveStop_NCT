@@ -17,7 +17,15 @@ public class PlayerData
     public List<LevelData> levelDataList;
     public PlayerData()
     {
+        coin = 0;
+        levelMap = 1;
+        isSoundOn = false;
+        isAdsRemove = false;
+        equippedWeaponId = -1;
+        equippedSkinId = -1;
         levelDataList = new List<LevelData>();
+        skins = new List<int>();
+        weapons = new List<int>();
     }
 
     public void UpdateHighestRankPerMap(int level, int rank)
