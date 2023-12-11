@@ -19,7 +19,6 @@ public class Player : Character, ICombatant
     void OnEnable()
     {
         GameManager.Instance.OnPlayerDataUpdated += UpdateWeapon;
-        GlobalEvents.OnXMarkSkinShopClicked -= ChangeSkin;
         GlobalEvents.OnXMarkSkinShopClicked += ChangeSkin;
     }
     private void OnDisable()
@@ -28,6 +27,8 @@ public class Player : Character, ICombatant
         {
             GameManager.Instance.OnPlayerDataUpdated -= UpdateWeapon;
         }
+        GlobalEvents.OnXMarkSkinShopClicked -= ChangeSkin;
+
     }
     private void UpdateWeapon(PlayerData data)
     {

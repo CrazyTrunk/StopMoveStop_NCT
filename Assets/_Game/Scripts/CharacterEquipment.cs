@@ -17,10 +17,16 @@ public class CharacterEquipment : MonoBehaviour
     {
         if (character is Player)
         {
-            GlobalEvents.OnShopItemClick -= EquipOnView;
             GlobalEvents.OnShopItemClick += EquipOnView;
         }
 
+    }
+    private void OnDisable()
+    {
+        if (character is Player)
+        {
+            GlobalEvents.OnShopItemClick -= EquipOnView;
+        }
     }
     public void OnInit()
     {
