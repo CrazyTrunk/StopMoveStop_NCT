@@ -39,7 +39,7 @@ public class MainMenu : Menu<MainMenu>
         CameraFollow camera = Camera.main.GetComponent<CameraFollow>();
         camera.SwitchCameraViewToPlayer();
         IngameMenu.Show();
-        IngameMenu.Instance.OnInit(LevelManager.Instance.TotalBotsToKill);
+        IngameMenu.Instance.OnInit(LevelManager.Instance.TotalAlive);
     }
     public void OnShopMenuClick()
     {

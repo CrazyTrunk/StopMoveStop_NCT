@@ -23,15 +23,15 @@ public class LevelManager : Singleton<LevelManager>
     private Player currentPlayerData;
     private PlayerData playerData;
     private HashSet<Vector3> usedPositions = new();
-    private int totalBotsToKill;
-    private int botsSpawned;
-
-    public int TotalBotsToKill { get => totalBotsToKill; set => totalBotsToKill = value; }
+    private int totalAlive;
+    private int currentParticipants;
+    private int maxParticipants;
+    public int TotalAlive { get => totalAlive; set => totalAlive = value; }
     public Level CurrentLevelData { get => currentLevelData; set => currentLevelData = value; }
     public void OnInit()
     {
+
         playerData = GameManager.Instance.GetPlayerData();
-        botsSpawned = 0;
         LoadCurrentLevel(playerData.levelMap);
         GameManager.Instance.ChangeState(GameState.MainMenu);
 
@@ -40,6 +40,7 @@ public class LevelManager : Singleton<LevelManager>
         {
             SpawnBot(currentPlayerData.level);
         }
+        currentParticipants = 1 + maxBotsAtOnce;
     }
     public void ClearAllBots()
     {
@@ -55,7 +56,8 @@ public class LevelManager : Singleton<LevelManager>
         }
         currentLevelPrefab = Instantiate(levels[currentLevel - 1]);
         CurrentLevelData = currentLevelPrefab.GetComponent<Level>();
-        TotalBotsToKill = CurrentLevelData.TotalBotsToKill;
+        maxParticipants = CurrentLevelData.TotalBotsToKill;
+        TotalAlive = CurrentLevelData.TotalBotsToKill;
         LoadPlayer();
     }
 
@@ -88,39 +90,41 @@ public class LevelManager : Singleton<LevelManager>
     }
     public void SpawnBot()
     {
-        if (botsSpawned <= TotalBotsToKill)
-        {
-            Vector3 spawnPosition = GenerateSpawnPosition();
-            Enemy enemy = botPool.Spawn(spawnPosition, Quaternion.identity, botPool.transform).GetComponent<Enemy>();
-            enemy.OnInit();
-            enemy.InitLevelBot(currentPlayerData.level + Random.Range(3, 5 + 1));
-            Indicator indicator = indicatorPool.Spawn(Vector3.zero, Quaternion.identity, indicatorParent).GetComponent<Indicator>();
-            indicator.SetTarget(enemy.transform, indicatorCanvas);
-            botsSpawned++;
-            activeIndicators.Add(indicator);
-        }
+        Vector3 spawnPosition = GenerateSpawnPosition();
+        GameObject go = botPool.Spawn(spawnPosition, Quaternion.identity, botPool.transform);
+        Enemy enemy = go.GetComponent<Enemy>();
+        enemy.OnInit();
+        enemy.InitLevelBot(currentPlayerData.level + Random.Range(3, 5 + 1));
+        Indicator indicator = indicatorPool.Spawn(Vector3.zero, Quaternion.identity, indicatorParent).GetComponent<Indicator>();
+        indicator.SetTarget(enemy.transform, indicatorCanvas);
+        activeIndicators.Add(indicator);
+
     }
     public void SpawnBot(int level)
     {
-        if (botsSpawned < TotalBotsToKill)
-        {
-            Vector3 spawnPosition = GenerateSpawnPosition();
-            Enemy enemy = botPool.Spawn(spawnPosition, Quaternion.identity, botPool.transform).GetComponent<Enemy>();
-            enemy.OnInit();
-            enemy.InitLevelBot(level);
-            Indicator indicator = indicatorPool.Spawn(spawnPosition, Quaternion.identity,indicatorParent).GetComponent<Indicator>();
-            indicator.SetTarget(enemy.transform, indicatorCanvas);
-            botsSpawned++;
-            activeIndicators.Add(indicator);
-        }
+
+        Vector3 spawnPosition = GenerateSpawnPosition();
+        Enemy enemy = botPool.Spawn(spawnPosition, Quaternion.identity, botPool.transform).GetComponent<Enemy>();
+        enemy.OnInit();
+        enemy.InitLevelBot(level);
+        Indicator indicator = indicatorPool.Spawn(spawnPosition, Quaternion.identity, indicatorParent).GetComponent<Indicator>();
+        indicator.SetTarget(enemy.transform, indicatorCanvas);
+        activeIndicators.Add(indicator);
         // Set up the bot (e.g., adding it to a list, setting up callbacks, etc.)
     }
     public void BotKilled(Character character)
     {
-        TotalBotsToKill--;
-        IngameMenu.Instance.OnInit(TotalBotsToKill);
+        TotalAlive--;
+        IngameMenu.Instance.OnInit(TotalAlive);
         usedPositions.Remove(character.transform.position);
         botPool.Despawn(character.gameObject);
+        if (currentParticipants < maxParticipants)
+        {
+            SpawnBot();
+            currentParticipants++;
+        }
+
+
         var indicatorToDespawn = activeIndicators.FirstOrDefault(indicator => indicator.Target == character.transform);
         if (indicatorToDespawn != null)
         {
@@ -128,21 +132,18 @@ public class LevelManager : Singleton<LevelManager>
             activeIndicators.Remove(indicatorToDespawn);
         }
 
-        if (TotalBotsToKill > 1)
-        {
-            SpawnBot();
-        }
-        else if (TotalBotsToKill == 1)
+        if(TotalAlive == 1)
         {
             if (playerData.levelMap < levels.Count)
             {
-                playerData.UpdateHighestRankPerMap(playerData.levelMap, TotalBotsToKill);
+                playerData.UpdateHighestRankPerMap(playerData.levelMap, TotalAlive);
                 playerData.levelMap++;
                 GameManager.Instance.UpdatePlayerData(playerData);
                 GameManager.Instance.SaveToJson(playerData, FilePathGame.CHARACTER_PATH);
             }
             WinMenu.Show();
         }
+     
     }
     private void LoadPlayer()
     {
@@ -156,6 +157,5 @@ public class LevelManager : Singleton<LevelManager>
         playerController.InitJoyStick(joystick);
         CameraFollow camera = Camera.main.GetComponent<CameraFollow>();
         camera.OnInit(currentPlayerPrefab.transform);
-        botsSpawned++;
     }
 }

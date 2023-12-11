@@ -298,9 +298,9 @@ public class Character : MonoBehaviour, ICombatant
         if (victim is Player player)
         {
             LoseMenu.Show();
-            LoseMenu.Instance.OnInit(LevelManager.Instance.TotalBotsToKill, attacker.characterName, player.CoinGained);
+            LoseMenu.Instance.OnInit(LevelManager.Instance.TotalAlive, attacker.characterName, player.CoinGained);
             GameManager.Instance.ChangeState(GameState.GameOver);
-            player.PlayerData.UpdateHighestRankPerMap(player.PlayerData.levelMap, LevelManager.Instance.TotalBotsToKill);
+            player.PlayerData.UpdateHighestRankPerMap(player.PlayerData.levelMap, LevelManager.Instance.TotalAlive);
             GameManager.Instance.UpdatePlayerData(player.PlayerData);
             GameManager.Instance.SaveToJson(player.PlayerData, FilePathGame.CHARACTER_PATH);
         }
