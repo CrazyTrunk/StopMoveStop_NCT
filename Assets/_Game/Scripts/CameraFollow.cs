@@ -81,9 +81,21 @@ public class CameraFollow : MonoBehaviour
         offset = newPosition;
         isSwitching = false;
     }
-    public void UpdateCameraHeight()
+    public void UpdateCamera(int characterLevel)
     {
-        offset = new Vector3(offset.x, offset.y + 5,offset.z);
-        transform.Rotate(transform.rotation.x + 5, 0, 0, Space.Self);
+        //offset = new Vector3(offset.x, offset.y + 5,offset.z);
+        //transform.Rotate(transform.rotation.x + 5, 0, 0, Space.Self);
+        UpdateCameraHeight(characterLevel);
+        UpdateCameraRotation(characterLevel);
+    }
+    public void UpdateCameraHeight(int characterLevel)
+    {
+        float heightIncrease = Mathf.Floor(characterLevel) * 0.1f; // Tăng 5 đơn vị sau mỗi 10 cấp độ
+        offset = new Vector3(offset.x, offset.y + heightIncrease, offset.z);
+    }
+    public void UpdateCameraRotation(int characterLevel)
+    {
+        float rotationIncrease = Mathf.Floor(characterLevel) * 0.1f; // Giả sử bạn muốn thay đổi góc 5 độ sau mỗi 10 cấp độ
+        transform.Rotate(transform.rotation.x + rotationIncrease, 0, 0, Space.Self);
     }
 }

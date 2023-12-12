@@ -116,6 +116,7 @@ public class RadicalTrigger : MonoBehaviour
         else if (combatantQueue.Count == 0)
         {
             CurrentTarget = null;
+            character.HasEnemyInSight = false;
             StopAllCoroutines();
         }
     }

@@ -28,7 +28,7 @@ public class Character : MonoBehaviour, ICombatant
     [SerializeField] private RadicalTrigger radicalTrigger;
     [SerializeField] private CharacterSphere characterSphere;
     [SerializeField] private CapsuleCollider capsuleColliderCharacter;
-    public const float RangeIncreasePerTenLevels = 2f;
+    public const float rangeIncresePerLevel = 0.1f;
     private float baseRange = 5f;
     private float baseSpeed = 5f;
     [SerializeField] private float maxSpeed = 8f;
@@ -48,8 +48,8 @@ public class Character : MonoBehaviour, ICombatant
     public float maxScale = 2f;
     public float scaleIncrement = 0.1f;
     private float scaleMultiple = 1f;
-    private Vector3 originalColliderSize;
-    private Vector3 originalColliderCenter;
+    [SerializeField] private Vector3 originalColliderSize;
+    [SerializeField] private Vector3 originalColliderCenter;
 
     [Header("Boolean")]
     private bool isMoving;
@@ -88,8 +88,9 @@ public class Character : MonoBehaviour, ICombatant
     public virtual void OnInit()
     {
         Animator.speed = animSpeed;
-        originalColliderSize = new Vector3(capsuleColliderCharacter.radius, capsuleColliderCharacter.height, capsuleColliderCharacter.radius);
-        originalColliderCenter = capsuleColliderCharacter.center;
+        capsuleColliderCharacter.center = originalColliderCenter;
+        capsuleColliderCharacter.radius = originalColliderSize.x;
+        capsuleColliderCharacter.height = originalColliderSize.y;
         ResetState();
         if (this is Enemy enemy)
         {
@@ -232,25 +233,22 @@ public class Character : MonoBehaviour, ICombatant
         float currentRange = CalculateRange();
         ScaleModel(level);
         AdjustCollider();
-        CharacterSphere.UpdateTriggerSize(currentRange);
+        CharacterSphere.UpdateTriggerSize(this.range);
         characterInfo.UpdateUILevelPlayer(this.level);
         Speed = Mathf.Min(Speed + (level * 0.1f), maxSpeed);
     }
     public void LevelUp(int enemyLevel)
     {
         int level = CalculateLevel(enemyLevel);
-        float currentRange = CalculateRange();
+        //float currentRange = CalculateRange();
         ScaleModel(level);
-        if (this is Player)
+        if (this is Player && this.range < maxRangeIncrese)
         {
-            if (level != 0 && level >= previousLevel + 10 && level < MaxLevel)
-            {
-                Camera.main.GetComponent<CameraFollow>().UpdateCameraHeight();
-                previousLevel = level;
-            }
+            Camera.main.GetComponent<CameraFollow>().UpdateCamera(level);
+            previousLevel = level;
         }
         AdjustCollider();
-        CharacterSphere.UpdateTriggerSize(currentRange);
+        CharacterSphere.UpdateTriggerSize(this.range);
         characterInfo.UpdateUILevelPlayer(this.level);
         Speed = Mathf.Min(Speed + 0.1f, maxSpeed);
     }
@@ -259,6 +257,8 @@ public class Character : MonoBehaviour, ICombatant
     {
         int levelIncrease = Mathf.Max(1, Mathf.Min(enemyLevel - level, MaxLevelIncreseGap));
         level += levelIncrease;
+
+        CalculateRange(levelIncrease);
         if (this is Player player)
         {
             player.GainCoin(levelIncrease);
@@ -269,7 +269,13 @@ public class Character : MonoBehaviour, ICombatant
     }
     private float CalculateRange()
     {
-        float increment = (level / 10) * RangeIncreasePerTenLevels;
+        float increment = level  * rangeIncresePerLevel;
+        Range = Mathf.Min(Range + increment, maxRangeIncrese);
+        return Range;
+    }
+    private float CalculateRange(int levelReceive)
+    {
+        float increment = levelReceive * rangeIncresePerLevel;
         Range = Mathf.Min(Range + increment, maxRangeIncrese);
         return Range;
     }
@@ -331,7 +337,7 @@ public class Character : MonoBehaviour, ICombatant
         switch (weaponType)
         {
             case WeaponType.KNIFE:
-                return (Anim.ATTACK_2,AnimatorType.ATTACK_2);
+                return (Anim.ATTACK_2, AnimatorType.ATTACK_2);
             default:
                 return (Anim.ATTACK, AnimatorType.ATTACK);
         }
