@@ -101,6 +101,9 @@ MonoBehaviour:
   rankText: {fileID: 5499342456808637700}
   killedByText: {fileID: 3949360541581027801}
   coinGained: {fileID: 1837089876025686456}
+  ZoneImages: []
+  currentSlider: {fileID: 3725110562296474950}
+  highScoreSlider: {fileID: 5459450292903908654}
 --- !u!1 &255522412254207458
 GameObject:
   m_ObjectHideFlags: 0
@@ -262,7 +265,7 @@ MonoBehaviour:
   m_MinValue: 0
   m_MaxValue: 15
   m_WholeNumbers: 0
-  m_Value: 8
+  m_Value: 0
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -2269,7 +2272,7 @@ MonoBehaviour:
   m_MinValue: 0
   m_MaxValue: 15
   m_WholeNumbers: 0
-  m_Value: 5.9
+  m_Value: 0
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []

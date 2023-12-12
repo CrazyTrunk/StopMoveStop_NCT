@@ -306,6 +306,7 @@ public class Character : MonoBehaviour, ICombatant
         {
             LoseMenu.Show();
             LoseMenu.Instance.OnInit(LevelManager.Instance.TotalAlive, attacker.characterName, player.CoinGained);
+            LoseMenu.Instance.CalculateCurrentProcess(LevelManager.Instance.TotalAlive);
             GameManager.Instance.ChangeState(GameState.GameOver);
             player.PlayerData.UpdateHighestRankPerMap(player.PlayerData.levelMap, LevelManager.Instance.TotalAlive);
             GameManager.Instance.UpdatePlayerData(player.PlayerData);

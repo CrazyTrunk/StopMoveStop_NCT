@@ -13,8 +13,14 @@ public class PlayerController : MonoBehaviour
     }
     private void Update()
     {
+        if (player.IsDead)
+        {
+            rb.velocity = Vector3.zero;
+            return;
+        }
         if (GameManager.Instance.IsState(GameState.Playing))
         {
+
             rb.velocity = new Vector3(joystick.Horizontal * player.Speed, rb.velocity.y, joystick.Vertical * player.Speed);
 
             if (joystick.Horizontal != 0 || joystick.Vertical != 0)

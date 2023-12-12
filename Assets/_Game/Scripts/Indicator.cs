@@ -13,7 +13,7 @@ public class Indicator : MonoBehaviour
     private RectTransform indicatorCanvas;
     [SerializeField] private RectTransform selfRect;
     [SerializeField] private CanvasGroup canvasGroup;
-    [SerializeField] private float offScreenThreshold = 50f;
+    [SerializeField] private float offScreenThreshold = 80f;
     [SerializeField] private TextMeshProUGUI levelDisplay;
 
     public Enemy Target { get => target; set => target = value; }
@@ -40,6 +40,7 @@ public class Indicator : MonoBehaviour
     public void SetTarget(Enemy newTarget, RectTransform canvas, int level)
     {
         target = newTarget;
+        target.OnLevelUp -= UpdateLevelUI;
         target.OnLevelUp += UpdateLevelUI;
         indicatorCanvas = canvas;
         levelDisplay.text = level.ToString();

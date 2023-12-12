@@ -28,6 +28,8 @@ public class LevelManager : Singleton<LevelManager>
     private int maxParticipants;
     public int TotalAlive { get => totalAlive; set => totalAlive = value; }
     public Level CurrentLevelData { get => currentLevelData; set => currentLevelData = value; }
+    public int MaxParticipants { get => maxParticipants; set => maxParticipants = value; }
+
     public void OnInit()
     {
 
@@ -56,7 +58,7 @@ public class LevelManager : Singleton<LevelManager>
         }
         currentLevelPrefab = Instantiate(levels[currentLevel - 1]);
         CurrentLevelData = currentLevelPrefab.GetComponent<Level>();
-        maxParticipants = CurrentLevelData.TotalBotsToKill;
+        MaxParticipants = CurrentLevelData.TotalBotsToKill;
         TotalAlive = CurrentLevelData.TotalBotsToKill;
         LoadPlayer();
     }
@@ -120,7 +122,7 @@ public class LevelManager : Singleton<LevelManager>
         IngameMenu.Instance.OnInit(TotalAlive);
         usedPositions.Remove(character.transform.position);
         botPool.Despawn(character.gameObject);
-        if (currentParticipants < maxParticipants)
+        if (currentParticipants < MaxParticipants)
         {
             SpawnBot();
             currentParticipants++;

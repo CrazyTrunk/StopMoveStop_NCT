@@ -41,7 +41,7 @@ public class CameraFollow : MonoBehaviour
             isSwitching = false;
         }
     }
-    private void Update()
+    private void LateUpdate()
     {
         if (!isSwitching)
         {
@@ -90,12 +90,12 @@ public class CameraFollow : MonoBehaviour
     }
     public void UpdateCameraHeight(int characterLevel)
     {
-        float heightIncrease = Mathf.Floor(characterLevel) * 0.1f; // Tăng 5 đơn vị sau mỗi 10 cấp độ
+        float heightIncrease = Mathf.Floor(characterLevel) * 0.05f; // Tăng 5 đơn vị sau mỗi 10 cấp độ
         offset = new Vector3(offset.x, offset.y + heightIncrease, offset.z);
     }
     public void UpdateCameraRotation(int characterLevel)
     {
-        float rotationIncrease = Mathf.Floor(characterLevel) * 0.1f; // Giả sử bạn muốn thay đổi góc 5 độ sau mỗi 10 cấp độ
+        float rotationIncrease = Mathf.Floor(characterLevel) * 0.05f; // Giả sử bạn muốn thay đổi góc 5 độ sau mỗi 10 cấp độ
         transform.Rotate(transform.rotation.x + rotationIncrease, 0, 0, Space.Self);
     }
 }
