@@ -330,10 +330,10 @@ public class Character : MonoBehaviour, ICombatant
     {
         switch (weaponType)
         {
-            case WeaponType.HAMMER:
-                return ("a", "a");
+            case WeaponType.KNIFE:
+                return (Anim.ATTACK_2,AnimatorType.ATTACK_2);
             default:
-                return ("a", "a");
+                return (Anim.ATTACK, AnimatorType.ATTACK);
         }
     }
     #endregion
