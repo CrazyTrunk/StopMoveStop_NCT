@@ -83,7 +83,7 @@ public class CameraFollow : MonoBehaviour
     }
     public void UpdateCameraHeight()
     {
-        offset = new Vector3(offset.x, offset.y + 2,offset.z);
-        transform.Rotate(transform.rotation.x + 2, 0, 0, Space.Self);
+        offset = new Vector3(offset.x, offset.y + 5,offset.z);
+        transform.Rotate(transform.rotation.x + 5, 0, 0, Space.Self);
     }
 }

@@ -71,10 +71,12 @@ public class LevelManager : Singleton<LevelManager>
             float x = Random.Range(CurrentLevelData.SpawnAreaMin.x, CurrentLevelData.SpawnAreaMax.x);
             float z = Random.Range(CurrentLevelData.SpawnAreaMin.y, CurrentLevelData.SpawnAreaMax.y);
             potentialPosition = new Vector3(x, 0.08f, z); // '0' is the y-coordinate on the plane
-            Collider[] hitColliders = Physics.OverlapSphere(potentialPosition, 5f);
-            foreach (var hitCollider in hitColliders)
+
+            Collider[] hitColliders = new Collider[10];
+            int numColliders = Physics.OverlapSphereNonAlloc(potentialPosition, 6f, hitColliders);
+            for (int i = 0; i < numColliders; i++)
             {
-                if (hitCollider.tag == Tag.CHARACTER || hitCollider.tag == Tag.OBSTACLE || usedPositions.Contains(potentialPosition))
+                if (hitColliders[i].CompareTag(Tag.CHARACTER) || hitColliders[i].CompareTag(Tag.OBSTACLE) || usedPositions.Contains(potentialPosition))
                 {
                     positionValid = false;
                     break;

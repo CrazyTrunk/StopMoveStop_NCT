@@ -40,11 +40,12 @@ public class RadicalTrigger : MonoBehaviour
                 UpdateTarget();
                 if (CurrentTarget != null && CanAttack())
                 {
-                    StartCoroutine(AttackCoroutine());
+                    WeaponType weaponType = character.WeaponData.type;
+                    StartCoroutine(AttackCoroutine(weaponType));
                 }
             }
         }
-      
+
     }
 
     private bool CanAttack()
@@ -122,22 +123,23 @@ public class RadicalTrigger : MonoBehaviour
     {
         character.LookAtTarget(currentTarget.GetTransform());
     }
-    private void ThrowWeapon()
+    private void ThrowWeapon(string animName)
     {
         character.HideWeaponOnHand();
-        CheckingAnimationAttackDone(AnimatorType.ATTACK);
+        CheckingAnimationAttackDone(animName);
     }
     private void WhenDoneThrowWeapon()
     {
         character.ShowWeaponOnHand();
     }
-    IEnumerator AttackCoroutine()
+    IEnumerator AttackCoroutine(WeaponType weaponType)
     {
         character.IsAttacking = true;
         LookAtEnemyAndAttack();
-        character.ChangeAnim(Anim.ATTACK);
+        var (attackAnim, animName) = character.GetAttackAnimation(weaponType); 
+        character.ChangeAnim(attackAnim);
         yield return new WaitForSeconds((character.AnimPlayTime / character.AnimSpeed) / 2);
-        ThrowWeapon();
+        ThrowWeapon(animName);
         yield return new WaitForSeconds((character.AnimPlayTime / character.AnimSpeed) / 2);
         WhenDoneThrowWeapon();
         //wait for 0,4s before can attack again

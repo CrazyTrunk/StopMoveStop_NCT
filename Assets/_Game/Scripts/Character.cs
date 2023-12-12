@@ -116,7 +116,7 @@ public class Character : MonoBehaviour, ICombatant
     private void ChangeSkin(int skinId)
     {
         ItemData currentskinData = skinDataSO.GetSkinById(skinId);
-        if(currentskinData != null)
+        if (currentskinData != null)
         {
             itemData = currentskinData;
             equipment.EquipOnView(itemData);
@@ -175,7 +175,7 @@ public class Character : MonoBehaviour, ICombatant
             Animator.SetTrigger(CurrentAnim);
         }
     }
-   
+
 
     public void LookAtTarget(Transform target)
     {
@@ -323,6 +323,17 @@ public class Character : MonoBehaviour, ICombatant
         if (GameManager.Instance.IsState(GameState.Playing))
         {
             LevelManager.Instance.BotKilled(this);
+        }
+    }
+
+    public (string attackAnim, string animName) GetAttackAnimation(WeaponType weaponType)
+    {
+        switch (weaponType)
+        {
+            case WeaponType.HAMMER:
+                return ("a", "a");
+            default:
+                return ("a", "a");
         }
     }
     #endregion
