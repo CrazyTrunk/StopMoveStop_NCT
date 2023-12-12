@@ -98,19 +98,19 @@ public class LevelManager : Singleton<LevelManager>
         enemy.OnInit();
         enemy.InitLevelBot(currentPlayerData.level + Random.Range(3, 5 + 1));
         Indicator indicator = indicatorPool.Spawn(Vector3.zero, Quaternion.identity, indicatorParent).GetComponent<Indicator>();
-        indicator.SetTarget(enemy.transform, indicatorCanvas);
+        indicator.SetTarget(enemy, indicatorCanvas, enemy.level);
         activeIndicators.Add(indicator);
 
     }
     public void SpawnBot(int level)
     {
-
         Vector3 spawnPosition = GenerateSpawnPosition();
-        Enemy enemy = botPool.Spawn(spawnPosition, Quaternion.identity, botPool.transform).GetComponent<Enemy>();
+        GameObject go = botPool.Spawn(spawnPosition, Quaternion.identity, botPool.transform);
+        Enemy enemy = go.GetComponent<Enemy>();
         enemy.OnInit();
         enemy.InitLevelBot(level);
         Indicator indicator = indicatorPool.Spawn(spawnPosition, Quaternion.identity, indicatorParent).GetComponent<Indicator>();
-        indicator.SetTarget(enemy.transform, indicatorCanvas);
+        indicator.SetTarget(enemy, indicatorCanvas, enemy.level);
         activeIndicators.Add(indicator);
         // Set up the bot (e.g., adding it to a list, setting up callbacks, etc.)
     }

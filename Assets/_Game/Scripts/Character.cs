@@ -81,6 +81,7 @@ public class Character : MonoBehaviour, ICombatant
     public Weapon Weapon { get => weapon; set => weapon = value; }
 
     public event Action<ICombatant> OnCombatantKilled;
+    public event Action<int> OnLevelUp;
     private void Awake()
     {
         OnInit();
@@ -230,7 +231,7 @@ public class Character : MonoBehaviour, ICombatant
     public void InitLevelBot(int level)
     {
         this.level = level;
-        float currentRange = CalculateRange();
+        CalculateRange();
         ScaleModel(level);
         AdjustCollider();
         CharacterSphere.UpdateTriggerSize(this.range);
@@ -311,6 +312,7 @@ public class Character : MonoBehaviour, ICombatant
             GameManager.Instance.SaveToJson(player.PlayerData, FilePathGame.CHARACTER_PATH);
         }
         attacker.LevelUp(victim.level);
+        attacker.OnLevelUp?.Invoke(attacker.level);
     }
     private void PlayDead()
     {

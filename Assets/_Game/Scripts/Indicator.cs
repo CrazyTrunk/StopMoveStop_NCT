@@ -1,23 +1,26 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UIElements;
 
 public class Indicator : MonoBehaviour
 {
-    private Transform target;
+    private Enemy target;
     private Camera mainCamera;
-     private RectTransform indicatorCanvas;
+    private RectTransform indicatorCanvas;
     [SerializeField] private RectTransform selfRect;
     [SerializeField] private CanvasGroup canvasGroup;
     [SerializeField] private float offScreenThreshold = 50f;
+    [SerializeField] private TextMeshProUGUI levelDisplay;
 
-    public Transform Target { get => target; set => target = value; }
+    public Enemy Target { get => target; set => target = value; }
 
     private void Update()
     {
-        if(Target != null)
+        if (target != null)
         {
             if (TargetIsOffScreen())
             {
@@ -34,20 +37,28 @@ public class Indicator : MonoBehaviour
     {
         mainCamera = Camera.main;
     }
-    public void SetTarget(Transform newTarget, RectTransform canvas)
+    public void SetTarget(Enemy newTarget, RectTransform canvas, int level)
     {
-        Target = newTarget;
+        target = newTarget;
+        target.OnLevelUp += UpdateLevelUI;
         indicatorCanvas = canvas;
+        levelDisplay.text = level.ToString();
     }
+
+    private void UpdateLevelUI(int level)
+    {
+        levelDisplay.text = level.ToString();
+    }
+
     private bool TargetIsOffScreen()
     {
-        Vector3 targetViewportPos = mainCamera.WorldToViewportPoint(Target.position);
+        Vector3 targetViewportPos = mainCamera.WorldToViewportPoint(target.transform.position);
         return targetViewportPos.x < 0 || targetViewportPos.x > 1 || targetViewportPos.y < 0 || targetViewportPos.y > 1;
     }
     private void UpdateIndicatorPosition()
     {
         //khong gian man hinh
-        Vector3 targetScreenPos = mainCamera.WorldToScreenPoint(Target.position);
+        Vector3 targetScreenPos = mainCamera.WorldToScreenPoint(target.transform.position);
 
         Vector2 localPoint;
         //chuyen tu khon gian man hinh sang khong gian canvas
