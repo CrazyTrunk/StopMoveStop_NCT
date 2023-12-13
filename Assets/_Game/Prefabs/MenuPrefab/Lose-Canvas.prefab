@@ -101,7 +101,14 @@ MonoBehaviour:
   rankText: {fileID: 5499342456808637700}
   killedByText: {fileID: 3949360541581027801}
   coinGained: {fileID: 1837089876025686456}
-  ZoneImages: []
+  ZoneImages:
+  - {fileID: 21300000, guid: 64cc9edebc6a34f4abdf3bc114b77c80, type: 3}
+  - {fileID: 21300000, guid: 760cff3a4883aed47b0425ddbbe4b0b6, type: 3}
+  - {fileID: 21300000, guid: af08f2d9447ead2428294306d12142b9, type: 3}
+  currentZone: {fileID: 8201669183018101401}
+  nextZone: {fileID: 5307348743601078527}
+  currentZoneText: {fileID: 873809026730689073}
+  nextZoneText: {fileID: 1416428980802279151}
   currentSlider: {fileID: 3725110562296474950}
   highScoreSlider: {fileID: 5459450292903908654}
 --- !u!1 &255522412254207458

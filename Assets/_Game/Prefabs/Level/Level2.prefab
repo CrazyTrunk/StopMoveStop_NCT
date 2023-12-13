@@ -285,7 +285,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 640f82b1ac69ab2478c8e8d62eb162ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  totalBotsToKill: 50
+  totalBotsToKill: 6
   spawnAreaMin: {x: -18, y: -18}
   spawnAreaMax: {x: 18, y: 18}
 --- !u!1 &9119005481672759082
