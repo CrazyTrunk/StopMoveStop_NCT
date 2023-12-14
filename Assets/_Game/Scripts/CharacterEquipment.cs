@@ -30,6 +30,10 @@ public class CharacterEquipment : MonoBehaviour
     }
     public void OnInit()
     {
+        if(character is Player)
+        {
+            character.ChangeAnim(Anim.DANCE);
+        }
         if (currentItemOnView != null)
         {
             Destroy(currentItemOnView);

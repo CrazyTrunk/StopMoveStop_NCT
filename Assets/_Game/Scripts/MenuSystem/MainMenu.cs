@@ -14,7 +14,7 @@ public class MainMenu : Menu<MainMenu>
     }
     public void OnInit()
     {
-        GameManager.Instance.ChangeState(GameState.MainMenu);
+        GameManager.Instance.ChangeState(GameState.MAINMENU);
         playerData = GameManager.Instance.GetPlayerData();
         coin.text = playerData.coin.ToString();
         inputField.text = playerData.playerName;
@@ -35,7 +35,7 @@ public class MainMenu : Menu<MainMenu>
     public void OnPlayButtonClick()
     {
         Hide();
-        GameManager.Instance.ChangeState(GameState.Playing);
+        GameManager.Instance.ChangeState(GameState.PLAYING);
         CameraFollow camera = Camera.main.GetComponent<CameraFollow>();
         camera.SwitchCameraViewToPlayer();
         IngameMenu.Show();

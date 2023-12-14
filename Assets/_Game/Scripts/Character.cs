@@ -307,7 +307,7 @@ public class Character : MonoBehaviour, ICombatant
             LoseMenu.Show();
             LoseMenu.Instance.OnInit(LevelManager.Instance.TotalAlive, attacker.characterName, player.CoinGained);
             LoseMenu.Instance.CalculateCurrentProcess(LevelManager.Instance.TotalAlive);
-            GameManager.Instance.ChangeState(GameState.GameOver);
+            GameManager.Instance.ChangeState(GameState.GAMEOVER);
             player.PlayerData.UpdateHighestRankPerMap(player.PlayerData.levelMap, LevelManager.Instance.TotalAlive);
             GameManager.Instance.UpdatePlayerData(player.PlayerData);
             GameManager.Instance.SaveToJson(player.PlayerData, FilePathGame.CHARACTER_PATH);
@@ -329,7 +329,7 @@ public class Character : MonoBehaviour, ICombatant
 
         // Ẩn nhân vật (hoặc làm nhân vật không hoạt động) khi nó chết
         yield return new WaitForSeconds(1f);
-        if (GameManager.Instance.IsState(GameState.Playing))
+        if (GameManager.Instance.IsState(GameState.PLAYING))
         {
             LevelManager.Instance.BotKilled(this);
         }

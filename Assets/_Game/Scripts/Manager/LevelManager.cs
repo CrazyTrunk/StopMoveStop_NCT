@@ -35,7 +35,7 @@ public class LevelManager : Singleton<LevelManager>
 
         playerData = GameManager.Instance.GetPlayerData();
         LoadCurrentLevel(playerData.levelMap);
-        GameManager.Instance.ChangeState(GameState.MainMenu);
+        GameManager.Instance.ChangeState(GameState.MAINMENU);
 
         ClearAllBots();
         for (int i = 0; i < maxBotsAtOnce; i++)
@@ -145,6 +145,8 @@ public class LevelManager : Singleton<LevelManager>
                 GameManager.Instance.UpdatePlayerData(playerData);
                 GameManager.Instance.SaveToJson(playerData, FilePathGame.CHARACTER_PATH);
             }
+            GameManager.Instance.ChangeState(GameState.WIN);
+            currentPlayerData.ChangeAnim(Anim.DANCE);
             WinMenu.Show();
         }
      

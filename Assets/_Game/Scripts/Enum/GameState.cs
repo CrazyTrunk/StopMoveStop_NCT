@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 public enum GameState
 {
-    Playing = 0,
-    MainMenu = 1,
-    GameOver = 2
+    PLAYING = 0,
+    MAINMENU = 1,
+    GAMEOVER = 2,
+    WIN = 3
 }

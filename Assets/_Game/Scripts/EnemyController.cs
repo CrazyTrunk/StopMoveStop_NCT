@@ -25,7 +25,7 @@ public class EnemyController : MonoBehaviour
         {
             return;
         }
-        if (GameManager.Instance.IsState(GameState.Playing))
+        if (GameManager.Instance.IsState(GameState.PLAYING))
         {
             currentState?.OnExecute();
         }

@@ -20,7 +20,10 @@ public class Player : Character, ICombatant
     {
         GameManager.Instance.OnPlayerDataUpdated += UpdateWeapon;
         GlobalEvents.OnXMarkSkinShopClicked += ChangeSkin;
+        GlobalEvents.OnXMarkSkinShopClicked += ResetIdle;
     }
+
+
     private void OnDisable()
     {
         if (GameManager.Instance != null)
@@ -28,7 +31,13 @@ public class Player : Character, ICombatant
             GameManager.Instance.OnPlayerDataUpdated -= UpdateWeapon;
         }
         GlobalEvents.OnXMarkSkinShopClicked -= ChangeSkin;
+        GlobalEvents.OnXMarkSkinShopClicked -= ResetIdle;
 
+
+    }
+    private void ResetIdle()
+    {
+        ChangeAnim(Anim.IDLE);
     }
     private void UpdateWeapon(PlayerData data)
     {

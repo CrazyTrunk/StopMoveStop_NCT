@@ -18,7 +18,7 @@ public class PlayerController : MonoBehaviour
             rb.velocity = Vector3.zero;
             return;
         }
-        if (GameManager.Instance.IsState(GameState.Playing))
+        if (GameManager.Instance.IsState(GameState.PLAYING))
         {
 
             rb.velocity = new Vector3(joystick.Horizontal * player.Speed, rb.velocity.y, joystick.Vertical * player.Speed);

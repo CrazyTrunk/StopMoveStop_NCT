@@ -59,7 +59,7 @@ public class LoseMenu : Menu<LoseMenu>
         MainMenu.Show();
         MainMenu.Instance.OnInit();
         LevelManager.Instance.OnInit();
-        GameManager.Instance.ChangeState(GameState.MainMenu);
+        GameManager.Instance.ChangeState(GameState.MAINMENU);
     }
     public static void Show()
     {

@@ -33,7 +33,7 @@ public class RadicalTrigger : MonoBehaviour
     }
     private void FixedUpdate()
     {
-        if (GameManager.Instance.IsState(GameState.Playing))
+        if (GameManager.Instance.IsState(GameState.PLAYING))
         {
             if (!character.IsAttacking)
             {
