@@ -137,6 +137,8 @@ public class WeaponMenu : Menu<WeaponMenu>
         {
             DestroyCurrentWeaponOnScene();
             currentWeaponPrefab = Instantiate(weaponDataSO.listWeapon[index].weaponPrefab, spawnPoint);
+            Weapon weaponPrefab = currentWeaponPrefab.GetComponent<Weapon>();
+            weaponPrefab.isDemo = true;
             currentWeaponDataOnView = weaponDataSO.listWeapon[index];
             nameWeapon.text = weaponDataSO.listWeapon[index].weaponName;
             textBonus.text = $"+ {weaponDataSO.listWeapon[index].bonusRange} Range\n + {weaponDataSO.listWeapon[index].bonusSpeed} Speed";

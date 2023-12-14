@@ -8,6 +8,7 @@ public class Weapon : MonoBehaviour
     [SerializeField]private GameObject bulletPrefab;
     [SerializeField]private WeaponType weaponType;
     [SerializeField]private MeshRenderer render;
+    public bool isDemo;
     public void HideWeapon()
     {
         render.enabled = false;
@@ -27,5 +28,12 @@ public class Weapon : MonoBehaviour
     public GameObject SpawnBullet(Transform spawnBulletPoint)
     {
         return Instantiate(bulletPrefab, spawnBulletPoint.position, spawnBulletPoint.rotation);
+    }
+    private void LateUpdate()
+    {
+        if(isDemo)
+        {
+            transform.Rotate(Vector3.up * 0.5f, Space.Self);
+        }
     }
 }
