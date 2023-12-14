@@ -52,6 +52,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2300000, guid: 37a28123e5e39f44fbff5daa106af161, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 115e31baf32b6d347afba72dd151112b, type: 2}
+    - target: {fileID: 2300000, guid: 37a28123e5e39f44fbff5daa106af161, type: 3}
+      propertyPath: m_Materials.Array.data[1]
+      value: 
+      objectReference: {fileID: 2100000, guid: 115e31baf32b6d347afba72dd151112b, type: 2}
+    - target: {fileID: 2300000, guid: 37a28123e5e39f44fbff5daa106af161, type: 3}
+      propertyPath: m_Materials.Array.data[2]
+      value: 
+      objectReference: {fileID: 2100000, guid: 115e31baf32b6d347afba72dd151112b, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -82,10 +94,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d7df10942c42bf446880a8d94d7cfb33, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  weaponName: Candy4
   bulletPrefab: {fileID: 1150718077658800654, guid: 7841a17b6e348e440a7610e78e08671f, type: 3}
-  bonusSpeed: 5
-  bonusRange: 5
-  type: 4
-  cost: 50
+  weaponType: 0
   render: {fileID: 1150718077656874190}
+  isDemo: 0

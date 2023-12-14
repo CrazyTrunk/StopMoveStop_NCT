@@ -52,6 +52,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2300000, guid: ecd6cb62ed8350e498f9e25d15d9caa3, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: bbd3b9bd5fae2a346ad944342410a63b, type: 2}
+    - target: {fileID: 2300000, guid: ecd6cb62ed8350e498f9e25d15d9caa3, type: 3}
+      propertyPath: m_Materials.Array.data[1]
+      value: 
+      objectReference: {fileID: 2100000, guid: bbd3b9bd5fae2a346ad944342410a63b, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -82,10 +90,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d7df10942c42bf446880a8d94d7cfb33, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  weaponName: Knife
   bulletPrefab: {fileID: 9044379844719831979, guid: a24f5d4461663fd43b751f01aaaf86ac, type: 3}
-  bonusSpeed: 10
-  bonusRange: 10
-  type: 8
-  cost: 800
+  weaponType: 0
   render: {fileID: 9044379844717639019}
+  isDemo: 0

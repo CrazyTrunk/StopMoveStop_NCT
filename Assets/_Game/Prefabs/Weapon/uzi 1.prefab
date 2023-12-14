@@ -48,6 +48,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -1504981713932161579, guid: 7bf2d0115aa96964bb72869fce1a4aee, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 0a5127becfaf3c34f816668fa8cc7d8f, type: 2}
+    - target: {fileID: -1504981713932161579, guid: 7bf2d0115aa96964bb72869fce1a4aee, type: 3}
+      propertyPath: m_Materials.Array.data[1]
+      value: 
+      objectReference: {fileID: 2100000, guid: 0a5127becfaf3c34f816668fa8cc7d8f, type: 2}
     - target: {fileID: -927199367670048503, guid: 7bf2d0115aa96964bb72869fce1a4aee, type: 3}
       propertyPath: m_Name
       value: uzi 1
@@ -82,10 +90,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d7df10942c42bf446880a8d94d7cfb33, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  weaponName: Uzi
   bulletPrefab: {fileID: 1219417698592225927, guid: c319ad1bfe976b34d89715bc6b077885, type: 3}
-  bonusSpeed: 20
-  bonusRange: 20
-  type: 9
-  cost: 1000
+  weaponType: 0
   render: {fileID: 635266907934281307}
+  isDemo: 0

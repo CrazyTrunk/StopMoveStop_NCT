@@ -52,6 +52,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2300000, guid: cb6e597070ed41f4eb5cb9583c725959, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 70692755ad71c6b47bff2ee65de4b6b1, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -82,10 +86,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d7df10942c42bf446880a8d94d7cfb33, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  weaponName: Boomerang
   bulletPrefab: {fileID: 3833731073488465525, guid: cecf7866d31f8ba48bf6055c182bc070, type: 3}
-  bonusSpeed: 8
-  bonusRange: 8
-  type: 7
-  cost: 500
+  weaponType: 0
   render: {fileID: 3833731073486532789}
+  isDemo: 0
