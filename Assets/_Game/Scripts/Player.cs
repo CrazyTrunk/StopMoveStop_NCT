@@ -57,6 +57,7 @@ public class Player : Character, ICombatant
     }
     public void OnRevive()
     {
+        RadicalTrigger.gameObject.SetActive(false);
         OnInit();
         IsPopupReviveShow = true;
         ChangeAnim(Anim.IDLE);

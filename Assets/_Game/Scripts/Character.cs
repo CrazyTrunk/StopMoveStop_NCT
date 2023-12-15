@@ -79,6 +79,7 @@ public class Character : MonoBehaviour, ICombatant
     public string CharacterName { get => characterName; set => characterName = value; }
     public Weapon Weapon { get => weapon; set => weapon = value; }
     public bool IsPopupReviveShow { get => isPopupReviveShow; set => isPopupReviveShow = value; }
+    public RadicalTrigger RadicalTrigger { get => radicalTrigger; set => radicalTrigger = value; }
 
     public event Action<ICombatant> OnCombatantKilled;
     public event Action<int> OnLevelUp;
@@ -225,7 +226,8 @@ public class Character : MonoBehaviour, ICombatant
         hasEnemyInSight = false;
         IsPopupReviveShow = false;
         capsuleColliderCharacter.enabled = true;
-        radicalTrigger.OnInit();
+        RadicalTrigger.OnInit();
+        RadicalTrigger.gameObject.SetActive(true);
         Undetect();
     }
     #region Level Init and other calculate related
