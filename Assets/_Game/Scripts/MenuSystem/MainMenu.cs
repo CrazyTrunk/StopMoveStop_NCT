@@ -14,7 +14,7 @@ public class MainMenu : Menu<MainMenu>
     }
     public void OnInit()
     {
-        GameManager.Instance.ChangeState(GameState.MAINMENU);
+        GameManager.Instance.ChangeState(GameState.MENU);
         playerData = GameManager.Instance.GetPlayerData();
         coin.text = playerData.coin.ToString();
         inputField.text = playerData.playerName;

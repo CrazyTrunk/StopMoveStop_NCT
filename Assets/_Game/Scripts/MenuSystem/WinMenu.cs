@@ -13,6 +13,8 @@ public class WinMenu : Menu<WinMenu>
     [SerializeField] private Image nextZone;
     [SerializeField] private TextMeshProUGUI currentZoneText;
     [SerializeField] private TextMeshProUGUI nextZoneText;
+    [SerializeField] private TextMeshProUGUI coinGained;
+
     private void Start()
     {
         OnInit();
@@ -20,6 +22,7 @@ public class WinMenu : Menu<WinMenu>
         nextZoneText.text = $"Zone {playerData.levelMap}";
         currentZone.sprite = ZoneImages[playerData.levelMap - 2];
         nextZone.sprite = ZoneImages[playerData.levelMap - 1];
+        coinGained.text = LevelManager.Instance.CurrentPlayerData.CoinGained.ToString();
     }
     public void OnInit()
     {
@@ -33,7 +36,7 @@ public class WinMenu : Menu<WinMenu>
         MainMenu.Show();
         MainMenu.Instance.OnInit();
         LevelManager.Instance.OnInit();
-        GameManager.Instance.ChangeState(GameState.MAINMENU);
+        GameManager.Instance.ChangeState(GameState.MENU);
     }
     public static void Show()
     {

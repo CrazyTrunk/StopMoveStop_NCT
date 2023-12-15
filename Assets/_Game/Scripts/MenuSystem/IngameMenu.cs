@@ -8,7 +8,8 @@ public class IngameMenu : Menu<IngameMenu>
     [SerializeField] TextMeshProUGUI alive;
     public void OnSettingClick()
     {
-        Debug.Log("Setting");
+        Hide();
+        IngameSetting.Show();
     }
     public void OnInit(int botAlive)
     {

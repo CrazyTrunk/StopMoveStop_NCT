@@ -29,18 +29,19 @@ public class LevelManager : Singleton<LevelManager>
     public int TotalAlive { get => totalAlive; set => totalAlive = value; }
     public Level CurrentLevelData { get => currentLevelData; set => currentLevelData = value; }
     public int MaxParticipants { get => maxParticipants; set => maxParticipants = value; }
+    public Player CurrentPlayerData { get => currentPlayerData; set => currentPlayerData = value; }
 
     public void OnInit()
     {
 
         playerData = GameManager.Instance.GetPlayerData();
         LoadCurrentLevel(playerData.levelMap);
-        GameManager.Instance.ChangeState(GameState.MAINMENU);
+        GameManager.Instance.ChangeState(GameState.MENU);
 
         ClearAllBots();
         for (int i = 0; i < maxBotsAtOnce; i++)
         {
-            SpawnBot(currentPlayerData.level);
+            SpawnBot(CurrentPlayerData.level);
         }
         currentParticipants = 1 + maxBotsAtOnce;
     }
@@ -98,7 +99,7 @@ public class LevelManager : Singleton<LevelManager>
         GameObject go = botPool.Spawn(spawnPosition, Quaternion.identity, botPool.transform);
         Enemy enemy = go.GetComponent<Enemy>();
         enemy.OnInit();
-        enemy.InitLevelBot(currentPlayerData.level + Random.Range(3, 5 + 1));
+        enemy.InitLevelBot(CurrentPlayerData.level + Random.Range(3, 5 + 1));
         Indicator indicator = indicatorPool.Spawn(Vector3.zero, Quaternion.identity, indicatorParent).GetComponent<Indicator>();
         indicator.SetTarget(enemy, indicatorCanvas, enemy.level);
         activeIndicators.Add(indicator);
@@ -119,7 +120,10 @@ public class LevelManager : Singleton<LevelManager>
     public void BotKilled(Character character)
     {
         TotalAlive--;
-        IngameMenu.Instance.OnInit(TotalAlive);
+        if (IngameMenu.Instance != null)
+        {
+            IngameMenu.Instance.OnInit(TotalAlive);
+        }
         usedPositions.Remove(character.transform.position);
         botPool.Despawn(character.gameObject);
         if (currentParticipants < MaxParticipants)
@@ -136,20 +140,20 @@ public class LevelManager : Singleton<LevelManager>
             activeIndicators.Remove(indicatorToDespawn);
         }
 
-        if(TotalAlive == 1)
+        if (TotalAlive == 1)
         {
             if (playerData.levelMap < levels.Count)
             {
                 playerData.UpdateHighestRankPerMap(playerData.levelMap, TotalAlive);
                 playerData.levelMap++;
-                GameManager.Instance.UpdatePlayerData(playerData);
-                GameManager.Instance.SaveToJson(playerData, FilePathGame.CHARACTER_PATH);
             }
+            GameManager.Instance.UpdatePlayerData(playerData);
+            GameManager.Instance.SaveToJson(playerData, FilePathGame.CHARACTER_PATH);
             GameManager.Instance.ChangeState(GameState.WIN);
-            currentPlayerData.ChangeAnim(Anim.DANCE);
+            CurrentPlayerData.ChangeAnim(Anim.DANCE);
             WinMenu.Show();
         }
-     
+
     }
     private void LoadPlayer()
     {
@@ -158,7 +162,7 @@ public class LevelManager : Singleton<LevelManager>
             Destroy(currentPlayerPrefab);
         }
         currentPlayerPrefab = Instantiate(playerPrefab);
-        currentPlayerData = currentPlayerPrefab.GetComponent<Player>();
+        CurrentPlayerData = currentPlayerPrefab.GetComponent<Player>();
         PlayerController playerController = currentPlayerPrefab.GetComponent<PlayerController>();
         playerController.InitJoyStick(joystick);
         CameraFollow camera = Camera.main.GetComponent<CameraFollow>();

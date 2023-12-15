@@ -270,7 +270,7 @@ public class Character : MonoBehaviour, ICombatant
     }
     private float CalculateRange()
     {
-        float increment = level  * rangeIncresePerLevel;
+        float increment = level * rangeIncresePerLevel;
         Range = Mathf.Min(Range + increment, maxRangeIncrese);
         return Range;
     }
@@ -329,10 +329,7 @@ public class Character : MonoBehaviour, ICombatant
 
         // Ẩn nhân vật (hoặc làm nhân vật không hoạt động) khi nó chết
         yield return new WaitForSeconds(1f);
-        if (GameManager.Instance.IsState(GameState.PLAYING))
-        {
-            LevelManager.Instance.BotKilled(this);
-        }
+        LevelManager.Instance.BotKilled(this);
     }
 
     public (string attackAnim, string animName) GetAttackAnimation(WeaponType weaponType)

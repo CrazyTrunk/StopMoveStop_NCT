@@ -106,6 +106,7 @@ MonoBehaviour:
   nextZone: {fileID: 8339095918178952257}
   currentZoneText: {fileID: 2389176008919460750}
   nextZoneText: {fileID: 7443303126475961876}
+  coinGained: {fileID: 800340516123605554}
 --- !u!1 &570459619478569987
 GameObject:
   m_ObjectHideFlags: 0

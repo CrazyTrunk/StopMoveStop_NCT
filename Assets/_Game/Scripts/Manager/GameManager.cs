@@ -15,7 +15,7 @@ public class GameManager : Singleton<GameManager>
 
     private void Awake()
     {
-        ChangeState(GameState.MAINMENU);
+        ChangeState(GameState.MENU);
         playerData = ReadFromJson(FilePathGame.CHARACTER_PATH);
         if (playerData == null)
         {
