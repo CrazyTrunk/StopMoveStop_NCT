@@ -76,8 +76,9 @@ public class Character : MonoBehaviour, ICombatant
     public float BaseRange { get => baseRange; set => baseRange = value; }
     public CharacterSphere CharacterSphere { get => characterSphere; set => characterSphere = value; }
     public WeaponManagerDataScripableObject WeaponDataSO { get => weaponDataSO; set => weaponDataSO = value; }
-    public string CharacterName { get => characterName; set => characterName = value; }
+    public string CharacterName { get => CharacterName1; set => CharacterName1 = value; }
     public Weapon Weapon { get => weapon; set => weapon = value; }
+    public string CharacterName1 { get => characterName; set => characterName = value; }
 
     public event Action<ICombatant> OnCombatantKilled;
     public event Action<int> OnLevelUp;
@@ -96,14 +97,14 @@ public class Character : MonoBehaviour, ICombatant
         {
             ChangeWeapon(WeaponType.HAMMER);
             ChangeSkin(15);
-            characterName = enemy.GetRandomBotName();
+            CharacterName1 = enemy.GetRandomBotName();
         }
         else if (this is Player)
         {
             ChangeWeapon(GameManager.Instance.GetPlayerData().equippedWeaponId);
             ChangeSkin(GameManager.Instance.GetPlayerData().equippedSkinId);
         }
-        characterInfo.UpdateUINamePlayer(characterName);
+        characterInfo.UpdateUINamePlayer(CharacterName1);
         RecalculateBonuses();
         CharacterSphere.UpdateTriggerSize(this.range);
     }
@@ -303,14 +304,10 @@ public class Character : MonoBehaviour, ICombatant
         victim.PlayDead();
         if (victim is Player player)
         {
-            LoseMenu.Show();
-            LoseMenu.Instance.OnInit(LevelManager.Instance.TotalAlive, attacker.characterName, player.CoinGained);
-            LoseMenu.Instance.CalculateCurrentProcess(LevelManager.Instance.TotalAlive);
-            GameManager.Instance.ChangeState(GameState.GAMEOVER);
-            player.PlayerData.UpdateHighestRankPerMap(player.PlayerData.levelMap, LevelManager.Instance.TotalAlive);
-            GameManager.Instance.UpdatePlayerData(player.PlayerData);
-            GameManager.Instance.SaveToJson(player.PlayerData, FilePathGame.CHARACTER_PATH);
-            AudioManager.Instance.PlaySFX(SoundType.GAMEOVER);
+            //Need to Revive?
+            ReviveMenu.Show();
+            ReviveMenu.Instance.OnInit(attacker,player);
+            GameManager.Instance.ChangeState(GameState.MENU);
         }
         attacker.LevelUp(victim.level);
         attacker.OnLevelUp?.Invoke(attacker.level);

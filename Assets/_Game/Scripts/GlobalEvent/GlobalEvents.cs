@@ -11,6 +11,7 @@ public static class GlobalEvents
     public static event Action<ItemData> OnShopItemClick;
     public static event Action OnXMarkSkinShopClicked;
     public static event Action OnPlayClick;
+    public static event Action OnReviveClick;
 
     // Phương thức để phát sự kiện chọn vũ khí
     public static void WeaponSelected(WeaponType weaponType)
@@ -28,5 +29,9 @@ public static class GlobalEvents
     public static void OnXMarkSelect()
     {
         OnXMarkSkinShopClicked?.Invoke();
+    }
+    public static void OnReviveClicked()
+    {
+        OnReviveClick?.Invoke();
     }
 }

@@ -1,6 +1,4 @@
-﻿using UnityEngine;
-
-public class IngameSetting : Menu<IngameSetting>
+﻿public class IngameSetting : Menu<IngameSetting>
 {
     private void Start()
     {
