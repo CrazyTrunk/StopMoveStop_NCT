@@ -27,6 +27,7 @@ public class RadicalTrigger : MonoBehaviour
     {
         CurrentTarget = null;
         combatantQueue.Clear();
+        StopAllCoroutines();
     }
     private void FixedUpdate()
     {

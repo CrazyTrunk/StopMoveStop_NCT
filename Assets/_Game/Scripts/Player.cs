@@ -55,6 +55,12 @@ public class Player : Character, ICombatant
         var floatText = Instantiate(floatingLevelTextPrefab, canvasPopup.position, canvasPopup.rotation, canvasPopup);
         floatText.GetComponent<TextMeshProUGUI>().text = $"+ {level}";
     }
+    public void OnRevive()
+    {
+        OnInit();
+        IsPopupReviveShow = true;
+        ChangeAnim(Anim.IDLE);
+    }
     private void LateUpdate()
     {
         Vector3 cameraForward = Camera.main.transform.forward;

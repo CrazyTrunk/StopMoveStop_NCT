@@ -12,7 +12,7 @@ public class PlayerController : MonoBehaviour
     }
     private void Update()
     {
-        if (player.IsDead)
+        if (player.IsDead || !GameManager.Instance.IsState(GameState.PLAYING))
         {
             rb.velocity = Vector3.zero;
             return;

@@ -84,8 +84,9 @@ public class LevelManager : Singleton<LevelManager>
                     break;
                 }
             }
-        }
-        while (!positionValid);
+        } 
+        //while (usedPositions.Contains(potentialPosition));
+        while (!positionValid) ;
         if (potentialPosition != Vector3.zero)
         {
             usedPositions.Add(potentialPosition);
@@ -118,13 +119,14 @@ public class LevelManager : Singleton<LevelManager>
     }
     public void BotKilled(Character character)
     {
+
         TotalAlive--;
         if (IngameMenu.Instance != null)
         {
             IngameMenu.Instance.OnInit(TotalAlive);
         }
         usedPositions.Remove(character.transform.position);
-        if (currentParticipants < MaxParticipants && GameManager.Instance.IsState(GameState.PLAYING))
+        if (currentParticipants < MaxParticipants)
         {
             botPool.Despawn(character.gameObject);
             SpawnBot();
@@ -153,7 +155,6 @@ public class LevelManager : Singleton<LevelManager>
             CurrentPlayerData.ChangeAnim(Anim.DANCE);
             WinMenu.Show();
         }
-
     }
     private void LoadPlayer()
     {

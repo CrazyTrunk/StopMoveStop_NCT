@@ -55,7 +55,7 @@ public class Character : MonoBehaviour, ICombatant
     private bool hasEnemyInSight;
     private bool isAttacking;
     private bool isDead;
-
+    private bool isPopupReviveShow;
     [SerializeField] private WeaponManagerDataScripableObject weaponDataSO;
     [SerializeField] private ItemManagerDataScripableObject skinDataSO;
 
@@ -76,9 +76,9 @@ public class Character : MonoBehaviour, ICombatant
     public float BaseRange { get => baseRange; set => baseRange = value; }
     public CharacterSphere CharacterSphere { get => characterSphere; set => characterSphere = value; }
     public WeaponManagerDataScripableObject WeaponDataSO { get => weaponDataSO; set => weaponDataSO = value; }
-    public string CharacterName { get => CharacterName1; set => CharacterName1 = value; }
+    public string CharacterName { get => characterName; set => characterName = value; }
     public Weapon Weapon { get => weapon; set => weapon = value; }
-    public string CharacterName1 { get => characterName; set => characterName = value; }
+    public bool IsPopupReviveShow { get => isPopupReviveShow; set => isPopupReviveShow = value; }
 
     public event Action<ICombatant> OnCombatantKilled;
     public event Action<int> OnLevelUp;
@@ -97,14 +97,14 @@ public class Character : MonoBehaviour, ICombatant
         {
             ChangeWeapon(WeaponType.HAMMER);
             ChangeSkin(15);
-            CharacterName1 = enemy.GetRandomBotName();
+            characterName = enemy.GetRandomBotName();
         }
         else if (this is Player)
         {
             ChangeWeapon(GameManager.Instance.GetPlayerData().equippedWeaponId);
             ChangeSkin(GameManager.Instance.GetPlayerData().equippedSkinId);
         }
-        characterInfo.UpdateUINamePlayer(CharacterName1);
+        characterInfo.UpdateUINamePlayer(characterName);
         RecalculateBonuses();
         CharacterSphere.UpdateTriggerSize(this.range);
     }
@@ -223,6 +223,7 @@ public class Character : MonoBehaviour, ICombatant
         isMoving = false;
         isAttacking = false;
         hasEnemyInSight = false;
+        IsPopupReviveShow = false;
         capsuleColliderCharacter.enabled = true;
         radicalTrigger.OnInit();
         Undetect();
@@ -305,9 +306,24 @@ public class Character : MonoBehaviour, ICombatant
         if (victim is Player player)
         {
             //Need to Revive?
-            ReviveMenu.Show();
-            ReviveMenu.Instance.OnInit(attacker,player);
-            GameManager.Instance.ChangeState(GameState.MENU);
+            if (!player.isPopupReviveShow)
+            {
+                ReviveMenu.Show();
+                ReviveMenu.Instance.OnInit(attacker, player);
+                GameManager.Instance.ChangeState(GameState.MENU);
+                IsPopupReviveShow = true;
+            }
+            else
+            {
+                LoseMenu.Show();
+                LoseMenu.Instance.OnInit(LevelManager.Instance.TotalAlive, attacker.CharacterName, player.CoinGained);
+                LoseMenu.Instance.CalculateCurrentProcess(LevelManager.Instance.TotalAlive);
+                GameManager.Instance.ChangeState(GameState.GAMEOVER);
+                player.PlayerData.UpdateHighestRankPerMap(player.PlayerData.levelMap, LevelManager.Instance.TotalAlive);
+                GameManager.Instance.UpdatePlayerData(player.PlayerData);
+                GameManager.Instance.SaveToJson(player.PlayerData, FilePathGame.CHARACTER_PATH);
+                AudioManager.Instance.PlaySFX(SoundType.GAMEOVER);
+            }
         }
         attacker.LevelUp(victim.level);
         attacker.OnLevelUp?.Invoke(attacker.level);
@@ -325,8 +341,11 @@ public class Character : MonoBehaviour, ICombatant
         yield return new WaitForSeconds(AnimPlayTime / AnimSpeed);
 
         // Ẩn nhân vật (hoặc làm nhân vật không hoạt động) khi nó chết
-        yield return new WaitForSeconds(1f);
-        LevelManager.Instance.BotKilled(this);
+        //yield return new WaitForSeconds(1f);
+        if(this is not Player)
+        {
+            LevelManager.Instance.BotKilled(this);
+        }
     }
 
     public (string attackAnim, string animName) GetAttackAnimation(WeaponType weaponType)
