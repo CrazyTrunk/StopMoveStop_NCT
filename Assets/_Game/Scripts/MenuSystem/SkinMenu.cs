@@ -193,7 +193,18 @@ public class SkinMenu : Menu<SkinMenu>
         }
         if (itemData is ShieldData shieldData)
         {
-            item.itemDescription = $"{5}Vi du% Gold";
+            item.itemDescription = $"Bonus Gold Inprocess...";
+        }
+        if (itemData is SetData setData)
+        {
+            if (setData.rangeBonus > 0)
+            {
+                item.itemDescription = $"{setData.rangeBonus}% Range";
+            }
+            if (setData.movespeedBonus > 0)
+            {
+                item.itemDescription = $"{setData.movespeedBonus}% Move Speed";
+            }
         }
     }
 

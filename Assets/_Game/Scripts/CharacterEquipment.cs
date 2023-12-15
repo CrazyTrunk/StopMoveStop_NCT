@@ -11,13 +11,18 @@ public class CharacterEquipment : MonoBehaviour
     [SerializeField] private Transform mustacheSocket;
     [SerializeField] private SkinnedMeshRenderer characterPants;
     [SerializeField] private Transform shieldSocket;
+    [SerializeField] private Transform tailSocket;
+    [SerializeField] private Transform wingSocket;
     [SerializeField] private Character character;
-    private GameObject currentItemOnView;
+    private Dictionary<ItemType, GameObject> equippedItems = new Dictionary<ItemType, GameObject>();
+
     void OnEnable()
     {
         if (character is Player)
         {
             GlobalEvents.OnShopItemClick += EquipOnView;
+            GlobalEvents.OnShopItemClick += DanceOnShop;
+
         }
 
     }
@@ -26,23 +31,34 @@ public class CharacterEquipment : MonoBehaviour
         if (character is Player)
         {
             GlobalEvents.OnShopItemClick -= EquipOnView;
+            GlobalEvents.OnShopItemClick -= DanceOnShop;
         }
     }
     public void OnInit()
     {
-        if(character is Player)
+        characterPants.material = null;
+        characterPants.enabled = false;
+        ClearItems();
+    }
+
+    private void ClearItems()
+    {
+        foreach (var item in equippedItems.Values)
+        {
+            if (item != null)
+            {
+                Destroy(item);
+            }
+        }
+        equippedItems.Clear();
+    }
+    public void DanceOnShop(ItemData item)
+    {
+        if (character is Player)
         {
             character.ChangeAnim(Anim.DANCE);
         }
-        if (currentItemOnView != null)
-        {
-            Destroy(currentItemOnView);
-        }
-        characterPants.material = null;
-        characterPants.enabled = false;
     }
-
-
     public void EquipOnView(ItemData item)
     {
         OnInit();
@@ -52,7 +68,7 @@ public class CharacterEquipment : MonoBehaviour
             case ItemType.HAT:
                 if (item is HatData hatData)
                 {
-                    EquipToSocket(headSocket, hatData.itemPrefab);
+                    EquipToSocket(headSocket, hatData.itemPrefab, hatData.itemType);
                 }
                 break;
             case ItemType.PANTS:
@@ -64,16 +80,38 @@ public class CharacterEquipment : MonoBehaviour
             case ItemType.SHIELD:
                 if (item is ShieldData shieldData)
                 {
-                    EquipToSocket(shieldSocket, shieldData.itemPrefab);
+                    EquipToSocket(shieldSocket, shieldData.itemPrefab, shieldData.itemType);
                 }
                 break;
             case ItemType.MUSTACHE:
                 if (item is MoustacheData moustacheData)
                 {
-                    EquipToSocket(mustacheSocket, moustacheData.itemPrefab);
+                    EquipToSocket(mustacheSocket, moustacheData.itemPrefab, moustacheData.itemType);
                 }
                 break;
             case ItemType.SET:
+                if(item is SetData setData)
+                {
+                    for(int i =0; i< setData.setItems.Count; i++)
+                    {
+                        if (setData.setItems[i] is PantsData pants)
+                        {
+                            EquipPants(pants.pantsMaterial);
+                        }
+                        if (setData.setItems[i] is HatData hat)
+                        {
+                            EquipToSocket(headSocket, hat.itemPrefab, hat.itemType);
+                        }
+                        if (setData.setItems[i] is WingsData wing)
+                        {
+                            EquipToSocket(wingSocket, wing.wingsPrefab, wing.itemType);
+                        }
+                        if (setData.setItems[i] is TailData tailData)
+                        {
+                            EquipToSocket(tailSocket, tailData.tailPrefab, tailData.itemType);
+                        }
+                    }
+                }
                 break;
             default:
                 break;
@@ -84,10 +122,11 @@ public class CharacterEquipment : MonoBehaviour
         characterPants.enabled = true;
         characterPants.material = material;
     }
-    private void EquipToSocket(Transform socket, GameObject prefab)
+    private void EquipToSocket(Transform socket, GameObject prefab, ItemType itemType)
     {
-        currentItemOnView = Instantiate(prefab, socket.position, Quaternion.identity, socket);
-        currentItemOnView.transform.localRotation = prefab.transform.localRotation;
-        currentItemOnView.transform.localPosition = prefab.transform.position;
+        GameObject item = Instantiate(prefab, socket.position, Quaternion.identity, socket);
+        item.transform.localRotation = prefab.transform.localRotation;
+        item.transform.localPosition = prefab.transform.position;
+        equippedItems[itemType] = item;
     }
 }

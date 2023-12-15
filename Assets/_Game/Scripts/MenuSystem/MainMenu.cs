@@ -55,7 +55,6 @@ public class MainMenu : Menu<MainMenu>
         camera.SwitchCameraViewToSkinShop();
         SkinMenu.Show();
         SkinMenu.Instance.OnInit();
-
     }
     public void HandleInputEnd()
     {
