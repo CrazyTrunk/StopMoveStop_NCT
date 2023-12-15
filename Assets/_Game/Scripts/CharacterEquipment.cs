@@ -110,6 +110,10 @@ public class CharacterEquipment : MonoBehaviour
                         {
                             EquipToSocket(tailSocket, tailData.tailPrefab, tailData.itemType);
                         }
+                        if (setData.setItems[i] is ShieldData shield)
+                        {
+                            EquipToSocket(shieldSocket, shield.itemPrefab, shield.itemType);
+                        }
                     }
                 }
                 break;
