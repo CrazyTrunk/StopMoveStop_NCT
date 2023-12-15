@@ -1,7 +1,6 @@
 ﻿using Lean.Pool;
 using System.Collections.Generic;
 using System.Linq;
-using UnityEditor.Tilemaps;
 using UnityEngine;
 
 public class LevelManager : Singleton<LevelManager>
