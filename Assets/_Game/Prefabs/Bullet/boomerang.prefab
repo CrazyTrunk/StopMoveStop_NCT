@@ -12,6 +12,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: boomerang
       objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: cb6e597070ed41f4eb5cb9583c725959, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: cb6e597070ed41f4eb5cb9583c725959, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0
