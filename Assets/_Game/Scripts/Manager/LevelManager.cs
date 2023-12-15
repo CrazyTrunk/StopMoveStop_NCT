@@ -125,7 +125,7 @@ public class LevelManager : Singleton<LevelManager>
         }
         usedPositions.Remove(character.transform.position);
         botPool.Despawn(character.gameObject);
-        if (currentParticipants < MaxParticipants)
+        if (currentParticipants < MaxParticipants && GameManager.Instance.IsState(GameState.PLAYING))
         {
             SpawnBot();
             currentParticipants++;
