@@ -1,16 +1,78 @@
-﻿using TMPro;
+﻿using System;
+using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
+using static Toggle;
 
 public class MainMenu : Menu<MainMenu>
 {
     [SerializeField] private TextMeshProUGUI coin;
     [SerializeField] private TextMeshProUGUI playerName;
     [SerializeField] private TextMeshProUGUI highScore;
-    private PlayerData playerData;
     [SerializeField] private TMP_InputField inputField;
+    [SerializeField] private Button vibranceButton;
+    [SerializeField] private Button soundButton;
+    [SerializeField] private GameObject vibranceOn;
+    [SerializeField] private GameObject vibranceOff;
+    [SerializeField] private GameObject soundOn;
+    [SerializeField] private GameObject soundOff;
+
+    private PlayerData playerData;
     private void Start()
     {
         OnInit();
+        vibranceButton.onClick.AddListener(HandleVibranceButton);
+        soundButton.onClick.AddListener(HandleSoundButton);
+        ToggleSound();
+        ToggleVibrance();
+    }
+    public void ToggleSound()
+    {
+        if (playerData.isSoundOn)
+        {
+            soundOn.SetActive(true);
+            soundOff.SetActive(false);
+        }
+        else
+        {
+            soundOn.SetActive(false);
+            soundOff.SetActive(true);
+        }
+    }
+    public void ToggleVibrance()
+    {
+        if (playerData.isVibrance)
+        {
+            vibranceOn.SetActive(true);
+            vibranceOff.SetActive(false);
+        }
+        else
+        {
+            vibranceOn.SetActive(false);
+            vibranceOff.SetActive(true);
+        }
+    }
+    private void HandleSoundButton()
+    {
+        playerData.isSoundOn = !playerData.isSoundOn;
+        ToggleSound();
+        GameManager.Instance.UpdatePlayerData(playerData);
+        GameManager.Instance.SaveToJson(playerData, FilePathGame.CHARACTER_PATH);
+    }
+
+    private void HandleVibranceButton()
+    {
+        playerData.isVibrance = !playerData.isVibrance;
+        ToggleVibrance();
+        GameManager.Instance.UpdatePlayerData(playerData);
+        GameManager.Instance.SaveToJson(playerData, FilePathGame.CHARACTER_PATH);
+    }
+
+    private void OnDisable()
+    {
+        vibranceButton.onClick.RemoveAllListeners();
+        soundButton.onClick.RemoveAllListeners();
+
     }
     public void OnInit()
     {
@@ -64,7 +126,7 @@ public class MainMenu : Menu<MainMenu>
             GameManager.Instance.UpdatePlayerData(playerData);
             GameManager.Instance.SaveToJson(playerData, FilePathGame.CHARACTER_PATH);
         }
-    
+
     }
     public void OnMenuLevelSelected()
     {

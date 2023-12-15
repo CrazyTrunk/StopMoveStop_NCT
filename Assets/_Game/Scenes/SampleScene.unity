@@ -220,7 +220,7 @@ MonoBehaviour:
   - {fileID: 5252539629464809133, guid: 4873a63825587174aa7985dae6fd75bb, type: 3}
   - {fileID: 6537579292795936361, guid: 9a78e60266973e14a92a133e595164dd, type: 3}
   - {fileID: 8689952077047533222, guid: 2edcdf19d2859894b81c476ecb8cac33, type: 3}
-  - {fileID: 6141773109252403494, guid: aceb19464ff84e346bd6f4f04fd6088e, type: 3}
+  - {fileID: 5985984624262641152, guid: aceb19464ff84e346bd6f4f04fd6088e, type: 3}
   canvasMenu: {fileID: 911435588}
 --- !u!1 &105624651
 GameObject:

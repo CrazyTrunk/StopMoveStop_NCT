@@ -7,6 +7,7 @@ public class PlayerData
     public int coin;
     public int levelMap = 1;
     public bool isSoundOn;
+    public bool isVibrance;
     public string playerName = "You";
     public bool isAdsRemove;
     public int equippedWeaponId;
@@ -19,8 +20,9 @@ public class PlayerData
     {
         coin = 0;
         levelMap = 1;
-        isSoundOn = false;
+        isSoundOn = true;
         isAdsRemove = false;
+        isVibrance = true;
         equippedWeaponId = -1;
         equippedSkinId = -1;
         levelDataList = new List<LevelData>();
