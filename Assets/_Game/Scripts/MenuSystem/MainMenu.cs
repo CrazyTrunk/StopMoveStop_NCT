@@ -58,6 +58,7 @@ public class MainMenu : Menu<MainMenu>
         ToggleSound();
         GameManager.Instance.UpdatePlayerData(playerData);
         GameManager.Instance.SaveToJson(playerData, FilePathGame.CHARACTER_PATH);
+        AudioManager.Instance.ToggleMusicAndSound(playerData.isSoundOn);
     }
 
     private void HandleVibranceButton()

@@ -32,6 +32,7 @@ public class Toggle : MonoBehaviour
         {
             case FeatureType.Sound:
                 playerData.isSoundOn = !playerData.isSoundOn;
+                AudioManager.Instance.ToggleMusicAndSound(playerData.isSoundOn);
                 break;
             case FeatureType.Vibration:
                 playerData.isVibrance = !playerData.isVibrance;

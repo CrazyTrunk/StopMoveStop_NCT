@@ -154,6 +154,7 @@ public class RadicalTrigger : MonoBehaviour
         //If Anim is Finish
         if (character.Animator.GetCurrentAnimatorStateInfo(0).IsName(animName))
         {
+            AudioManager.Instance.PlaySFX(SoundType.THROW);
             character.ThrowWeapon();
         }
         else

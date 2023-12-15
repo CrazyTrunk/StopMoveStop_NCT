@@ -124,9 +124,9 @@ public class LevelManager : Singleton<LevelManager>
             IngameMenu.Instance.OnInit(TotalAlive);
         }
         usedPositions.Remove(character.transform.position);
-        botPool.Despawn(character.gameObject);
         if (currentParticipants < MaxParticipants && GameManager.Instance.IsState(GameState.PLAYING))
         {
+            botPool.Despawn(character.gameObject);
             SpawnBot();
             currentParticipants++;
         }
@@ -149,6 +149,7 @@ public class LevelManager : Singleton<LevelManager>
             GameManager.Instance.UpdatePlayerData(playerData);
             GameManager.Instance.SaveToJson(playerData, FilePathGame.CHARACTER_PATH);
             GameManager.Instance.ChangeState(GameState.WIN);
+            AudioManager.Instance.PlaySFX(SoundType.WIN);
             CurrentPlayerData.ChangeAnim(Anim.DANCE);
             WinMenu.Show();
         }

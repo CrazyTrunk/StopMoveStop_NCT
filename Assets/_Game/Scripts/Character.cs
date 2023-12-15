@@ -299,6 +299,7 @@ public class Character : MonoBehaviour, ICombatant
     #region Event
     protected virtual void OnHitVictim(Character attacker, Character victim)
     {
+        AudioManager.Instance.PlaySFX(SoundType.HIT);
         victim.PlayDead();
         if (victim is Player player)
         {
@@ -309,6 +310,7 @@ public class Character : MonoBehaviour, ICombatant
             player.PlayerData.UpdateHighestRankPerMap(player.PlayerData.levelMap, LevelManager.Instance.TotalAlive);
             GameManager.Instance.UpdatePlayerData(player.PlayerData);
             GameManager.Instance.SaveToJson(player.PlayerData, FilePathGame.CHARACTER_PATH);
+            AudioManager.Instance.PlaySFX(SoundType.GAMEOVER);
         }
         attacker.LevelUp(victim.level);
         attacker.OnLevelUp?.Invoke(attacker.level);
