@@ -41,7 +41,6 @@ public class Character : MonoBehaviour, ICombatant
     [Header("Basic CharacterInfo")]
     [SerializeField] private Transform characterModel;
     public int level = 0;
-    private int previousLevel = 0;
     public const int MaxLevelIncreseGap = 3;
     public const int MaxLevel = 55;
     public Vector3 baseScale = new(1f, 1f, 1f);
@@ -246,7 +245,6 @@ public class Character : MonoBehaviour, ICombatant
         if (this is Player && this.range < maxRangeIncrese)
         {
             Camera.main.GetComponent<CameraFollow>().UpdateCamera(level);
-            previousLevel = level;
         }
         AdjustCollider();
         CharacterSphere.UpdateTriggerSize(this.range);

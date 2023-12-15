@@ -1,11 +1,9 @@
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
 public class IngameMenu : Menu<IngameMenu>
 {
-    [SerializeField] TextMeshProUGUI alive;
+    [SerializeField]private TextMeshProUGUI alive;
     public void OnSettingClick()
     {
         Hide();

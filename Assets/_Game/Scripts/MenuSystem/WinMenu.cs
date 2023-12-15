@@ -7,13 +7,13 @@ using UnityEngine.UI;
 
 public class WinMenu : Menu<WinMenu>
 {
-    private PlayerData playerData;
     [SerializeField] private Sprite[] ZoneImages;
     [SerializeField] private Image currentZone;
     [SerializeField] private Image nextZone;
     [SerializeField] private TextMeshProUGUI currentZoneText;
     [SerializeField] private TextMeshProUGUI nextZoneText;
     [SerializeField] private TextMeshProUGUI coinGained;
+    private PlayerData playerData;
 
     private void Start()
     {

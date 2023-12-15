@@ -1,14 +1,12 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using TMPro;
+﻿using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class LoseMenu : Menu<LoseMenu>
 {
-    [SerializeField] TextMeshProUGUI rankText;
-    [SerializeField] TextMeshProUGUI killedByText;
-    [SerializeField] TextMeshProUGUI coinGained;
+    [SerializeField] private TextMeshProUGUI rankText;
+    [SerializeField] private TextMeshProUGUI killedByText;
+    [SerializeField] private TextMeshProUGUI coinGained;
     private PlayerData playerData;
     [SerializeField] private Sprite[] ZoneImages;
     [SerializeField] private Image currentZone;

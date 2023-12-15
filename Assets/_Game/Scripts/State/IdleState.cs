@@ -1,6 +1,4 @@
-﻿using System;
-using UnityEditor.Tilemaps;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class IdleState : IState
 {

@@ -1,19 +1,13 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEditor.Experimental.GraphView;
 using UnityEngine;
-using UnityEngine.SocialPlatforms;
-using UnityEngine.UI;
-
 [RequireComponent(typeof(Rigidbody))]
 
 public class Bullet : MonoBehaviour
 {
+    [SerializeField] protected Rigidbody rb;
     protected float attackSpeed = 2f;
     protected float range;
     protected Vector3 startPosition;
-    [SerializeField] protected Rigidbody rb;
     protected Action<Character, Character> onHit;
 
     public Character Shooter { get; set; }

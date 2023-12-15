@@ -6,7 +6,7 @@ public class MainMenu : Menu<MainMenu>
     [SerializeField] private TextMeshProUGUI coin;
     [SerializeField] private TextMeshProUGUI playerName;
     [SerializeField] private TextMeshProUGUI highScore;
-    PlayerData playerData;
+    private PlayerData playerData;
     [SerializeField] private TMP_InputField inputField;
     private void Start()
     {

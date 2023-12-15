@@ -1,21 +1,16 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.UIElements;
 
 public class Indicator : MonoBehaviour
 {
-    private Enemy target;
-    private Camera mainCamera;
-    private RectTransform indicatorCanvas;
+
     [SerializeField] private RectTransform selfRect;
     [SerializeField] private CanvasGroup canvasGroup;
     [SerializeField] private float offScreenThreshold = 80f;
     [SerializeField] private TextMeshProUGUI levelDisplay;
-
+    private Enemy target;
+    private Camera mainCamera;
+    private RectTransform indicatorCanvas;
     public Enemy Target { get => target; set => target = value; }
 
     private void Update()

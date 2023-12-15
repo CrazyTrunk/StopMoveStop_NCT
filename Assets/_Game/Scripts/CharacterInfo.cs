@@ -6,8 +6,8 @@ public class CharacterInfo : MonoBehaviour
     [SerializeField] private Transform infoCanvasTransform;
     [SerializeField] private Transform characterModel;
     [SerializeField] private float yOffset = 3.0f;
-    [SerializeField] TextMeshProUGUI levelUI;
-    [SerializeField] TextMeshProUGUI nameUI;
+    [SerializeField] private TextMeshProUGUI levelUI;
+    [SerializeField] private TextMeshProUGUI nameUI;
 
     [SerializeField] private Character character;
     void Start()

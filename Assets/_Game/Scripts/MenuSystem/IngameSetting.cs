@@ -1,6 +1,4 @@
-﻿using TMPro;
-using UnityEngine;
-using UnityEngine.SceneManagement;
+﻿using UnityEngine;
 
 public class IngameSetting : Menu<IngameSetting>
 {
@@ -10,7 +8,6 @@ public class IngameSetting : Menu<IngameSetting>
     }
     public void OnContinueClick()
     {
-        Debug.Log("Continue");
         Hide();
         GameManager.Instance.ChangeState(GameState.PLAYING);
         IngameMenu.Show();
@@ -18,7 +15,6 @@ public class IngameSetting : Menu<IngameSetting>
     }
     public void OnHomeClick()
     {
-        Debug.Log("Load Lai Scene");
         Hide();
         MainMenu.Show();
         MainMenu.Instance.OnInit();

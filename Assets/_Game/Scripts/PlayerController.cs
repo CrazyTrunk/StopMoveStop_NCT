@@ -1,5 +1,4 @@
 ﻿
-using System;
 using UnityEngine;
 [RequireComponent(typeof(Rigidbody), typeof(CapsuleCollider))]
 public class PlayerController : MonoBehaviour

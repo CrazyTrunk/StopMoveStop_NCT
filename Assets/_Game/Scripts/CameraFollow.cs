@@ -1,11 +1,9 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class CameraFollow : MonoBehaviour
 {
 
-    Vector3 offset;
     [SerializeField] private float smoothTime = 0.25f;
     [SerializeField] private Transform target;
     [SerializeField] private Vector3 mainCameraPos;
@@ -14,6 +12,7 @@ public class CameraFollow : MonoBehaviour
     [SerializeField] private Quaternion shopRotationPos;
     private Vector3 originalPos;
     private Quaternion originalRotation;
+    private Vector3 offset;
 
     private Vector3 _currentVelocity = Vector3.zero;
     private bool isSwitching = false;

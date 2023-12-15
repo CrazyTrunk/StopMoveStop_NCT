@@ -1,9 +1,7 @@
 ﻿
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -15,16 +13,19 @@ public class SkinMenu : Menu<SkinMenu>
     [SerializeField] private TextMeshProUGUI descriptionBonus;
     [SerializeField] private TextMeshProUGUI adsText;
     [SerializeField] public Transform parentHolder;
-    private List<GameObject> itemHolders = new List<GameObject>();
+    [SerializeField] private Color defaultTabColor;
+    [SerializeField] private Color selectedTabColor;
     [SerializeField] private GameObject itemHolder;
 
     [SerializeField] private TextMeshProUGUI coinText;
     [SerializeField] private TextMeshProUGUI selectText;
-    PlayerData playerData;
+
+    private List<GameObject> itemHolders = new();
+
+    private PlayerData playerData;
 
     private Button currentSelectedTab;
-    [SerializeField] private Color defaultTabColor;
-    [SerializeField] private Color selectedTabColor;
+
     public ItemInfo currentItemOnViewClick;
     private void SetTabColor(Button tabButton, bool isSelected)
     {
