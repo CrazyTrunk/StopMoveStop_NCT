@@ -10964,7 +10964,7 @@ GameObject:
   - component: {fileID: 2101611271449191594}
   m_Layer: 0
   m_Name: CircleSpin_VFX
-  m_TagString: Untagged
+  m_TagString: DetectCircle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

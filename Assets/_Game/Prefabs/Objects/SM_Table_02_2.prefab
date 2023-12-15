@@ -118,3 +118,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8876a6f776292f54087236ecb2789672, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  meshMaterial: {fileID: 4918811644714831329}
+  originMaterial: {fileID: -3620572297651811420, guid: 465f7de57544e6e4abacfb1eaeafd050, type: 3}
+  transparentMaterial: {fileID: 2100000, guid: c965de1f6c5eb5443a4bd4d14d178065, type: 2}

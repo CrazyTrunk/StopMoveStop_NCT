@@ -7,6 +7,7 @@ TagManager:
   - Wall
   - Obstacle
   - Character
+  - DetectCircle
   layers:
   - Default
   - TransparentFX
