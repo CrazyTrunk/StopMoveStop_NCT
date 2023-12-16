@@ -6,5 +6,6 @@
 
     public static string OBSTACLE = "Obstacle";
     public static string DETECT_CIRCLE = "DetectCircle";
+    public static string BULLET = "Bullet";
 
 }

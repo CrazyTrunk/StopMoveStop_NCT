@@ -8,6 +8,7 @@ TagManager:
   - Obstacle
   - Character
   - DetectCircle
+  - Bullet
   layers:
   - Default
   - TransparentFX
