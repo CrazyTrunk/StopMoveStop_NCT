@@ -756,7 +756,7 @@ MonoBehaviour:
   - {fileID: 2640070021537320685, guid: 1990712d651575548a838e925c42aac8, type: 3}
   joystick: {fileID: 445529404}
   playerPrefab: {fileID: 470833348114134376, guid: 94a2814b2676be340a7fda8c9767c2bb, type: 3}
-  maxBotsAtOnce: 1
+  maxBotsAtOnce: 5
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
@@ -1162,7 +1162,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   smoothTime: 0.25
-  target: {fileID: 0}
   mainCameraPos: {x: 0, y: 18, z: -15}
   mainRotationPos: {x: 0.42261827, y: 0, z: 0, w: 0.90630776}
   shopCameraPos: {x: 0, y: 5, z: -10}
@@ -1320,8 +1319,8 @@ MonoBehaviour:
   prefab: {fileID: 107782700579461794, guid: 77666643464a82840b06975bd1a51c47, type: 3}
   notification: 3
   strategy: 0
-  preload: 1
-  capacity: 1
+  preload: 5
+  capacity: 5
   recycle: 0
   persist: 0
   stamp: 0

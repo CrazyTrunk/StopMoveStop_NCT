@@ -132,9 +132,9 @@ public class LevelManager : Singleton<LevelManager>
             indicatorPool.Despawn(indicatorToDespawn.gameObject);
             activeIndicators.Remove(indicatorToDespawn);
         }
+        botPool.Despawn(character.gameObject);
         if (currentParticipants < MaxParticipants)
         {
-            botPool.Despawn(character.gameObject);
             SpawnBot();
             currentParticipants++;
         }
