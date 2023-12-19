@@ -1,1 +1,1 @@
-{"coin":9200,"levelMap":1,"isSoundOn":true,"isVibrance":true,"playerName":"You","isAdsRemove":false,"equippedWeaponId":8,"equippedSkinId":-1,"weapons":[0,8],"skins":[],"levelDataList":[{"level":1,"highestRank":45}]}
+{"coin":9218,"levelMap":1,"isSoundOn":true,"isVibrance":true,"playerName":"You","isAdsRemove":false,"equippedWeaponId":8,"equippedSkinId":-1,"weapons":[0,8],"skins":[],"levelDataList":[{"level":1,"highestRank":42}]}

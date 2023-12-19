@@ -50,14 +50,20 @@ public class Character : MonoBehaviour, ICombatant
     [SerializeField] private Vector3 originalColliderSize;
     [SerializeField] private Vector3 originalColliderCenter;
 
+    [Header("Effect")]
+    [SerializeField] private CharacterEffect characterEffect;
+
     [Header("Boolean")]
     private bool isMoving;
     private bool hasEnemyInSight;
     private bool isAttacking;
     private bool isDead;
     private bool isPopupReviveShow;
+    [Header("Scriptable Object")]
+
     [SerializeField] private WeaponManagerDataScripableObject weaponDataSO;
     [SerializeField] private ItemManagerDataScripableObject skinDataSO;
+
 
 
     public Animator Animator { get => animator; set => animator = value; }
@@ -341,13 +347,15 @@ public class Character : MonoBehaviour, ICombatant
     }
     private IEnumerator RespawnCoroutine()
     {
+        characterEffect.ActiveDeathEffect();
         ChangeAnim(Anim.DIE);
         // Đợi animation "die" chạy xong
         yield return new WaitForSeconds(AnimPlayTime / AnimSpeed);
 
         // Ẩn nhân vật (hoặc làm nhân vật không hoạt động) khi nó chết
         //yield return new WaitForSeconds(1f);
-        if(this is not Player)
+        characterEffect.DeactivateCurrentEffect();
+        if (this is not Player)
         {
             LevelManager.Instance.BotKilled(this);
         }
