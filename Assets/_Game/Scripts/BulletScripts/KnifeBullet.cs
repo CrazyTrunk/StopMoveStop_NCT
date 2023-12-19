@@ -5,12 +5,15 @@ public class KnifeBullet : Bullet
     public override void Shoot()
     {
         startPosition = transform.position;
-        rb.velocity = attackSpeed * range * transform.forward;
-        transform.rotation = Quaternion.LookRotation(rb.velocity) * Quaternion.Euler(new Vector3(90f,0, 180f));
+        Target = startPosition + (transform.forward * range);
+        Vector3 directionToTarget = (Target - startPosition).normalized;
+
+        transform.rotation = Quaternion.LookRotation(directionToTarget) * Quaternion.Euler(new Vector3(90f, 0, 180f));
     }
     public override void Update()
     {
-        if (Vector3.Distance(startPosition, transform.position) > range)
+        transform.position = Vector3.MoveTowards(transform.position, Target, range * 2f * Time.deltaTime);
+        if (Vector3.Distance(transform.position, Target) < 0.1f)
         {
             Destroy(gameObject);
         }

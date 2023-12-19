@@ -10,9 +10,10 @@ public class BoomerangScript : Bullet
     public override void Shoot()
     {
         startPosition = transform.position;
-        rb.velocity = attackSpeed * range * transform.forward;
-        transform.rotation = Quaternion.LookRotation(rb.velocity) * Quaternion.Euler(new Vector3(90f, 0, 180f));
+        Target = startPosition + (transform.forward * range);
+        Vector3 directionToTarget = (Target - startPosition).normalized;
 
+        transform.rotation = Quaternion.LookRotation(directionToTarget) * Quaternion.Euler(new Vector3(90f, 0, 180f));
         state = State.Forward;
     }
     public override void Update()
@@ -20,19 +21,19 @@ public class BoomerangScript : Bullet
         switch (state)
         {
             case State.Forward:
-                if (Vector3.Distance(startPosition, transform.position) > range)
+                transform.position = Vector3.MoveTowards(transform.position, Target, range * 2f * Time.deltaTime);
+                transform.Rotate(new Vector3(0f, 0f, 360f) * Time.deltaTime);
+                if (Vector3.Distance(transform.position, Target) < 0.1f)
                 {
                     state = State.Backward;
-                    rb.velocity = -rb.velocity;
                 }
-                transform.Rotate(new Vector3(0f, 0f, 360f) * Time.deltaTime);
                 break;
             case State.Backward:
+                transform.position = Vector3.MoveTowards(transform.position, startPosition, range * 2f * Time.deltaTime);
                 transform.Rotate(new Vector3(0f, 0f, 360f) * Time.deltaTime);
 
                 if (Vector3.Distance(startPosition, transform.position) < 0.1f)
                 {
-                    rb.velocity = Vector3.zero;
                     state = State.Stop;
                     Destroy(gameObject);
                 }
