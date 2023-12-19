@@ -1,4 +1,5 @@
-﻿using TMPro;
+﻿using System;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -28,6 +29,12 @@ public class LoseMenu : Menu<LoseMenu>
         nextZoneText.text = $"Zone {playerData.levelMap + 1}";
         currentZone.sprite = ZoneImages[playerData.levelMap - 1];
         nextZone.sprite = ZoneImages[playerData.levelMap];
+    }
+    public void OnScreenShotClick()
+    {
+        string filename = $"{playerData.playerName}-Level {playerData.levelMap}.png";
+
+        ScreenCapture.CaptureScreenshot(filename);
     }
     private void CalculateHighScore()
     {
