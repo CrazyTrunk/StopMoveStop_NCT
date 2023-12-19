@@ -16,6 +16,6 @@ MonoBehaviour:
   itemType: 1
   itemName: RainBow
   cost: 500
-  image: {fileID: 21300000, guid: 4d6b3cb74098a8640b03cd004d1dcdbb, type: 3}
+  image: {fileID: 21300000, guid: e300fac81719ee24794c02440211acd1, type: 3}
   moveSpeedBonus: 8
   pantsMaterial: {fileID: 2100000, guid: 3ede5fa8aa09c8e4bb0949dcbaa5982b, type: 2}

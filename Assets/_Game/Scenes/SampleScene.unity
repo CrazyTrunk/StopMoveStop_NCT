@@ -1161,7 +1161,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4a476f0d9b9842242b94be99a11d0b45, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  smoothTime: 0.1
+  smoothTime: 0.25
   target: {fileID: 0}
   mainCameraPos: {x: 0, y: 18, z: -15}
   mainRotationPos: {x: 0.42261827, y: 0, z: 0, w: 0.90630776}

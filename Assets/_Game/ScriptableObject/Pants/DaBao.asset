@@ -16,6 +16,6 @@ MonoBehaviour:
   itemType: 1
   itemName: DaBao
   cost: 500
-  image: {fileID: 21300000, guid: ae9d58ecee0e3f848b8fedb3f2c67648, type: 3}
+  image: {fileID: 21300000, guid: c39a243b263ba9b48b2bb0764d6de13a, type: 3}
   moveSpeedBonus: 8
   pantsMaterial: {fileID: 2100000, guid: 496bbadbeb14010498edc9e5d711d3ab, type: 2}

@@ -16,6 +16,6 @@ MonoBehaviour:
   itemType: 1
   itemName: Chambi
   cost: 500
-  image: {fileID: 21300000, guid: 3ddbc9e0f3f883a46b1ba9635f87c222, type: 3}
+  image: {fileID: 21300000, guid: 21be0c77900e28445805a46957b4dc1f, type: 3}
   moveSpeedBonus: 8
   pantsMaterial: {fileID: 2100000, guid: 4e32ca4afcbbf564aa954d7f7e70b7a8, type: 2}

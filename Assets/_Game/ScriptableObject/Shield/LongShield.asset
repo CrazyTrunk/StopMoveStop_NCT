@@ -16,6 +16,6 @@ MonoBehaviour:
   itemType: 3
   itemName: LongShield
   cost: 500
-  image: {fileID: 21300000, guid: 3dedbea6f56343249805bb0aee8693f9, type: 3}
+  image: {fileID: 21300000, guid: 02f2863eeb8222f42b2bbc5d7b7eed32, type: 3}
   bonusGold: 25
   itemPrefab: {fileID: 1516117476785278154, guid: 150540a82681bb44f9e31e6c122741ea, type: 3}

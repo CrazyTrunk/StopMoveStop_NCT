@@ -126,21 +126,18 @@ public class LevelManager : Singleton<LevelManager>
             IngameMenu.Instance.OnInit(TotalAlive);
         }
         usedPositions.Remove(character.transform.position);
+        var indicatorToDespawn = activeIndicators.FirstOrDefault(indicator => indicator.Target == character);
+        if (indicatorToDespawn != null)
+        {
+            indicatorPool.Despawn(indicatorToDespawn.gameObject);
+            activeIndicators.Remove(indicatorToDespawn);
+        }
         if (currentParticipants < MaxParticipants)
         {
             botPool.Despawn(character.gameObject);
             SpawnBot();
             currentParticipants++;
         }
-
-
-        var indicatorToDespawn = activeIndicators.FirstOrDefault(indicator => indicator.Target == character.transform);
-        if (indicatorToDespawn != null)
-        {
-            indicatorPool.Despawn(indicatorToDespawn.gameObject);
-            activeIndicators.Remove(indicatorToDespawn);
-        }
-
         if (TotalAlive == 1)
         {
             if (playerData.levelMap < levels.Count)

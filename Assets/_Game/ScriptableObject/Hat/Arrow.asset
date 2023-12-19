@@ -16,6 +16,6 @@ MonoBehaviour:
   itemType: 0
   itemName: Arrow
   cost: 500
-  image: {fileID: 21300000, guid: eb69cff6254433d4e9c38084ef04f590, type: 3}
+  image: {fileID: 21300000, guid: e301ece609e4a264da093bf909f4d414, type: 3}
   rangeBonus: 5
   itemPrefab: {fileID: 9200484338104123509, guid: 88dbd622b9727ab40809191713c1f6f5, type: 3}

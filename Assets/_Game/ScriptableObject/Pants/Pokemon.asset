@@ -16,6 +16,6 @@ MonoBehaviour:
   itemType: 1
   itemName: Pokemon
   cost: 500
-  image: {fileID: 21300000, guid: ea8161e4ed231be438fe9e968bc8752c, type: 3}
+  image: {fileID: 21300000, guid: 8c26e93d7e1af22438b58f3642640051, type: 3}
   moveSpeedBonus: 8
   pantsMaterial: {fileID: 2100000, guid: 3a3521c517a12fa44afa1be87836020c, type: 2}

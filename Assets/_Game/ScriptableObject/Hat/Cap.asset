@@ -16,6 +16,6 @@ MonoBehaviour:
   itemType: 0
   itemName: Cap
   cost: 500
-  image: {fileID: 21300000, guid: 1cbb565e6302e234e82c3d5766667afd, type: 3}
+  image: {fileID: 21300000, guid: fd68d91a7f4c9f048a427ef4d26fb7a6, type: 3}
   rangeBonus: 5
   itemPrefab: {fileID: 411958621163980118, guid: 0849dba014ac7044b8a5db579b6cc228, type: 3}

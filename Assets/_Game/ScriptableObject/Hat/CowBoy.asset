@@ -16,6 +16,6 @@ MonoBehaviour:
   itemType: 0
   itemName: CowBoy
   cost: 500
-  image: {fileID: 21300000, guid: e18f18b183a01424f8c20f088905e355, type: 3}
+  image: {fileID: 21300000, guid: 126c3b3f221f9c648a30975da6717194, type: 3}
   rangeBonus: 5
   itemPrefab: {fileID: 3578605558763110080, guid: 6015981a4085ab549b1fc5107e23a93b, type: 3}

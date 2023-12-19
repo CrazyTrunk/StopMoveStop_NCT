@@ -16,7 +16,7 @@ MonoBehaviour:
   itemType: 4
   itemName: Devil Set
   cost: 2000
-  image: {fileID: 21300000, guid: a7a1277e40e78884c8bf098129497dab, type: 3}
+  image: {fileID: 21300000, guid: 2659f9a61973b4f4f834e63e7710a34a, type: 3}
   rangeBonus: 5
   movespeedBonus: 0
   setItems:

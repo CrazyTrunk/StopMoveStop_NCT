@@ -5,7 +5,7 @@ public class CameraFollow : MonoBehaviour
 {
 
     [SerializeField] private float smoothTime = 0.25f;
-    [SerializeField] private Transform target;
+    private Transform target;
     [SerializeField] private Vector3 mainCameraPos;
     [SerializeField] private Quaternion mainRotationPos;
     [SerializeField] private Vector3 shopCameraPos;

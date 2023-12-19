@@ -16,6 +16,6 @@ MonoBehaviour:
   itemType: 0
   itemName: PoliceHat
   cost: 500
-  image: {fileID: 21300000, guid: 618234528de04654db5493d4d04dbbf2, type: 3}
+  image: {fileID: 21300000, guid: 41490dac1031e65448d1685b92141d90, type: 3}
   rangeBonus: 5
   itemPrefab: {fileID: 5379597887387267568, guid: 0a2af3e03dc28e44f816fe113670cd3b, type: 3}

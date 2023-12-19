@@ -16,6 +16,6 @@ MonoBehaviour:
   itemType: 0
   itemName: Crown
   cost: 500
-  image: {fileID: 21300000, guid: 5c06bab390a79764d8d0539b57b1cf45, type: 3}
+  image: {fileID: 21300000, guid: df29fe001a0dd17408aacc8d66b056f3, type: 3}
   rangeBonus: 5
   itemPrefab: {fileID: 6662150186912548168, guid: 8f1f73d7355811d4ba1a9147798a4700, type: 3}

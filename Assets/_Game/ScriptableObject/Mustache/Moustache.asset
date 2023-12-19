@@ -16,6 +16,6 @@ MonoBehaviour:
   itemType: 2
   itemName: Moustache
   cost: 500
-  image: {fileID: 21300000, guid: 689d52942dc71174fadb78bf5de269d0, type: 3}
+  image: {fileID: 21300000, guid: bf835124682e4164181e3e6645a85de4, type: 3}
   rangeBonus: 5
   itemPrefab: {fileID: 852233063679537424, guid: 5645a2e8ffe57414e953454ef3037612, type: 3}
