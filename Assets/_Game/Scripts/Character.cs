@@ -96,8 +96,11 @@ public class Character : MonoBehaviour, ICombatant
         ResetState();
         if (this is Enemy enemy)
         {
-            ChangeWeapon(WeaponType.HAMMER);
-            ChangeSkin(15);
+            int randomWeaponTypeIndex = UnityEngine.Random.Range(0, Enum.GetNames(typeof(WeaponType)).Length - 1);
+            int randomSkinId = UnityEngine.Random.Range(0, 20);
+
+            ChangeWeapon(randomWeaponTypeIndex);
+            ChangeSkin(randomSkinId);
             characterName = enemy.GetRandomBotName();
         }
         else if (this is Player)
