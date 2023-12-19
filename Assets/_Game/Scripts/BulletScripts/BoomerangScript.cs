@@ -35,7 +35,7 @@ public class BoomerangScript : Bullet
                 if (Vector3.Distance(startPosition, transform.position) < 0.1f)
                 {
                     state = State.Stop;
-                    Destroy(gameObject);
+                    OnDespawn();
                 }
                 break;
         }

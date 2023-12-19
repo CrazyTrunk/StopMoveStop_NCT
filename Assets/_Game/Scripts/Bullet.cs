@@ -1,17 +1,21 @@
 using System;
 using UnityEngine;
-//[RequireComponent(typeof(Rigidbody))]
-
+[RequireComponent(typeof(Rigidbody))]
 public class Bullet : MonoBehaviour
 {
-    //[SerializeField] protected Rigidbody rb;
+    [SerializeField] protected Rigidbody rb;
     protected float range;
     protected Vector3 startPosition;
     protected Action<Character, Character> onHit;
     private Vector3 target;
     public Character Shooter { get; set; }
     public Vector3 Target { get => target; set => target = value; }
-
+    private bool isHitObstacle;
+    private void Start()
+    {
+        rb = GetComponent<Rigidbody>();
+        isHitObstacle = false;
+    }
     public void OnInit(Character attacker, Action<Character, Character> onHit)
     {
         this.Shooter = attacker;
@@ -29,23 +33,36 @@ public class Bullet : MonoBehaviour
     }
     public virtual void Update()
     {
-        transform.position = Vector3.MoveTowards(transform.position, Target, range * 2f * Time.deltaTime);    
-        transform.Rotate(new Vector3(0f, 0f, 360f) * Time.deltaTime);
-        if (Vector3.Distance(transform.position, Target) < 0.1f)
+        if (!isHitObstacle)
         {
-            Destroy(gameObject);
+            transform.position = Vector3.MoveTowards(transform.position, Target, range * 2f * Time.deltaTime);
+            transform.Rotate(new Vector3(0f, 0f, 360f) * Time.deltaTime);
+            if (Vector3.Distance(transform.position, Target) < 0.1f)
+            {
+                OnDespawn();
+            }
         }
+
     }
     private void OnTriggerEnter(Collider other)
     {
+        if (other.CompareTag(Tag.WALL) || other.CompareTag(Tag.OBSTACLE))
+        {
+            isHitObstacle = true;
+            Invoke(nameof(OnDespawn), 2f);
+        }
         if (other.CompareTag(Tag.CHARACTER))
         {
             Character victim = other.GetComponent<Character>();
             if (!victim.IsDead && victim != Shooter)
             {
                 onHit?.Invoke(Shooter, victim);
-                Destroy(gameObject);
+                OnDespawn();
             }
         }
+    }
+    public void OnDespawn()
+    {
+        Destroy(gameObject);
     }
 }

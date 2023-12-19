@@ -308,7 +308,7 @@ public class Character : MonoBehaviour, ICombatant
         if (victim is Player player)
         {
             //Need to Revive?
-            if (!player.isPopupReviveShow)
+            if (!player.isPopupReviveShow && LevelManager.Instance.TotalAlive >= 3)
             {
                 ReviveMenu.Show();
                 ReviveMenu.Instance.OnInit(attacker, player);

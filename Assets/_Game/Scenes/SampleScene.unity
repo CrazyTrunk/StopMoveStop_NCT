@@ -752,8 +752,8 @@ MonoBehaviour:
   indicatorParent: {fileID: 1881836829}
   indicatorCanvas: {fileID: 726397872}
   levels:
-  - {fileID: 179443406242372634, guid: 4698a516db2c27b4ba2f7156961bddae, type: 3}
-  - {fileID: 2640070021537320685, guid: 1990712d651575548a838e925c42aac8, type: 3}
+  - {fileID: 4812408940212568817, guid: 4698a516db2c27b4ba2f7156961bddae, type: 3}
+  - {fileID: 4812408940212568817, guid: c2aacc92d6b4d01498ec17193e45a168, type: 3}
   joystick: {fileID: 445529404}
   playerPrefab: {fileID: 470833348114134376, guid: 94a2814b2676be340a7fda8c9767c2bb, type: 3}
   maxBotsAtOnce: 5

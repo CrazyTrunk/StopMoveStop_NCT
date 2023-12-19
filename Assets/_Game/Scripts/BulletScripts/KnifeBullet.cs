@@ -15,7 +15,7 @@ public class KnifeBullet : Bullet
         transform.position = Vector3.MoveTowards(transform.position, Target, range * 2f * Time.deltaTime);
         if (Vector3.Distance(transform.position, Target) < 0.1f)
         {
-            Destroy(gameObject);
+            OnDespawn();
         }
     }
 }
