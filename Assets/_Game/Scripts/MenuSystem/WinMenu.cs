@@ -26,6 +26,12 @@ public class WinMenu : Menu<WinMenu>
         playerData = GameManager.Instance.GetPlayerData();
 
     }
+    public void OnScreenShotClick()
+    {
+        string filename = $"{playerData.playerName}-Level {playerData.levelMap}.png";
+
+        ScreenCapture.CaptureScreenshot(filename);
+    }
     public void OnNextZoneClicked()
     {
         Hide();
