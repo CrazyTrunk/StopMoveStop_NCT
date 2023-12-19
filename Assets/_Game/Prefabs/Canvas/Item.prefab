@@ -800,12 +800,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cc5e4ed7e8a41db4283971f564536d48, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  id: 0
   type: 0
   itemName: 
   itemDescription: 
-  price: 
+  price: 0
   isUnlocked: 0
   isFocus: 0
+  isSelected: 0
   image: {fileID: 586815520865584240}
   button: {fileID: 4671224121663710227}
   borders:
@@ -815,3 +817,4 @@ MonoBehaviour:
   - {fileID: 2518737654444875511}
   lockObject: {fileID: 1109544758721347860}
   equipObject: {fileID: 6070194513586779492}
+  currentItem: {fileID: 0}
