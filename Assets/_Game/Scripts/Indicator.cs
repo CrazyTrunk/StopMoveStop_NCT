@@ -1,4 +1,4 @@
-using TMPro;
+﻿using TMPro;
 using UnityEngine;
 
 public class Indicator : MonoBehaviour
@@ -53,8 +53,10 @@ public class Indicator : MonoBehaviour
     }
     private void UpdateIndicatorPosition()
     {
+        Vector3 adjustedPosition = calculateWorldPosition(target.transform.position, mainCamera);
+
         //khong gian man hinh
-        Vector3 targetScreenPos = mainCamera.WorldToScreenPoint(target.transform.position);
+        Vector3 targetScreenPos = mainCamera.WorldToScreenPoint(adjustedPosition);
 
         Vector2 localPoint;
         //chuyen tu khon gian man hinh sang khong gian canvas
@@ -72,5 +74,22 @@ public class Indicator : MonoBehaviour
     {
         float angle = Mathf.Atan2(targetPosition.y, targetPosition.x) * Mathf.Rad2Deg - 90;
         selfRect.localRotation = Quaternion.Euler(0, 0, angle);
+    }
+    // position = the world position of the entity to be tested
+    private Vector3 calculateWorldPosition(Vector3 position, Camera camera)
+    {
+        //if the point is behind the camera then project it onto the camera plane
+        Vector3 camNormal = camera.transform.forward;
+        Vector3 vectorFromCam = position - camera.transform.position;
+        float camNormDot = Vector3.Dot(camNormal, vectorFromCam.normalized);
+        if (camNormDot <= 0f)
+        {
+            //we are beind the camera, project the position on the camera plane
+            float camDot = Vector3.Dot(camNormal, vectorFromCam);
+            Vector3 proj = (camNormal * camDot * 1.01f);   //small epsilon to keep the position infront of the camera
+            position = camera.transform.position + (vectorFromCam - proj);
+        }
+
+        return position;
     }
 }
