@@ -1,5 +1,4 @@
 
-#if UNITY_EDITOR
 using UnityEngine;
 
 public class FPS : MonoBehaviour
@@ -43,4 +42,3 @@ public class FPS : MonoBehaviour
     }
 }
 
-#endif
