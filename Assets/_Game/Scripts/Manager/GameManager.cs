@@ -13,7 +13,7 @@ public class GameManager : Singleton<GameManager>
 
     private void Awake()
     {
-        Application.targetFrameRate = 60;
+        //Application.targetFrameRate = 60;
         ChangeState(GameState.MENU);
         playerData = ReadFromJson(FilePathGame.CHARACTER_PATH);
         if (playerData == null)
