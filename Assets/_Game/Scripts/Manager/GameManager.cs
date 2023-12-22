@@ -13,7 +13,11 @@ public class GameManager : Singleton<GameManager>
 
     private void Awake()
     {
+        Input.multiTouchEnabled = false;
+
         Application.targetFrameRate = 60;
+        Screen.sleepTimeout = SleepTimeout.NeverSleep;
+
         ChangeState(GameState.MENU);
         playerData = ReadFromJson(FilePathGame.CHARACTER_PATH);
         if (playerData == null)
