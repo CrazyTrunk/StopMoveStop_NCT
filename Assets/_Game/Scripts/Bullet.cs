@@ -1,3 +1,4 @@
+using Lean.Pool;
 using System;
 using UnityEngine;
 [RequireComponent(typeof(Rigidbody))]
@@ -10,7 +11,7 @@ public class Bullet : MonoBehaviour
     private Vector3 target;
     public Character Shooter { get; set; }
     public Vector3 Target { get => target; set => target = value; }
-    private bool isHitObstacle;
+    protected bool isHitObstacle;
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
@@ -63,6 +64,6 @@ public class Bullet : MonoBehaviour
     }
     public void OnDespawn()
     {
-        Destroy(gameObject);
+        LeanPool.Despawn(gameObject);
     }
 }

@@ -75,7 +75,7 @@ public class LevelManager : Singleton<LevelManager>
             potentialPosition = new Vector3(x, 0.08f, z); // '0' is the y-coordinate on the plane
 
             Collider[] hitColliders = new Collider[10];
-            int numColliders = Physics.OverlapSphereNonAlloc(potentialPosition, 6f, hitColliders);
+            int numColliders = Physics.OverlapSphereNonAlloc(potentialPosition, 10f, hitColliders);
             for (int i = 0; i < numColliders; i++)
             {
                 if (hitColliders[i].CompareTag(Tag.CHARACTER) || hitColliders[i].CompareTag(Tag.OBSTACLE) || usedPositions.Contains(potentialPosition))

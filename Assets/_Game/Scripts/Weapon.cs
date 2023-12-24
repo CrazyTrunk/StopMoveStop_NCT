@@ -1,6 +1,7 @@
 ﻿
 using System;
 using UnityEngine;
+using Lean.Pool;
 [System.Serializable]
 public class Weapon : MonoBehaviour
 {
@@ -26,7 +27,7 @@ public class Weapon : MonoBehaviour
     }
     public GameObject SpawnBullet(Transform spawnBulletPoint)
     {
-        return Instantiate(bulletPrefab, spawnBulletPoint.position, spawnBulletPoint.rotation);
+        return LeanPool.Spawn(bulletPrefab, spawnBulletPoint.position, spawnBulletPoint.rotation);
     }
     private void LateUpdate()
     {
