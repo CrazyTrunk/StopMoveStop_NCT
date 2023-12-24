@@ -19,6 +19,7 @@ public class Bullet : MonoBehaviour
     }
     public void OnInit(Character attacker, Action<Character, Character> onHit)
     {
+        isHitObstacle = false;
         this.Shooter = attacker;
         this.onHit = onHit;
         this.range = attacker.Range;
@@ -50,9 +51,9 @@ public class Bullet : MonoBehaviour
         if (other.CompareTag(Tag.WALL) || other.CompareTag(Tag.OBSTACLE))
         {
             isHitObstacle = true;
-            Invoke(nameof(OnDespawn), 2f);
+            Invoke(nameof(OnDespawn),1f);
         }
-        if (other.CompareTag(Tag.CHARACTER))
+        else if (other.CompareTag(Tag.CHARACTER))
         {
             Character victim = other.GetComponent<Character>();
             if (!victim.IsDead && victim != Shooter)

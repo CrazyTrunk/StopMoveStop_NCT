@@ -12,10 +12,13 @@ public class KnifeBullet : Bullet
     }
     public override void Update()
     {
-        transform.position = Vector3.MoveTowards(transform.position, Target, range * 2f * Time.deltaTime);
-        if (Vector3.Distance(transform.position, Target) < 0.1f)
+        if (!isHitObstacle)
         {
-            OnDespawn();
+            transform.position = Vector3.MoveTowards(transform.position, Target, range * 2f * Time.deltaTime);
+            if (Vector3.Distance(transform.position, Target) < 0.1f)
+            {
+                OnDespawn();
+            }
         }
     }
 }

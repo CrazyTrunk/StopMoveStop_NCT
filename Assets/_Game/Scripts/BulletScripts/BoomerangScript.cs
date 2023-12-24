@@ -18,27 +18,29 @@ public class BoomerangScript : Bullet
     }
     public override void Update()
     {
-        switch (state)
+        if (!isHitObstacle)
         {
-            case State.Forward:
-                transform.position = Vector3.MoveTowards(transform.position, Target, range * 2f * Time.deltaTime);
-                transform.Rotate(new Vector3(0f, 0f, 360f) * Time.deltaTime);
-                if (Vector3.Distance(transform.position, Target) < 0.1f)
-                {
-                    state = State.Backward;
-                }
-                break;
-            case State.Backward:
-                transform.position = Vector3.MoveTowards(transform.position, startPosition, range * 2f * Time.deltaTime);
-                transform.Rotate(new Vector3(0f, 0f, 360f) * Time.deltaTime);
+            switch (state)
+            {
+                case State.Forward:
+                    transform.position = Vector3.MoveTowards(transform.position, Target, range * 2f * Time.deltaTime);
+                    transform.Rotate(new Vector3(0f, 0f, 360f) * Time.deltaTime);
+                    if (Vector3.Distance(transform.position, Target) < 0.1f)
+                    {
+                        state = State.Backward;
+                    }
+                    break;
+                case State.Backward:
+                    transform.position = Vector3.MoveTowards(transform.position, startPosition, range * 2f * Time.deltaTime);
+                    transform.Rotate(new Vector3(0f, 0f, 360f) * Time.deltaTime);
 
-                if (Vector3.Distance(startPosition, transform.position) < 0.1f)
-                {
-                    state = State.Stop;
-                    OnDespawn();
-                }
-                break;
+                    if (Vector3.Distance(startPosition, transform.position) < 0.1f)
+                    {
+                        state = State.Stop;
+                        OnDespawn();
+                    }
+                    break;
+            }
         }
-       
     }
 }
