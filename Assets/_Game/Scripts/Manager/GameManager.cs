@@ -15,7 +15,7 @@ public class GameManager : Singleton<GameManager>
     {
         Input.multiTouchEnabled = false;
 
-        Application.targetFrameRate = 60;
+        //Application.targetFrameRate = 60;
         Screen.sleepTimeout = SleepTimeout.NeverSleep;
 
         ChangeState(GameState.MENU);

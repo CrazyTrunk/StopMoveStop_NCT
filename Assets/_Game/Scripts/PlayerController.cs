@@ -20,15 +20,18 @@ public class PlayerController : MonoBehaviour
         if (GameManager.Instance.IsState(GameState.PLAYING))
         {
 
-            rb.velocity = new Vector3(joystick.Horizontal * player.Speed, rb.velocity.y, joystick.Vertical * player.Speed);
+            Vector3 direction = new Vector3(joystick.Horizontal, 0, joystick.Vertical);
 
-            if (joystick.Horizontal != 0 || joystick.Vertical != 0)
+            if (direction.magnitude > 0.01f)
             {
+                direction.Normalize();
+                rb.velocity = direction * player.Speed;
                 player.IsMoving = true;
                 player.ChangeAnim(Anim.RUN);
             }
-            else if ((joystick.Horizontal == 0 || joystick.Vertical == 0))
+            else
             {
+                rb.velocity = Vector3.zero;
                 player.IsMoving = false;
                 if (CanIdle())
                 {
