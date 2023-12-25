@@ -91,7 +91,7 @@ public class WeaponMenu : Menu<WeaponMenu>
         currentEquipData = weaponDataSO.GetWeaponById(playerData.equippedWeaponId);
         GameManager.Instance.UpdatePlayerData(playerData);
         DisplayButtons();
-        GlobalEvents.WeaponSelected(currentWeaponDataOnView.type);
+        GlobalEvents.WeaponSelected(playerData);
         GameManager.Instance.SaveToJson(playerData, FilePathGame.CHARACTER_PATH);
 
     }

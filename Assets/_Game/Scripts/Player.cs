@@ -17,7 +17,7 @@ public class Player : Character, ICombatant
     }
     void OnEnable()
     {
-        GameManager.Instance.OnPlayerDataUpdated += UpdateWeapon;
+        GlobalEvents.OnWeaponSelected += UpdateWeapon;
         GlobalEvents.OnXMarkSkinShopClicked += ChangeSkin;
         GlobalEvents.OnXMarkSkinShopClicked += ResetIdle;
     }
@@ -25,10 +25,8 @@ public class Player : Character, ICombatant
 
     private void OnDisable()
     {
-        if (GameManager.Instance != null)
-        {
-            GameManager.Instance.OnPlayerDataUpdated -= UpdateWeapon;
-        }
+
+        GlobalEvents.OnWeaponSelected -= UpdateWeapon;
         GlobalEvents.OnXMarkSkinShopClicked -= ChangeSkin;
         GlobalEvents.OnXMarkSkinShopClicked -= ResetIdle;
 
@@ -55,10 +53,10 @@ public class Player : Character, ICombatant
         var floatText = Instantiate(floatingLevelTextPrefab, canvasPopup.position, canvasPopup.rotation, canvasPopup);
         floatText.GetComponent<TextMeshProUGUI>().text = $"+ {level}";
     }
-    public void OnRevive()
+    public void OnRevive(int playerLevel)
     {
         RadicalTrigger.gameObject.SetActive(false);
-        OnInit();
+        ResetState(playerLevel);
         IsPopupReviveShow = true;
         ChangeAnim(Anim.IDLE);
     }

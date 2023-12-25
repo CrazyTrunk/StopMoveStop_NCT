@@ -97,9 +97,7 @@ public class Character : MonoBehaviour, ICombatant
     public virtual void OnInit()
     {
         Animator.speed = animSpeed;
-        capsuleColliderCharacter.center = originalColliderCenter;
-        capsuleColliderCharacter.radius = originalColliderSize.x;
-        capsuleColliderCharacter.height = originalColliderSize.y;
+        ResetCollider();
         ResetState();
         if (this is Enemy enemy)
         {
@@ -118,6 +116,12 @@ public class Character : MonoBehaviour, ICombatant
         characterInfo.UpdateUINamePlayer(characterName);
         RecalculateBonuses();
         CharacterSphere.UpdateTriggerSize(this.range);
+    }
+    public void ResetCollider()
+    {
+        capsuleColliderCharacter.center = originalColliderCenter;
+        capsuleColliderCharacter.radius = originalColliderSize.x;
+        capsuleColliderCharacter.height = originalColliderSize.y;
     }
     public void ChangeSkin()
     {
@@ -230,6 +234,19 @@ public class Character : MonoBehaviour, ICombatant
     public void ResetState()
     {
         level = 0;
+        isDead = false;
+        isMoving = false;
+        isAttacking = false;
+        hasEnemyInSight = false;
+        IsPopupReviveShow = false;
+        capsuleColliderCharacter.enabled = true;
+        RadicalTrigger.OnInit();
+        RadicalTrigger.gameObject.SetActive(true);
+        Undetect();
+    }
+    public void ResetState(int currentLevel)
+    {
+        level = currentLevel;
         isDead = false;
         isMoving = false;
         isAttacking = false;

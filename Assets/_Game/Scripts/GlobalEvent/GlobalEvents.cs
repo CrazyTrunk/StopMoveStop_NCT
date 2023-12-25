@@ -7,16 +7,16 @@ using System.Threading.Tasks;
 public static class GlobalEvents
 {
     // Sự kiện cho việc chọn vũ khí
-    public static event Action<WeaponType> OnWeaponSelected;
+    public static event Action<PlayerData> OnWeaponSelected;
     public static event Action<ItemData> OnShopItemClick;
     public static event Action OnXMarkSkinShopClicked;
     public static event Action OnPlayClick;
     public static event Action OnReviveClick;
 
     // Phương thức để phát sự kiện chọn vũ khí
-    public static void WeaponSelected(WeaponType weaponType)
+    public static void WeaponSelected(PlayerData playerData)
     {
-        OnWeaponSelected?.Invoke(weaponType);
+        OnWeaponSelected?.Invoke(playerData);
     }
     public static void ShopItemClicked(ItemData itemData)
     {

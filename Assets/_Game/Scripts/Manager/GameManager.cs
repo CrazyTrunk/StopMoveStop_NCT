@@ -7,7 +7,6 @@ using UnityEngine;
 public class GameManager : Singleton<GameManager>
 {
     private GameState _gameState;
-    public event Action<PlayerData> OnPlayerDataUpdated;
     private PlayerData playerData;
     [SerializeField] private WeaponManagerDataScripableObject weaponDataSO;
 
@@ -80,7 +79,6 @@ public class GameManager : Singleton<GameManager>
     public void UpdatePlayerData(PlayerData newData)
     {
         playerData = newData;
-        OnPlayerDataUpdated?.Invoke(playerData);
         Cache.UpdatePlayerData(playerData);
     }
     public PlayerData GetPlayerData()

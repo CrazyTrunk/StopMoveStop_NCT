@@ -40,7 +40,7 @@ public class ReviveMenu : Menu<ReviveMenu>
     private void HandleReviveClick()
     {
         Hide();
-        player.OnRevive();
+        player.OnRevive(player.level);
         GameManager.Instance.ChangeState(GameState.PLAYING);
     }
 
