@@ -112,6 +112,13 @@ public class WeaponMenu : Menu<WeaponMenu>
             GameManager.Instance.SaveToJson(playerData, FilePathGame.CHARACTER_PATH);
         }
     }
+    public void OnAdsButtonClick()
+    {
+        BuyWeapon(currentWeaponDataOnView.id);
+        GameManager.Instance.UpdatePlayerData(playerData);
+        DisplayButtons();
+        GameManager.Instance.SaveToJson(playerData, FilePathGame.CHARACTER_PATH);
+    }
     public static void Show()
     {
         Open();

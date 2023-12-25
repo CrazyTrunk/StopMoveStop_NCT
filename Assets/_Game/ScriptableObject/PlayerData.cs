@@ -15,7 +15,7 @@ public class PlayerData
     public List<int> weapons;
     public List<int> skins;
 
-    public List<LevelData> levelDataList;
+    public List<LevelDataRank> levelDataList;
     public PlayerData()
     {
         coin = 0;
@@ -25,7 +25,7 @@ public class PlayerData
         isVibrance = true;
         equippedWeaponId = -1;
         equippedSkinId = -1;
-        levelDataList = new List<LevelData>();
+        levelDataList = new List<LevelDataRank>();
         skins = new List<int>();
         weapons = new List<int>();
     }
@@ -47,7 +47,7 @@ public class PlayerData
                 }
             }
         }
-        levelDataList.Add(new LevelData(level, rank));
+        levelDataList.Add(new LevelDataRank(level, rank));
     }
     public int GetHighestScoreByLevel(int level)
     {
@@ -62,12 +62,12 @@ public class PlayerData
     }
 }
 [System.Serializable]
-public class LevelData
+public class LevelDataRank
 {
     public int level;
     public int highestRank;
 
-    public LevelData(int level, int highestRank)
+    public LevelDataRank(int level, int highestRank)
     {
         this.level = level;
         this.highestRank = highestRank;
