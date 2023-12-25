@@ -5,7 +5,7 @@ public class EnemyController : MonoBehaviour
     [SerializeField] private Enemy currentBot;
     [SerializeField] private Transform infoCanvasTransform;
     private IState currentState;
-    private float wallCheckDistance = 1f;
+    private float wallCheckDistance = 2f;
 
     public Enemy CurrentBot { get => currentBot; set => currentBot = value; }
     public void OnInit()
