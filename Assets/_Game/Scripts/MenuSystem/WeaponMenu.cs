@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections;
+using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -20,7 +21,8 @@ public class WeaponMenu : Menu<WeaponMenu>
     [SerializeField] private TextMeshProUGUI selectText;
     [SerializeField] private WeaponManagerDataScripableObject weaponDataSO;
     [SerializeField] private Transform spawnPoint;
-
+    [SerializeField] private GameObject warning;
+    private bool warningActive = false;
     PlayerData playerData;
 
 
@@ -31,12 +33,14 @@ public class WeaponMenu : Menu<WeaponMenu>
     private int currentWeaponIndex = 0;
     private GameObject currentWeaponPrefab;
 
+
     public void OnInit()
     {
         playerData = GameManager.Instance.GetPlayerData();
         currentEquipData = weaponDataSO.GetWeaponById(playerData.equippedWeaponId);
         playerData = GameManager.Instance.GetPlayerData();
         coinText.text = playerData.coin.ToString();
+        warning.SetActive(false);
     }
     private void DisplayButtons()
     {
@@ -111,6 +115,23 @@ public class WeaponMenu : Menu<WeaponMenu>
             DisplayButtons();
             GameManager.Instance.SaveToJson(playerData, FilePathGame.CHARACTER_PATH);
         }
+        else
+        {
+            StartCoroutine(ShowWarning());
+        }
+    }
+    public IEnumerator ShowWarning()
+    {
+        if (warningActive)
+        {
+            yield break;
+        }
+        warningActive = true;
+        warning.SetActive(true);
+        yield return new WaitForSeconds(1f);
+        warning.SetActive(false);
+        warningActive = false;
+
     }
     public void OnAdsButtonClick()
     {
