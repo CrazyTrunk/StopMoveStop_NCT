@@ -17,6 +17,7 @@ public class LevelManager : Singleton<LevelManager>
     [SerializeField] private int maxBotsAtOnce;
     private GameObject currentLevelPrefab;
     private Level currentLevelData;
+    public List<Enemy> activeBots = new List<Enemy>();
 
     private GameObject currentPlayerPrefab;
     private Player currentPlayerData;
@@ -65,29 +66,36 @@ public class LevelManager : Singleton<LevelManager>
 
     private Vector3 GenerateSpawnPosition()
     {
+        const float MIN_DISTANCE_FROM_PLAYER_AND_BOTS = 10f;
         bool positionValid;
         Vector3 potentialPosition;
+        int attemps = 0;
+        int MAX_ATTEMPS = 20;
         do
         {
+            attemps++;
             positionValid = true;
             float x = Random.Range(CurrentLevelData.SpawnAreaMin.x, CurrentLevelData.SpawnAreaMax.x);
             float z = Random.Range(CurrentLevelData.SpawnAreaMin.y, CurrentLevelData.SpawnAreaMax.y);
             potentialPosition = new Vector3(x, 0.08f, z); // '0' is the y-coordinate on the plane
-
-            Collider[] hitColliders = new Collider[10];
-            int numColliders = Physics.OverlapSphereNonAlloc(potentialPosition, 10f, hitColliders);
-            for (int i = 0; i < numColliders; i++)
+            if (Vector3.Distance(potentialPosition, currentPlayerPrefab.transform.position) < MIN_DISTANCE_FROM_PLAYER_AND_BOTS)
             {
-                if (hitColliders[i].CompareTag(Tag.CHARACTER) || hitColliders[i].CompareTag(Tag.OBSTACLE) || usedPositions.Contains(potentialPosition))
+                positionValid = false;
+            }
+            else
+            {
+                foreach (var bot in activeBots)
                 {
-                    positionValid = false;
-                    break;
+                    if (Vector3.Distance(potentialPosition, bot.transform.position) < MIN_DISTANCE_FROM_PLAYER_AND_BOTS)
+                    {
+                        positionValid = false;
+                        break;
+                    }
                 }
             }
-        } 
-        //while (usedPositions.Contains(potentialPosition));
-        while (!positionValid) ;
-        if (potentialPosition != Vector3.zero)
+        }
+        while (!positionValid && attemps <= MAX_ATTEMPS);
+        if (positionValid)
         {
             usedPositions.Add(potentialPosition);
         }
@@ -98,6 +106,7 @@ public class LevelManager : Singleton<LevelManager>
         Vector3 spawnPosition = GenerateSpawnPosition();
         GameObject go = botPool.Spawn(spawnPosition, Quaternion.identity, botPool.transform);
         Enemy enemy = go.GetComponent<Enemy>();
+        activeBots.Add(enemy);
         enemy.OnInit();
         enemy.InitLevelBot(CurrentPlayerData.level + Random.Range(3, 5 + 1));
         Indicator indicator = indicatorPool.Spawn(Vector3.zero, Quaternion.identity, indicatorParent).GetComponent<Indicator>();
@@ -110,6 +119,7 @@ public class LevelManager : Singleton<LevelManager>
         Vector3 spawnPosition = GenerateSpawnPosition();
         GameObject go = botPool.Spawn(spawnPosition, Quaternion.identity, botPool.transform);
         Enemy enemy = go.GetComponent<Enemy>();
+        activeBots.Add(enemy);
         enemy.OnInit();
         enemy.InitLevelBot(level);
         Indicator indicator = indicatorPool.Spawn(spawnPosition, Quaternion.identity, indicatorParent).GetComponent<Indicator>();
@@ -125,14 +135,19 @@ public class LevelManager : Singleton<LevelManager>
         {
             IngameMenu.Instance.OnInit(TotalAlive);
         }
-        usedPositions.Remove(character.transform.position);
+
         var indicatorToDespawn = activeIndicators.FirstOrDefault(indicator => indicator.Target == character);
         if (indicatorToDespawn != null)
         {
             indicatorPool.Despawn(indicatorToDespawn.gameObject);
             activeIndicators.Remove(indicatorToDespawn);
         }
-        botPool.Despawn(character.gameObject);
+        if (character is Enemy enemyKilled)
+        {
+            activeBots.Remove(enemyKilled);
+            usedPositions.Remove(enemyKilled.transform.position);
+            botPool.Despawn(enemyKilled.gameObject);
+        }
         if (currentParticipants < MaxParticipants)
         {
             SpawnBot();
