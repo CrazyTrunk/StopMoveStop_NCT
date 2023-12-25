@@ -12,7 +12,8 @@ public class Toggle : MonoBehaviour
     public enum FeatureType
     {
         Sound = 1,
-        Vibration = 2
+        Vibration = 2,
+        Minimap = 3
     }
     [SerializeField]private FeatureType featureType;
     private PlayerData playerData;
@@ -36,6 +37,9 @@ public class Toggle : MonoBehaviour
                 break;
             case FeatureType.Vibration:
                 playerData.isVibrance = !playerData.isVibrance;
+                break;
+            case FeatureType.Minimap:
+                playerData.isUsingMinimap = !playerData.isUsingMinimap;
                 break;
         }
         ToggleFeature(featureType);
@@ -61,6 +65,18 @@ public class Toggle : MonoBehaviour
                 break;
             case FeatureType.Vibration:
                 if (playerData.isVibrance)
+                {
+                    onObject.SetActive(true);
+                    offObject.SetActive(false);
+                }
+                else
+                {
+                    onObject.SetActive(false);
+                    offObject.SetActive(true);
+                }
+                break;
+            case FeatureType.Minimap:
+                if (playerData.isUsingMinimap)
                 {
                     onObject.SetActive(true);
                     offObject.SetActive(false);

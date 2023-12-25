@@ -17,7 +17,7 @@ public class LevelManager : Singleton<LevelManager>
     [SerializeField] private int maxBotsAtOnce;
     private GameObject currentLevelPrefab;
     private Level currentLevelData;
-    public List<Enemy> activeBots = new List<Enemy>();
+    private List<Enemy> activeBots = new List<Enemy>();
 
     private GameObject currentPlayerPrefab;
     private Player currentPlayerData;

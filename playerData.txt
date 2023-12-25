@@ -1,1 +1,1 @@
-{"coin":1,"levelMap":1,"isSoundOn":true,"isVibrance":true,"playerName":"You","isAdsRemove":false,"equippedWeaponId":4,"equippedSkinId":-1,"weapons":[0,4],"skins":[],"levelDataList":[{"level":1,"highestRank":49}]}
+{"coin":1,"levelMap":1,"isSoundOn":true,"isVibrance":false,"isUsingMinimap":true,"playerName":"You","isAdsRemove":false,"equippedWeaponId":4,"equippedSkinId":-1,"weapons":[0,4],"skins":[],"levelDataList":[{"level":1,"highestRank":49}]}

@@ -619,6 +619,7 @@ MonoBehaviour:
   DisableMenusUnderneath: 1
   Cancelable: 1
   alive: {fileID: 1097419139732266835}
+  minimap: {fileID: 6209364955782469318}
 --- !u!1 &6209364955782469318
 GameObject:
   m_ObjectHideFlags: 0

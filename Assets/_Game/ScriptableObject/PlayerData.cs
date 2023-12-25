@@ -8,6 +8,7 @@ public class PlayerData
     public int levelMap = 1;
     public bool isSoundOn;
     public bool isVibrance;
+    public bool isUsingMinimap;
     public string playerName = "You";
     public bool isAdsRemove;
     public int equippedWeaponId;
@@ -23,6 +24,7 @@ public class PlayerData
         isSoundOn = true;
         isAdsRemove = false;
         isVibrance = true;
+        isUsingMinimap = true;
         equippedWeaponId = -1;
         equippedSkinId = -1;
         levelDataList = new List<LevelDataRank>();
