@@ -717,16 +717,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   botPool: {fileID: 1664224345}
-  indicatorPool: {fileID: 1881836830}
-  indicatorParent: {fileID: 1881836829}
-  indicatorCanvas: {fileID: 726397872}
   levels:
   - {fileID: 4812408940212568817, guid: 4698a516db2c27b4ba2f7156961bddae, type: 3}
   - {fileID: 4812408940212568817, guid: c2aacc92d6b4d01498ec17193e45a168, type: 3}
   joystick: {fileID: 445529404}
   playerPrefab: {fileID: 6803561741217805165, guid: 94a2814b2676be340a7fda8c9767c2bb, type: 3}
   maxBotsAtOnce: 5
-  activeBots: []
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
@@ -1147,6 +1143,7 @@ GameObject:
   - component: {fileID: 1289230813}
   - component: {fileID: 1289230815}
   - component: {fileID: 1289230814}
+  - component: {fileID: 1289230816}
   m_Layer: 5
   m_Name: Indicator-Canvas
   m_TagString: Untagged
@@ -1212,6 +1209,22 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1289230812}
   m_CullTransparentMesh: 1
+--- !u!114 &1289230816
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1289230812}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e17a787ad24c3bc49a69f6b57c8a6d17, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  indicatorPool: {fileID: 1881836830}
+  indicatorCanvas: {fileID: 1289230813}
+  mainCamera: {fileID: 963194227}
+  indicatorParent: {fileID: 1881836829}
 --- !u!1 &1659511961
 GameObject:
   m_ObjectHideFlags: 0

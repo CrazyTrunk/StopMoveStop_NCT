@@ -9,28 +9,13 @@ public class Indicator : MonoBehaviour
     [SerializeField] private float offScreenThreshold = 80f;
     [SerializeField] private TextMeshProUGUI levelDisplay;
     private Enemy target;
-    private Camera mainCamera;
+    //private Camera mainCamera;
     private RectTransform indicatorCanvas;
     public Enemy Target { get => target; set => target = value; }
 
-    private void Update()
+    public void ToggleIndicator(bool isShow)
     {
-        if (target != null)
-        {
-            if (TargetIsOffScreen())
-            {
-                UpdateIndicatorPosition();
-                canvasGroup.alpha = 1;
-            }
-            else
-            {
-                canvasGroup.alpha = 0;
-            }
-        }
-    }
-    private void Start()
-    {
-        mainCamera = Camera.main;
+        canvasGroup.alpha = isShow ? 1 : 0;
     }
     public void SetTarget(Enemy newTarget, RectTransform canvas, int level)
     {
@@ -46,12 +31,12 @@ public class Indicator : MonoBehaviour
         levelDisplay.text = level.ToString();
     }
 
-    private bool TargetIsOffScreen()
+    public bool TargetIsOffScreen(Camera mainCamera)
     {
         Vector3 targetViewportPos = mainCamera.WorldToViewportPoint(target.transform.position);
         return targetViewportPos.x < 0 || targetViewportPos.x > 1 || targetViewportPos.y < 0 || targetViewportPos.y > 1;
     }
-    private void UpdateIndicatorPosition()
+    public void UpdateIndicatorPosition(Camera mainCamera)
     {
         Vector3 adjustedPosition = calculateWorldPosition(target.transform.position, mainCamera);
 
@@ -62,7 +47,7 @@ public class Indicator : MonoBehaviour
         //chuyen tu khon gian man hinh sang khong gian canvas
         RectTransformUtility.ScreenPointToLocalPointInRectangle(indicatorCanvas, targetScreenPos, mainCamera, out localPoint);
 
-        Vector2 canvasSize = indicatorCanvas.sizeDelta;
+        Vector2 canvasSize = indicatorCanvas.rect.size;
         //trung tam la (0,0) xy
         localPoint.x = Mathf.Clamp(localPoint.x, -canvasSize.x / 2 + offScreenThreshold, canvasSize.x / 2 - offScreenThreshold);
         localPoint.y = Mathf.Clamp(localPoint.y, -canvasSize.y / 2 + offScreenThreshold, canvasSize.y / 2 - offScreenThreshold);
