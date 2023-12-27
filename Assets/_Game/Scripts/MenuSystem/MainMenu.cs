@@ -14,7 +14,8 @@ public class MainMenu : Menu<MainMenu>
     [SerializeField] private GameObject vibranceOff;
     [SerializeField] private GameObject soundOn;
     [SerializeField] private GameObject soundOff;
-
+    public delegate void MenuAction();
+    public static event MenuAction OnMainMenuPlayClick;
     private PlayerData playerData;
     private void Start()
     {
@@ -97,8 +98,9 @@ public class MainMenu : Menu<MainMenu>
     {
         Hide();
         GameManager.Instance.ChangeState(GameState.PLAYING);
-        CameraFollow camera = Camera.main.GetComponent<CameraFollow>();
-        camera.SwitchCameraViewToPlayer();
+        //CameraFollow camera = Camera.main.GetComponent<CameraFollow>();
+        //camera.SwitchCameraViewToPlayer();
+        OnMainMenuPlayClick?.Invoke();
         IngameMenu.Show();
         IngameMenu.Instance.OnInit(LevelManager.Instance.TotalAlive);
     }
@@ -112,8 +114,6 @@ public class MainMenu : Menu<MainMenu>
     public void OnSkinMenuClick()
     {
         Hide();
-        CameraFollow camera = Camera.main.GetComponent<CameraFollow>();
-        camera.SwitchCameraViewToSkinShop();
         SkinMenu.Show();
         SkinMenu.Instance.OnInit();
     }

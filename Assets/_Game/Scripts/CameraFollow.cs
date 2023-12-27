@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using UnityEngine;
 
 public class CameraFollow : MonoBehaviour
@@ -21,6 +22,37 @@ public class CameraFollow : MonoBehaviour
         originalPos = transform.position;
         originalRotation = transform.rotation;
     }
+    private void OnEnable()
+    {
+        SkinMenu.OnMenuOpened += HandleMenuOpened;
+        SkinMenu.OnMenuClosed += HandleMenuClosed;
+        MainMenu.OnMainMenuPlayClick += HandleMainMenuPlayClick;
+
+    }
+
+    private void HandleMainMenuPlayClick()
+    {
+        SwitchCameraViewToPlayer();
+    }
+
+    private void HandleMenuClosed()
+    {
+        ResetCameraToOriginalPosition();
+    }
+
+    private void HandleMenuOpened()
+    {
+        SwitchCameraViewToSkinShop();
+    }
+
+    private void OnDisable()
+    {
+        SkinMenu.OnMenuOpened -= HandleMenuOpened;
+        SkinMenu.OnMenuClosed -= HandleMenuClosed;
+        MainMenu.OnMainMenuPlayClick -= HandleMainMenuPlayClick;
+
+    }
+
     public void OnInit(Transform target)
     {
         this.target = target;

@@ -27,6 +27,12 @@ public class SkinMenu : Menu<SkinMenu>
     private Button currentSelectedTab;
 
     private ItemInfo currentItemOnViewClick;
+
+    public delegate void MenuAction();
+    public static event MenuAction OnMenuOpened;
+    public static event MenuAction OnMenuClosed;
+
+
     private void SetTabColor(Button tabButton, bool isSelected)
     {
         tabButton.GetComponent<Image>().color = isSelected ? selectedTabColor : defaultTabColor;
@@ -249,18 +255,21 @@ public class SkinMenu : Menu<SkinMenu>
         Hide();
         MainMenu.Show();
         MainMenu.Instance.OnInit();
-        CameraFollow camera = Camera.main.GetComponent<CameraFollow>();
-        camera.ResetCameraToOriginalPosition();
+        //CameraFollow camera = Camera.main.GetComponent<CameraFollow>();
+        //camera.ResetCameraToOriginalPosition();
         GlobalEvents.OnXMarkSelect();
     }
     public static void Show()
     {
         Open();
+        OnMenuOpened?.Invoke();
     }
 
     public static void Hide()
     {
         Close();
         LeanPool.DespawnAll();
+        OnMenuClosed?.Invoke();
+
     }
 }

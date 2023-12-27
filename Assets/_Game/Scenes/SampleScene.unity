@@ -723,6 +723,7 @@ MonoBehaviour:
   joystick: {fileID: 445529404}
   playerPrefab: {fileID: 6803561741217805165, guid: 94a2814b2676be340a7fda8c9767c2bb, type: 3}
   maxBotsAtOnce: 5
+  cameraFollow: {fileID: 963194229}
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0

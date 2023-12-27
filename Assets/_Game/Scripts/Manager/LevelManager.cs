@@ -15,6 +15,8 @@ public class LevelManager : Singleton<LevelManager>
     [SerializeField] private Joystick joystick;
     [SerializeField] private GameObject playerPrefab;
     [SerializeField] private int maxBotsAtOnce;
+    [SerializeField] private CameraFollow cameraFollow;
+
     private GameObject currentLevelPrefab;
     private Level currentLevelData;
     private List<Enemy> activeBots = new List<Enemy>();
@@ -172,7 +174,6 @@ public class LevelManager : Singleton<LevelManager>
         CurrentPlayerData = currentPlayerPrefab.GetComponent<Player>();
         PlayerController playerController = currentPlayerPrefab.GetComponent<PlayerController>();
         playerController.InitJoyStick(joystick);
-        CameraFollow camera = Camera.main.GetComponent<CameraFollow>();
-        camera.OnInit(currentPlayerPrefab.transform);
+        cameraFollow.OnInit(currentPlayerPrefab.transform);
     }
 }
