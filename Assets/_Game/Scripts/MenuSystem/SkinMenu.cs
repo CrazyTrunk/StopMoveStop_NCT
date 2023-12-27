@@ -1,4 +1,5 @@
 ﻿
+using Lean.Pool;
 using System.Collections.Generic;
 using System.Linq;
 using TMPro;
@@ -19,14 +20,13 @@ public class SkinMenu : Menu<SkinMenu>
 
     [SerializeField] private TextMeshProUGUI coinText;
     [SerializeField] private TextMeshProUGUI selectText;
-
     private List<GameObject> itemHolders = new();
 
     private PlayerData playerData;
 
     private Button currentSelectedTab;
 
-    public ItemInfo currentItemOnViewClick;
+    private ItemInfo currentItemOnViewClick;
     private void SetTabColor(Button tabButton, bool isSelected)
     {
         tabButton.GetComponent<Image>().color = isSelected ? selectedTabColor : defaultTabColor;
@@ -122,7 +122,7 @@ public class SkinMenu : Menu<SkinMenu>
     {
         for (int i = 0; i < itemSO.listItem.Count; i++)
         {
-            GameObject g = Instantiate(itemHolder, parentHolder);
+            GameObject g = LeanPool.Spawn(itemHolder, parentHolder);
             ItemInfo item = g.GetComponent<ItemInfo>();
             item.image.sprite = itemSO.listItem[i].image;
             item.id = itemSO.listItem[i].id;
@@ -261,5 +261,6 @@ public class SkinMenu : Menu<SkinMenu>
     public static void Hide()
     {
         Close();
+        LeanPool.DespawnAll();
     }
 }

@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using Lean.Pool;
+using System.Collections;
 using System.Linq;
 using TMPro;
 using UnityEngine;
@@ -155,7 +156,7 @@ public class WeaponMenu : Menu<WeaponMenu>
     {
         if (currentWeaponPrefab != null)
         {
-            Destroy(currentWeaponPrefab);
+            LeanPool.Despawn(currentWeaponPrefab);
         }
     }
     public void LoadWeapon(int index)
@@ -163,7 +164,7 @@ public class WeaponMenu : Menu<WeaponMenu>
         if (index >= 0 && index < weaponDataSO.listWeapon.Count)
         {
             DestroyCurrentWeaponOnScene();
-            currentWeaponPrefab = Instantiate(weaponDataSO.listWeapon[index].weaponPrefab, spawnPoint);
+            currentWeaponPrefab = LeanPool.Spawn(weaponDataSO.listWeapon[index].weaponPrefab, spawnPoint);
             Weapon weaponPrefab = currentWeaponPrefab.GetComponent<Weapon>();
             weaponPrefab.isDemo = true;
             currentWeaponDataOnView = weaponDataSO.listWeapon[index];
