@@ -96,7 +96,7 @@ GameObject:
   - component: {fileID: 4979983352446225345}
   - component: {fileID: 2129273830803414580}
   - component: {fileID: 1770299287916134775}
-  - component: {fileID: -2048264701460998682}
+  - component: {fileID: 5569590598177916511}
   m_Layer: 9
   m_Name: SM_Cup_01
   m_TagString: Obstacle
@@ -185,8 +185,8 @@ MonoBehaviour:
   meshMaterial: {fileID: 2129273830803414580}
   originMaterial: {fileID: -3620572297651811420, guid: bd3fad7d186920849a46df4d66b07f4b, type: 3}
   transparentMaterial: {fileID: 2100000, guid: c965de1f6c5eb5443a4bd4d14d178065, type: 2}
---- !u!64 &-2048264701460998682
-MeshCollider:
+--- !u!65 &5569590598177916511
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -203,7 +203,6 @@ MeshCollider:
   m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 5
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: -7251255731686344134, guid: bd3fad7d186920849a46df4d66b07f4b, type: 3}
+  serializedVersion: 3
+  m_Size: {x: 0.08578045, y: 0.14839996, z: 0.11140489}
+  m_Center: {x: 0.00024039746, y: 0.07452913, z: -0.03101693}

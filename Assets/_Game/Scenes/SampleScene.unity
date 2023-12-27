@@ -718,8 +718,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   botPool: {fileID: 1664224345}
   levels:
-  - {fileID: 4812408940212568817, guid: 4698a516db2c27b4ba2f7156961bddae, type: 3}
-  - {fileID: 4812408940212568817, guid: c2aacc92d6b4d01498ec17193e45a168, type: 3}
+  - {fileID: 8383013337648330218, guid: 4698a516db2c27b4ba2f7156961bddae, type: 3}
+  - {fileID: 8383013337648330218, guid: 2e993a9246209b747ae851f52f795ac6, type: 3}
   joystick: {fileID: 445529404}
   playerPrefab: {fileID: 6803561741217805165, guid: 94a2814b2676be340a7fda8c9767c2bb, type: 3}
   maxBotsAtOnce: 5

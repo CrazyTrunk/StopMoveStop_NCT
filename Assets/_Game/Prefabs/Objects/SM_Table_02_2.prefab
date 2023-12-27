@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 3771077739584550855}
   - component: {fileID: 4918811644714831329}
   - component: {fileID: -8629242381088564974}
-  - component: {fileID: 1482455146410397468}
+  - component: {fileID: 2502775775475729470}
   m_Layer: 9
   m_Name: SM_Table_02_2
   m_TagString: Obstacle
@@ -29,7 +29,7 @@ Transform:
   m_GameObject: {fileID: 4301811699572731594}
   serializedVersion: 2
   m_LocalRotation: {x: -0.7071068, y: -0, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: -1.7875, y: 0.73375, z: 2.15}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1.25, y: 1.2499999, z: 1.2499999}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -101,8 +101,8 @@ MonoBehaviour:
   meshMaterial: {fileID: 4918811644714831329}
   originMaterial: {fileID: -3620572297651811420, guid: 465f7de57544e6e4abacfb1eaeafd050, type: 3}
   transparentMaterial: {fileID: 2100000, guid: c965de1f6c5eb5443a4bd4d14d178065, type: 2}
---- !u!64 &1482455146410397468
-MeshCollider:
+--- !u!65 &2502775775475729470
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -119,10 +119,9 @@ MeshCollider:
   m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 5
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 1484203685221605603, guid: 465f7de57544e6e4abacfb1eaeafd050, type: 3}
+  serializedVersion: 3
+  m_Size: {x: 1.6639404, y: 1.3596371, z: 1.0053301}
+  m_Center: {x: -0.011835933, y: -0.0097952215, z: -0.070179865}
 --- !u!1 &4839114178956652254
 GameObject:
   m_ObjectHideFlags: 0

@@ -79,7 +79,7 @@ public class LevelManager : Singleton<LevelManager>
             positionValid = true;
             float x = Random.Range(CurrentLevelData.SpawnAreaMin.x, CurrentLevelData.SpawnAreaMax.x);
             float z = Random.Range(CurrentLevelData.SpawnAreaMin.y, CurrentLevelData.SpawnAreaMax.y);
-            potentialPosition = new Vector3(x, 0.08f, z); // '0' is the y-coordinate on the plane
+            potentialPosition = new Vector3(x, 0.6f, z); // '0' is the y-coordinate on the plane
             if (Vector3.Distance(potentialPosition, currentPlayerPrefab.transform.position) < MIN_DISTANCE_FROM_PLAYER_AND_BOTS)
             {
                 positionValid = false;
