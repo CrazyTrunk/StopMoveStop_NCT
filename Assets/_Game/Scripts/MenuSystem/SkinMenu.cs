@@ -253,10 +253,12 @@ public class SkinMenu : Menu<SkinMenu>
     public void OnXMarkClick()
     {
         Hide();
+        for(int i=0; i < itemHolders.Count; i++)
+        {
+            LeanPool.Despawn(itemHolders[i]);
+        }
         MainMenu.Show();
         MainMenu.Instance.OnInit();
-        //CameraFollow camera = Camera.main.GetComponent<CameraFollow>();
-        //camera.ResetCameraToOriginalPosition();
         GlobalEvents.OnXMarkSelect();
     }
     public static void Show()
@@ -268,7 +270,6 @@ public class SkinMenu : Menu<SkinMenu>
     public static void Hide()
     {
         Close();
-        LeanPool.DespawnAll();
         OnMenuClosed?.Invoke();
 
     }
