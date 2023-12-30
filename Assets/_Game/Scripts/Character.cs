@@ -328,31 +328,44 @@ public class Character : MonoBehaviour, ICombatant
     }
     #endregion
     #region Event
+    private void HandlePlayerHit(Player player, bool shouldShowRevive, Character attacker)
+    {
+        if (shouldShowRevive)
+        {
+            ShowReviveMenu(attacker, player);
+        }
+        else
+        {
+            ShowLoseMenu(attacker, player);
+        }
+    }
+    private void ShowReviveMenu(Character attacker, Player player)
+    {
+        GameManager.Instance.ChangeState(GameState.REVIVE);
+        ReviveMenu.Instance.OnInit(attacker, player);
+        IsPopupReviveShow = true;
+    }
+
+    private void ShowLoseMenu(Character attacker, Player player)
+    {
+        GameManager.Instance.ChangeState(GameState.GAMEOVER);
+        GameManager.Instance.UpdatePlayerData(player.PlayerData);
+        GameManager.Instance.SaveToJson(player.PlayerData, FilePathGame.CHARACTER_PATH);
+        LoseMenu.Instance.OnInit(LevelManager.Instance.TotalAlive, attacker.CharacterName, player.CoinGained);
+        LoseMenu.Instance.CalculateCurrentProcess(LevelManager.Instance.TotalAlive);
+        player.PlayerData.UpdateHighestRankPerMap(player.PlayerData.levelMap, LevelManager.Instance.TotalAlive);
+
+        AudioManager.Instance.PlaySFX(SoundType.GAMEOVER);
+    }
     protected virtual void OnHitVictim(Character attacker, Character victim)
     {
         AudioManager.Instance.PlaySFX(SoundType.HIT);
         victim.PlayDead();
         if (victim is Player player)
         {
+            bool shouldShowRevive = !player.isPopupReviveShow && LevelManager.Instance.TotalAlive >= 3;
+            HandlePlayerHit(player, shouldShowRevive, attacker);
             //Need to Revive?
-            if (!player.isPopupReviveShow && LevelManager.Instance.TotalAlive >= 3)
-            {
-                ReviveMenu.Show();
-                ReviveMenu.Instance.OnInit(attacker, player);
-                GameManager.Instance.ChangeState(GameState.MENU);
-                IsPopupReviveShow = true;
-            }
-            else
-            {
-                LoseMenu.Show();
-                LoseMenu.Instance.OnInit(LevelManager.Instance.TotalAlive, attacker.CharacterName, player.CoinGained);
-                LoseMenu.Instance.CalculateCurrentProcess(LevelManager.Instance.TotalAlive);
-                GameManager.Instance.ChangeState(GameState.GAMEOVER);
-                player.PlayerData.UpdateHighestRankPerMap(player.PlayerData.levelMap, LevelManager.Instance.TotalAlive);
-                GameManager.Instance.UpdatePlayerData(player.PlayerData);
-                GameManager.Instance.SaveToJson(player.PlayerData, FilePathGame.CHARACTER_PATH);
-                AudioManager.Instance.PlaySFX(SoundType.GAMEOVER);
-            }
         }
         attacker.LevelUp(victim.level);
         attacker.OnLevelUp?.Invoke(attacker.level);

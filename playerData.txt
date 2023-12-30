@@ -1,1 +1,0 @@
-{"coin":6382,"levelMap":2,"isSoundOn":true,"isVibrance":true,"isUsingMinimap":true,"playerName":"dsds","isAdsRemove":false,"equippedWeaponId":6,"equippedSkinId":2,"weapons":[0,1,2,3,6],"skins":[3,1,23,2],"levelDataList":[{"level":1,"highestRank":1}]}

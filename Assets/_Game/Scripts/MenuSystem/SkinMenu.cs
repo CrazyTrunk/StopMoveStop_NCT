@@ -251,14 +251,17 @@ public class SkinMenu : Menu<SkinMenu>
             descriptionBonus.text = "";
         }
     }
-    public void OnXMarkClick()
+    private void OnDisable()
     {
         Hide();
+    }
+    public void OnXMarkClick()
+    {
         for(int i=0; i < itemHolders.Count; i++)
         {
             LeanPool.Despawn(itemHolders[i]);
         }
-        MainMenu.Show();
+        GameManager.Instance.ChangeState(GameState.MAIN_MENU);
         MainMenu.Instance.OnInit();
         GlobalEvents.OnXMarkSelect();
     }

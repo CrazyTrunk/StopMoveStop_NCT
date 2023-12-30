@@ -1,24 +1,20 @@
 ﻿public class IngameSetting : Menu<IngameSetting>
 {
-    public void OnInit()
-    {
-        GameManager.Instance.ChangeState(GameState.MENU);
-    }
     public void OnContinueClick()
     {
-        Hide();
         GameManager.Instance.ChangeState(GameState.PLAYING);
-        IngameMenu.Show();
         IngameMenu.Instance.OnInit();
         IngameMenu.Instance.InitAliveText(LevelManager.Instance.TotalAlive);
     }
     public void OnHomeClick()
     {
-        Hide();
-        MainMenu.Show();
+        GameManager.Instance.ChangeState(GameState.MAIN_MENU);
         MainMenu.Instance.OnInit();
         LevelManager.Instance.OnInit();
-        GameManager.Instance.ChangeState(GameState.MENU);
+    }
+    private void OnDisable()
+    {
+        Hide();
     }
     public static void Show()
     {

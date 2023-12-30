@@ -20,10 +20,6 @@ public class MainMenu : Menu<MainMenu>
     private void Start()
     {
         OnInit();
-        vibranceButton.onClick.AddListener(HandleVibranceButton);
-        soundButton.onClick.AddListener(HandleSoundButton);
-        ToggleSound();
-        ToggleVibrance();
     }
     public void ToggleSound()
     {
@@ -67,20 +63,25 @@ public class MainMenu : Menu<MainMenu>
         GameManager.Instance.UpdatePlayerData(playerData);
         GameManager.Instance.SaveToJson(playerData, FilePathGame.CHARACTER_PATH);
     }
-
+    private void OnEnable()
+    {
+        vibranceButton.onClick.AddListener(HandleVibranceButton);
+        soundButton.onClick.AddListener(HandleSoundButton);
+    }
     private void OnDisable()
     {
         vibranceButton.onClick.RemoveAllListeners();
         soundButton.onClick.RemoveAllListeners();
-
+        Hide();
     }
     public void OnInit()
     {
-        GameManager.Instance.ChangeState(GameState.MENU);
         playerData = GameManager.Instance.GetPlayerData();
         coin.text = playerData.coin.ToString();
         inputField.text = playerData.playerName;
         highScore.text = $"Zone:{playerData.levelMap} - Best:#{GetHighScore()}";
+        ToggleSound();
+        ToggleVibrance();
     }
 
     private int GetHighScore()
@@ -96,24 +97,18 @@ public class MainMenu : Menu<MainMenu>
 
     public void OnPlayButtonClick()
     {
-        Hide();
         GameManager.Instance.ChangeState(GameState.PLAYING);
-        //CameraFollow camera = Camera.main.GetComponent<CameraFollow>();
-        //camera.SwitchCameraViewToPlayer();
         OnMainMenuPlayClick?.Invoke();
-        IngameMenu.Show();
         IngameMenu.Instance.InitAliveText(LevelManager.Instance.TotalAlive);
     }
     public void OnShopMenuClick()
     {
-        Hide();
-        WeaponMenu.Show();
+        GameManager.Instance.ChangeState(GameState.WEAPON_MENU);
         WeaponMenu.Instance.OnInit();
     }
     public void OnSkinMenuClick()
     {
-        Hide();
-        SkinMenu.Show();
+        GameManager.Instance.ChangeState(GameState.SHOP_MENU);
         SkinMenu.Instance.OnInit();
     }
     public void HandleInputEnd()

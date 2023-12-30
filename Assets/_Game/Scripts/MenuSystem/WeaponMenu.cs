@@ -34,7 +34,10 @@ public class WeaponMenu : Menu<WeaponMenu>
     private int currentWeaponIndex = 0;
     private GameObject currentWeaponPrefab;
 
-
+    private void OnDisable()
+    {
+        Hide();
+    }
     public void OnInit()
     {
         playerData = GameManager.Instance.GetPlayerData();
@@ -72,7 +75,6 @@ public class WeaponMenu : Menu<WeaponMenu>
     #region Buttons
     public void OnXmarkClick()
     {
-        Hide();
         MainMenu.Show();
         MainMenu.Instance.OnInit();
     }

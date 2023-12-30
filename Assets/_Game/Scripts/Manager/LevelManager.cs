@@ -38,8 +38,6 @@ public class LevelManager : Singleton<LevelManager>
 
         playerData = GameManager.Instance.GetPlayerData();
         LoadCurrentLevel(playerData.levelMap);
-        GameManager.Instance.ChangeState(GameState.MENU);
-
         ClearAllBots();
         for (int i = 0; i < maxBotsAtOnce; i++)
         {
@@ -156,12 +154,12 @@ public class LevelManager : Singleton<LevelManager>
                 playerData.UpdateHighestRankPerMap(playerData.levelMap, TotalAlive);
                 playerData.levelMap++;
             }
+            GameManager.Instance.ChangeState(GameState.WIN);
             GameManager.Instance.UpdatePlayerData(playerData);
             GameManager.Instance.SaveToJson(playerData, FilePathGame.CHARACTER_PATH);
-            GameManager.Instance.ChangeState(GameState.WIN);
             AudioManager.Instance.PlaySFX(SoundType.WIN);
             CurrentPlayerData.ChangeAnim(Anim.DANCE);
-            WinMenu.Show();
+            WinMenu.Instance.OnInit();
         }
     }
     private void LoadPlayer()

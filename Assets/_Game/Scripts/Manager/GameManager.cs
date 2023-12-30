@@ -9,6 +9,7 @@ public class GameManager : Singleton<GameManager>
     private GameState _gameState;
     private PlayerData playerData;
     [SerializeField] private WeaponManagerDataScripableObject weaponDataSO;
+    public event Action<GameState> OnGameStateChange;
 
     private void Awake()
     {
@@ -17,7 +18,7 @@ public class GameManager : Singleton<GameManager>
         Application.targetFrameRate = 60;
         Screen.sleepTimeout = SleepTimeout.NeverSleep;
 
-        ChangeState(GameState.MENU);
+        ChangeState(GameState.PREPARING);
         playerData = ReadFromJson(FilePathGame.CHARACTER_PATH);
         if (playerData == null)
         {
@@ -35,6 +36,7 @@ public class GameManager : Singleton<GameManager>
     public void ChangeState(GameState state)
     {
         _gameState = state;
+        OnGameStateChange?.Invoke(state);
 
     }
     public bool IsState(GameState gameState)

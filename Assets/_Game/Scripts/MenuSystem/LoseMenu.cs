@@ -17,7 +17,7 @@ public class LoseMenu : Menu<LoseMenu>
 
     [SerializeField] private Slider currentSlider;
     [SerializeField] private Slider highScoreSlider;
-    private void Start()
+    private void OnEnable()
     {
         OnInit();
     }
@@ -29,6 +29,10 @@ public class LoseMenu : Menu<LoseMenu>
         nextZoneText.text = $"Zone {playerData.levelMap + 1}";
         currentZone.sprite = ZoneImages[playerData.levelMap - 1];
         nextZone.sprite = ZoneImages[playerData.levelMap];
+    }
+    private void OnDisable()
+    {
+        Hide();
     }
     public void OnScreenShotClick()
     {
@@ -59,12 +63,9 @@ public class LoseMenu : Menu<LoseMenu>
     }
     public void OnContinueClick()
     {
-        Hide();
-        IngameMenu.Hide();
-        MainMenu.Show();
+        GameManager.Instance.ChangeState(GameState.MAIN_MENU);
         MainMenu.Instance.OnInit();
         LevelManager.Instance.OnInit();
-        GameManager.Instance.ChangeState(GameState.MENU);
     }
     public static void Show()
     {

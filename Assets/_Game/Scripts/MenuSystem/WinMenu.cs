@@ -12,19 +12,18 @@ public class WinMenu : Menu<WinMenu>
     [SerializeField] private TextMeshProUGUI coinGained;
     private PlayerData playerData;
 
-    private void Start()
+    public void OnInit()
     {
-        OnInit();
+        playerData = GameManager.Instance.GetPlayerData();
         currentZoneText.text = $"Zone {playerData.levelMap - 1}";
         nextZoneText.text = $"Zone {playerData.levelMap}";
         currentZone.sprite = ZoneImages[playerData.levelMap - 2];
         nextZone.sprite = ZoneImages[playerData.levelMap - 1];
         coinGained.text = LevelManager.Instance.CurrentPlayerData.CoinGained.ToString();
     }
-    public void OnInit()
+    private void OnDisable()
     {
-        playerData = GameManager.Instance.GetPlayerData();
-
+        Hide();
     }
     public void OnScreenShotClick()
     {
@@ -34,12 +33,9 @@ public class WinMenu : Menu<WinMenu>
     }
     public void OnNextZoneClicked()
     {
-        Hide();
-        IngameMenu.Hide();
-        MainMenu.Show();
+        GameManager.Instance.ChangeState(GameState.MAIN_MENU);
         MainMenu.Instance.OnInit();
         LevelManager.Instance.OnInit();
-        GameManager.Instance.ChangeState(GameState.MENU);
     }
     public static void Show()
     {

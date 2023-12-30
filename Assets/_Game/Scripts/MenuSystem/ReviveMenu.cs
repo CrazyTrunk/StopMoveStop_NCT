@@ -32,6 +32,7 @@ public class ReviveMenu : Menu<ReviveMenu>
     {
         exitButton.onClick.RemoveListener(HandleXmarkClick);
         reviveButton.onClick.RemoveListener(HandleReviveClick);
+        Hide();
     }
     private void HandleReviveClick()
     {
@@ -48,11 +49,9 @@ public class ReviveMenu : Menu<ReviveMenu>
     }
     private void HandleXmarkClick()
     {
-        Hide();
-        LoseMenu.Show();
+        GameManager.Instance.ChangeState(GameState.GAMEOVER);
         LoseMenu.Instance.OnInit(LevelManager.Instance.TotalAlive, attacker.CharacterName, player.CoinGained);
         LoseMenu.Instance.CalculateCurrentProcess(LevelManager.Instance.TotalAlive);
-        GameManager.Instance.ChangeState(GameState.GAMEOVER);
         player.PlayerData.UpdateHighestRankPerMap(player.PlayerData.levelMap, LevelManager.Instance.TotalAlive);
         GameManager.Instance.UpdatePlayerData(player.PlayerData);
         GameManager.Instance.SaveToJson(player.PlayerData, FilePathGame.CHARACTER_PATH);

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class UIManager : MonoBehaviour
@@ -8,6 +9,46 @@ public class UIManager : MonoBehaviour
     public static UIManager Instance { get; set; }
     private readonly Stack<MenuBase> menuStack = new Stack<MenuBase>();
     public Canvas canvasMenu;
+    private void OnEnable()
+    {
+        GameManager.Instance.OnGameStateChange -= HandleGameStateChange;
+        GameManager.Instance.OnGameStateChange += HandleGameStateChange;
+    }
+
+    private void HandleGameStateChange(GameState state)
+    {
+        switch (state)
+        {
+            case GameState.PREPARING:
+                break;
+            case GameState.MAIN_MENU:
+                MainMenu.Show();
+                break;
+            case GameState.WIN:
+                WinMenu.Show();
+                break;
+            case GameState.GAMEOVER:
+                LoseMenu.Show();
+                break;
+            case GameState.SHOP_MENU:
+                SkinMenu.Show();
+                break;
+            case GameState.WEAPON_MENU:
+                WeaponMenu.Show();
+                break;
+            case GameState.REVIVE:
+                ReviveMenu.Show();
+                break;
+            case GameState.PLAYING:
+                IngameMenu.Show();
+                break;
+            case GameState.SETTING_MENU:
+                IngameSetting.Show();
+                break;
+                // Xử lý các trạng thái khác
+        }
+    }
+
     private void Awake()
     {
         Instance = this;

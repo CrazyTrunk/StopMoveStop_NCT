@@ -9,22 +9,32 @@ public class Bullet : MonoBehaviour
     protected Vector3 startPosition;
     protected Action<Character, Character> onHit;
     private Vector3 target;
-    public Character Shooter { get; set; }
+    private Character shooterCharacter;
+    public Character Shooter
+    {
+        get => shooterCharacter;
+        set
+        {
+            shooterCharacter = value;
+            range = shooterCharacter.Range;
+            transform.localScale *= shooterCharacter.ScaleMultiple;
+        }
+    }
     public Vector3 Target { get => target; set => target = value; }
     protected bool isHitObstacle;
-    private void Start()
+
+    private void Awake()
     {
         rb = GetComponent<Rigidbody>();
         isHitObstacle = false;
+        gameObject.AddComponent<CapsuleCollider>().isTrigger = true;
+
     }
     public void OnInit(Character attacker, Action<Character, Character> onHit)
     {
-        isHitObstacle = false;
-        this.Shooter = attacker;
+        Shooter = attacker;
         this.onHit = onHit;
-        this.range = attacker.Range;
-        transform.localScale *= attacker.ScaleMultiple;
-        gameObject.AddComponent<CapsuleCollider>().isTrigger = true;
+        isHitObstacle = false;
     }
 
     public virtual void Shoot()

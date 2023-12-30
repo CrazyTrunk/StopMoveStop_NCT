@@ -1,13 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+﻿
 public enum GameState
 {
-    PLAYING = 0,
-    MENU = 1,
-    GAMEOVER = 2,
-    WIN = 3
+    PREPARING = 0,
+    MAIN_MENU = 1,
+    WEAPON_MENU = 2,
+    SHOP_MENU = 3,
+    PLAYING = 4,
+    SETTING_MENU = 5,
+    REVIVE = 6,
+    GAMEOVER =7,
+    WIN = 8
 }

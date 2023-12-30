@@ -22,10 +22,11 @@ public class IngameMenu : Menu<IngameMenu>
     }
     public void OnSettingClick()
     {
+        GameManager.Instance.ChangeState(GameState.SETTING_MENU);
+    }
+    private void OnDisable()
+    {
         Hide();
-        IngameSetting.Show();
-        IngameSetting.Instance.OnInit();
-
     }
     public void InitAliveText(int botAlive)
     {

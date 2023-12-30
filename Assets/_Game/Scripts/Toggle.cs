@@ -17,13 +17,10 @@ public class Toggle : MonoBehaviour
     }
     [SerializeField]private FeatureType featureType;
     private PlayerData playerData;
-    private void Start()
+    private void OnEnable()
     {
         playerData = GameManager.Instance.GetPlayerData();
         ToggleFeature(featureType);
-    }
-    private void OnEnable()
-    {
         toggleButton.onClick.AddListener(() => HandleToggle(featureType));
     }
     private void OnDisable()
