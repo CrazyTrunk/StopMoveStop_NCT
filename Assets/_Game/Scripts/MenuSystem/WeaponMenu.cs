@@ -75,7 +75,7 @@ public class WeaponMenu : Menu<WeaponMenu>
     #region Buttons
     public void OnXmarkClick()
     {
-        MainMenu.Show();
+        GameManager.Instance.ChangeState(GameState.MAIN_MENU);
         MainMenu.Instance.OnInit();
     }
 
