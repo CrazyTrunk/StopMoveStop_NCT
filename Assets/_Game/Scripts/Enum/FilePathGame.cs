@@ -1,4 +1,7 @@
-﻿public class FilePathGame
+﻿using System.IO;
+using UnityEngine;
+
+public static class FilePathGame
 {
-    public const string CHARACTER_PATH = "playerData.txt";
+    public static string CHARACTER_PATH => Path.Combine(Application.persistentDataPath, "playerData.txt");
 }
