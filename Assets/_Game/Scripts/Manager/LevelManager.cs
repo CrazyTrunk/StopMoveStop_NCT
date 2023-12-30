@@ -57,9 +57,9 @@ public class LevelManager : Singleton<LevelManager>
     {
         if (currentLevelPrefab != null)
         {
-            Destroy(currentLevelPrefab);
+            LeanPool.Despawn(currentLevelPrefab);
         }
-        currentLevelPrefab = Instantiate(levels[currentLevel - 1]);
+        currentLevelPrefab = LeanPool.Spawn(levels[currentLevel - 1]);
         CurrentLevelData = currentLevelPrefab.GetComponent<Level>();
         MaxParticipants = CurrentLevelData.TotalBotsToKill;
         TotalAlive = CurrentLevelData.TotalBotsToKill;
@@ -130,7 +130,7 @@ public class LevelManager : Singleton<LevelManager>
         TotalAlive--;
         if (IngameMenu.Instance != null)
         {
-            IngameMenu.Instance.OnInit(TotalAlive);
+            IngameMenu.Instance.InitAliveText(TotalAlive);
         }
 
         var indicatorToDespawn = IndicatorManager.Instance.ActiveIndicators.FirstOrDefault(indicator => indicator.Target == character);
@@ -171,6 +171,7 @@ public class LevelManager : Singleton<LevelManager>
             Destroy(currentPlayerPrefab);
         }
         currentPlayerPrefab = Instantiate(playerPrefab);
+
         CurrentPlayerData = currentPlayerPrefab.GetComponent<Player>();
         PlayerController playerController = currentPlayerPrefab.GetComponent<PlayerController>();
         playerController.InitJoyStick(joystick);

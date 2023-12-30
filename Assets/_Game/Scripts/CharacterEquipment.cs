@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using Lean.Pool;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class CharacterEquipment : MonoBehaviour
@@ -43,7 +44,7 @@ public class CharacterEquipment : MonoBehaviour
         {
             if (item != null)
             {
-                Destroy(item);
+                LeanPool.Despawn(item);
             }
         }
         equippedItems.Clear();
@@ -124,7 +125,7 @@ public class CharacterEquipment : MonoBehaviour
     }
     private void EquipToSocket(Transform socket, GameObject prefab, ItemType itemType)
     {
-        GameObject item = Instantiate(prefab, socket.position, Quaternion.identity, socket);
+        GameObject item = LeanPool.Spawn(prefab, socket.position, Quaternion.identity, socket);
         item.transform.localRotation = prefab.transform.localRotation;
         item.transform.localPosition = prefab.transform.position;
         equippedItems[itemType] = item;

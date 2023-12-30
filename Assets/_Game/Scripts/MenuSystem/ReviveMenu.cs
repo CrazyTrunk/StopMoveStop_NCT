@@ -17,11 +17,6 @@ public class ReviveMenu : Menu<ReviveMenu>
     private int timerInt;
     private float timerFloat;
     IEnumerator coroutine;
-    private void Start()
-    {
-        OnInit();
-        StartCountDown();
-    }
     public void OnInit()
     {
         rotZ = 0;
@@ -31,6 +26,7 @@ public class ReviveMenu : Menu<ReviveMenu>
         timerFloat = (float)timerValue;
         timerText.text = timerValue.ToString();
         coroutine = CountDown();
+        StartCountDown();
     }
     private void OnDisable()
     {
@@ -48,6 +44,7 @@ public class ReviveMenu : Menu<ReviveMenu>
     {
         this.attacker  = attacker;
         this.player = player;
+        OnInit();
     }
     private void HandleXmarkClick()
     {

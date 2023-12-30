@@ -102,14 +102,13 @@ public class MainMenu : Menu<MainMenu>
         //camera.SwitchCameraViewToPlayer();
         OnMainMenuPlayClick?.Invoke();
         IngameMenu.Show();
-        IngameMenu.Instance.OnInit(LevelManager.Instance.TotalAlive);
+        IngameMenu.Instance.InitAliveText(LevelManager.Instance.TotalAlive);
     }
     public void OnShopMenuClick()
     {
         Hide();
         WeaponMenu.Show();
         WeaponMenu.Instance.OnInit();
-        WeaponMenu.Instance.LoadWeapon((int)WeaponType.HAMMER);
     }
     public void OnSkinMenuClick()
     {

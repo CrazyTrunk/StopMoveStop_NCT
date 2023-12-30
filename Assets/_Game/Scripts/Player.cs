@@ -1,3 +1,4 @@
+using Lean.Pool;
 using TMPro;
 using UnityEngine;
 
@@ -5,6 +6,8 @@ public class Player : Character, ICombatant
 {
     [SerializeField] private GameObject floatingLevelTextPrefab;
     [SerializeField] private Transform canvasPopup;
+    private TextMeshProUGUI cachedTextComponent;
+
     private int coinGained;
     private PlayerData playerData;
     public int CoinGained { get => coinGained; set => coinGained = value; }
@@ -50,7 +53,7 @@ public class Player : Character, ICombatant
 
     public void ShowFloatingText(int level)
     {
-        var floatText = Instantiate(floatingLevelTextPrefab, canvasPopup.position, canvasPopup.rotation, canvasPopup);
+        GameObject floatText = Instantiate(floatingLevelTextPrefab, canvasPopup.position, canvasPopup.rotation, canvasPopup);
         floatText.GetComponent<TextMeshProUGUI>().text = $"+ {level}";
     }
     public void OnRevive(int playerLevel)

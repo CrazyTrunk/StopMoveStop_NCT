@@ -42,6 +42,7 @@ public class WeaponMenu : Menu<WeaponMenu>
         playerData = GameManager.Instance.GetPlayerData();
         coinText.text = playerData.coin.ToString();
         warning.SetActive(false);
+        LoadWeapon((int)WeaponType.HAMMER);
     }
     private void DisplayButtons()
     {
@@ -74,8 +75,6 @@ public class WeaponMenu : Menu<WeaponMenu>
         Hide();
         MainMenu.Show();
         MainMenu.Instance.OnInit();
-        DestroyCurrentWeaponOnScene();
-        currentWeaponIndex = 0;
     }
 
     public void OnNextButtonClicked()

@@ -602,7 +602,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 94beac49cc7133e4f8352f7d0c10a6c8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  DestroyWhenClosed: 1
+  DestroyWhenClosed: 0
   DisableMenusUnderneath: 1
   Cancelable: 1
   itemSO: {fileID: 11400000, guid: fc2cee851ef35be4083679a08b321f4d, type: 2}
@@ -617,12 +617,11 @@ MonoBehaviour:
   descriptionBonus: {fileID: 8350665990332235993}
   adsText: {fileID: 6253530958748560499}
   parentHolder: {fileID: 4699843888616854813}
+  defaultTabColor: {r: 0.22745098, g: 0.22745098, b: 0.26666668, a: 1}
+  selectedTabColor: {r: 0.4509804, g: 0.45882353, b: 0.50980395, a: 1}
   itemHolder: {fileID: 8945656761408394387, guid: a3f59fcfa1126fc42a77380bbcd90049, type: 3}
   coinText: {fileID: 8865371380153734540}
   selectText: {fileID: 5671641316345521903}
-  defaultTabColor: {r: 0.22745098, g: 0.22745098, b: 0.26666668, a: 1}
-  selectedTabColor: {r: 0.4509804, g: 0.45882353, b: 0.50980395, a: 1}
-  currentItemOnViewClick: {fileID: 0}
 --- !u!1 &1846117022030833309
 GameObject:
   m_ObjectHideFlags: 0

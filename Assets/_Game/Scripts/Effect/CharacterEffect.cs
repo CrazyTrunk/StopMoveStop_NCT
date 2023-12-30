@@ -1,3 +1,4 @@
+using Lean.Pool;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -11,18 +12,13 @@ public class CharacterEffect : MonoBehaviour
 
     public void ActiveDeathEffect()
     {
-        if (currentEffectInstance != null)
-        {
-            Destroy(currentEffectInstance);
-        }
-
-        currentEffectInstance = Instantiate(deathEffect, parentHolder.position, Quaternion.identity, parentHolder);
+        currentEffectInstance = LeanPool.Spawn(deathEffect, parentHolder.position, Quaternion.identity, parentHolder);
     }
     public void DeactivateCurrentEffect()
     {
         if (currentEffectInstance != null)
         {
-            Destroy(currentEffectInstance);
+            LeanPool.Despawn(currentEffectInstance);
         }
     }
 }

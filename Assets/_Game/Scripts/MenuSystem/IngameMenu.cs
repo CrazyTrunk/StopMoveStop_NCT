@@ -8,7 +8,7 @@ public class IngameMenu : Menu<IngameMenu>
 
     private PlayerData playerData;
 
-    private void Start()
+    public void OnInit()
     {
         playerData = GameManager.Instance.GetPlayerData();
         if (playerData.isUsingMinimap)
@@ -24,8 +24,10 @@ public class IngameMenu : Menu<IngameMenu>
     {
         Hide();
         IngameSetting.Show();
+        IngameSetting.Instance.OnInit();
+
     }
-    public void OnInit(int botAlive)
+    public void InitAliveText(int botAlive)
     {
         alive.text = $"Alive: {botAlive}";
     }

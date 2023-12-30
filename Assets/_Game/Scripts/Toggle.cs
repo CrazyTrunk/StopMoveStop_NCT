@@ -21,7 +21,10 @@ public class Toggle : MonoBehaviour
     {
         playerData = GameManager.Instance.GetPlayerData();
         ToggleFeature(featureType);
-        toggleButton.onClick.AddListener(()=>HandleToggle(featureType));
+    }
+    private void OnEnable()
+    {
+        toggleButton.onClick.AddListener(() => HandleToggle(featureType));
     }
     private void OnDisable()
     {

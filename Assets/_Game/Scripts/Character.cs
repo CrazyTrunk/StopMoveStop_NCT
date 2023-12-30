@@ -143,9 +143,9 @@ public class Character : MonoBehaviour, ICombatant
     {
         if (weaponPrefab != null)
         {
-            Destroy(weaponPrefab);
+            LeanPool.Despawn(weaponPrefab);
         }
-        weaponPrefab = Instantiate(WeaponDataSO.GetWeaponByType(weaponType).weaponPrefab, spawnWeaponPoint);
+        weaponPrefab = LeanPool.Spawn(WeaponDataSO.GetWeaponByType(weaponType).weaponPrefab, spawnWeaponPoint);
         weaponData = WeaponDataSO.GetWeaponByType(weaponType);
         weapon = weaponPrefab.GetComponent<Weapon>();
     }
@@ -154,9 +154,9 @@ public class Character : MonoBehaviour, ICombatant
         WeaponData currentWeaponData = weaponDataSO.GetWeaponById(weaponId);
         if (weaponPrefab != null)
         {
-            Destroy(weaponPrefab);
+            LeanPool.Despawn(weaponPrefab);
         }
-        weaponPrefab = Instantiate(currentWeaponData.weaponPrefab, spawnWeaponPoint);
+        weaponPrefab = LeanPool.Spawn(currentWeaponData.weaponPrefab, spawnWeaponPoint);
         weaponData = WeaponDataSO.GetWeaponByType(currentWeaponData.type);
         weapon = weaponPrefab.GetComponent<Weapon>();
     }

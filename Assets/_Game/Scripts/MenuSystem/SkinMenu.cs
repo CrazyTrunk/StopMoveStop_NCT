@@ -72,6 +72,7 @@ public class SkinMenu : Menu<SkinMenu>
     public void OnInit()
     {
         playerData = GameManager.Instance.GetPlayerData();
+        itemHolders.Clear();
         itemSO.listItem = itemSO.listItem.OrderBy(x => x.id).ToList();
         InitItems();
         Hat.onClick.AddListener(() => CategorizeItem(new List<ItemType> { ItemType.HAT, ItemType.MUSTACHE }, Hat));

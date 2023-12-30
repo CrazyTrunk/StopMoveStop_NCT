@@ -1,6 +1,6 @@
 ﻿public class IngameSetting : Menu<IngameSetting>
 {
-    private void Start()
+    public void OnInit()
     {
         GameManager.Instance.ChangeState(GameState.MENU);
     }
@@ -9,7 +9,8 @@
         Hide();
         GameManager.Instance.ChangeState(GameState.PLAYING);
         IngameMenu.Show();
-        IngameMenu.Instance.OnInit(LevelManager.Instance.TotalAlive);
+        IngameMenu.Instance.OnInit();
+        IngameMenu.Instance.InitAliveText(LevelManager.Instance.TotalAlive);
     }
     public void OnHomeClick()
     {
