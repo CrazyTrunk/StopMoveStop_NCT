@@ -6,7 +6,6 @@ public class EnemyController : MonoBehaviour
     [SerializeField] private Transform infoCanvasTransform;
     private IState currentState;
     private float wallCheckDistance = 2f;
-
     public Enemy CurrentBot { get => currentBot; set => currentBot = value; }
     public void OnInit()
     {
@@ -50,6 +49,7 @@ public class EnemyController : MonoBehaviour
     }
     public bool IsFacingWall(Vector3 direction)
     {
+
         RaycastHit hit;
         //Debug.DrawRay(transform.position + Vector3.up, direction.normalized * wallCheckDistance, Color.red, 10f);
 
