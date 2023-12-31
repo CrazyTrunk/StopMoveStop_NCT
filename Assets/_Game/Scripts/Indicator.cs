@@ -5,18 +5,12 @@ public class Indicator : MonoBehaviour
 {
 
     [SerializeField] private RectTransform selfRect;
-    [SerializeField] private CanvasGroup canvasGroup;
     [SerializeField] private float offScreenThreshold = 80f;
     [SerializeField] private TextMeshProUGUI levelDisplay;
     private Enemy target;
     //private Camera mainCamera;
     private RectTransform indicatorCanvas;
     public Enemy Target { get => target; set => target = value; }
-
-    public void ToggleIndicator(bool isShow)
-    {
-        canvasGroup.alpha = isShow ? 1 : 0;
-    }
     public void SetTarget(Enemy newTarget, RectTransform canvas, int level)
     {
         target = newTarget;

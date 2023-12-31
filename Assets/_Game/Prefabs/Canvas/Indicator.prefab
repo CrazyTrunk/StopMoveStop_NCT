@@ -295,7 +295,6 @@ GameObject:
   m_Component:
   - component: {fileID: 5950769034865192504}
   - component: {fileID: 2453707255760532990}
-  - component: {fileID: 5443745265564491613}
   m_Layer: 5
   m_Name: Indicator
   m_TagString: Untagged
@@ -337,18 +336,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   selfRect: {fileID: 5950769034865192504}
-  canvasGroup: {fileID: 5443745265564491613}
   offScreenThreshold: 50
   levelDisplay: {fileID: 9191525960303418554}
---- !u!225 &5443745265564491613
-CanvasGroup:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8617994276492466826}
-  m_Enabled: 1
-  m_Alpha: 1
-  m_Interactable: 0
-  m_BlocksRaycasts: 1
-  m_IgnoreParentGroups: 0

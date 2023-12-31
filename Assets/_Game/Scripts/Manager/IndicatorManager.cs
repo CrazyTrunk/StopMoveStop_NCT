@@ -32,11 +32,11 @@ public class IndicatorManager : Singleton<IndicatorManager>
             if (ActiveIndicators[i].TargetIsOffScreen(mainCamera))
             {
                 ActiveIndicators[i].UpdateIndicatorPosition(mainCamera);
-                ActiveIndicators[i].ToggleIndicator(true);
+                ActiveIndicators[i].gameObject.SetActive(true);
             }
             else
             {
-                ActiveIndicators[i].ToggleIndicator(false);
+                ActiveIndicators[i].gameObject.SetActive(false);
 
             }
         }
