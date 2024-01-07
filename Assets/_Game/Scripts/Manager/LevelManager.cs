@@ -67,8 +67,6 @@ public class LevelManager : Singleton<LevelManager>
         do
         {
             var direction = Random.insideUnitCircle.normalized;
-            float x = Random.Range(CurrentLevelData.SpawnAreaMin.x, CurrentLevelData.SpawnAreaMax.x);
-            float z = Random.Range(CurrentLevelData.SpawnAreaMin.y, CurrentLevelData.SpawnAreaMax.y);
             var distance = Random.Range(10, 15);
             var pos = direction * distance;
 
