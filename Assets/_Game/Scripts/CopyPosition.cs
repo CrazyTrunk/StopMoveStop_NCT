@@ -10,7 +10,7 @@ public class CopyPosition : MonoBehaviour
     {
         this.target = target;
     }
-    private void Update()
+    private void LateUpdate()
     {
         if (!target) return;
         transform.position = new Vector3

@@ -63,61 +63,25 @@ public class LevelManager : Singleton<LevelManager>
 
     private Vector3 GenerateSpawnPosition()
     {
-        //const float MIN_DISTANCE_FROM_PLAYER_AND_BOTS = 10f;
-        //Vector3 potentialPosition;
-        //bool positionValid;
-        //int attemps = 0;
-        //int MAX_ATTEMPS = 20;
-        //do
-        //{
-        //    attemps++;
-        //    positionValid = true;
-        //    float x = Random.Range(CurrentLevelData.SpawnAreaMin.x, CurrentLevelData.SpawnAreaMax.x);
-        //    float z = Random.Range(CurrentLevelData.SpawnAreaMin.y, CurrentLevelData.SpawnAreaMax.y);
-        //    potentialPosition = new Vector3(x, 0.6f, z); // '0' is the y-coordinate on the plane
-        //    if (Vector3.Distance(potentialPosition, currentPlayerPrefab.transform.position) < MIN_DISTANCE_FROM_PLAYER_AND_BOTS)
-        //    {
-        //        positionValid = false;
-        //    }
-        //    else
-        //    {
-        //        foreach (var bot in activeBots)
-        //        {
-        //            if (Vector3.Distance(potentialPosition, bot.transform.position) < MIN_DISTANCE_FROM_PLAYER_AND_BOTS)
-        //            {
-        //                positionValid = false;
-        //                break;
-        //            }
-        //        }
-        //    }
-        //}
-        //while (!positionValid && attemps <= MAX_ATTEMPS);
-        //if (positionValid)
-        //{
-        //    usedPositions.Add(potentialPosition);
-        //}
-        //return potentialPosition;
-        const float MIN_DISTANCE_FROM_PLAYER = 7f;
-        const float MAX_DISTANCE_FROM_PLAYER = 15f;
+        Vector3 spawnPosition;
+        do
+        {
+            var direction = Random.insideUnitCircle.normalized;
+            float x = Random.Range(CurrentLevelData.SpawnAreaMin.x, CurrentLevelData.SpawnAreaMax.x);
+            float z = Random.Range(CurrentLevelData.SpawnAreaMin.y, CurrentLevelData.SpawnAreaMax.y);
+            var distance = Random.Range(10, 15);
+            var pos = direction * distance;
 
-        Vector3 randomDirection = Random.insideUnitCircle.normalized;
-        float randomDistance = Random.Range(MIN_DISTANCE_FROM_PLAYER, MAX_DISTANCE_FROM_PLAYER);
-        Vector3 randomPosRelativeToPlayer = randomDirection * randomDistance;
-        float x = Random.Range(CurrentLevelData.SpawnAreaMin.x, CurrentLevelData.SpawnAreaMax.x);
-        float z = Random.Range(CurrentLevelData.SpawnAreaMin.y, CurrentLevelData.SpawnAreaMax.y);
-        Vector3 randomPosInLevel = new Vector3(x, 0, z);
+            spawnPosition = currentLevelData.transform.position + new Vector3(pos.x, 0.6f, pos.y);
 
-        // Kết hợp vị trí ngẫu nhiên quanh người chơi và trong khu vực xác định
-        Vector3 combinedPosition = CurrentPlayerData.transform.position + randomPosRelativeToPlayer + randomPosInLevel;
+            // Điều chỉnh vị trí nếu nằm ngoài khu vực cho phép
+            spawnPosition.x = Mathf.Clamp(spawnPosition.x, CurrentLevelData.SpawnAreaMin.x, CurrentLevelData.SpawnAreaMax.x);
+            spawnPosition.z = Mathf.Clamp(spawnPosition.z, CurrentLevelData.SpawnAreaMin.y, CurrentLevelData.SpawnAreaMax.y);
 
-        // Điều chỉnh vị trí để đảm bảo nó nằm trong khu vực sinh sản
-        combinedPosition.x = Mathf.Clamp(combinedPosition.x, CurrentLevelData.SpawnAreaMin.x, CurrentLevelData.SpawnAreaMax.x);
-        combinedPosition.y = 0.6f;
-        combinedPosition.z = Mathf.Clamp(combinedPosition.z, CurrentLevelData.SpawnAreaMin.y, CurrentLevelData.SpawnAreaMax.y);
-        usedPositions.Add(combinedPosition);
+        } while (usedPositions.Contains(spawnPosition)); // Kiểm tra nếu vị trí đã được sử dụng
 
-        return combinedPosition;
-
+        usedPositions.Add(spawnPosition); // Thêm vị trí vào danh sách đã sử dụng
+        return spawnPosition;
     }
     public void SpawnBot()
     {
